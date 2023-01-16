@@ -1,0 +1,234 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'secondpage recieve page__recieve' %}
+{% set baner_title = 'WiFiレンタルのお申込み' %}
+{% block main %}
+	<section class="recieve regist regist--input">
+        <div class="container">
+	        <h2 class="ttl clblue">購⼊者情報登録</h2>
+	        <ul class="listselect">
+	            <li class="listselect--item">
+	            	<span class="num">01</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-calendar.png', 'user_data') }}" alt="渡航日時・渡航先選択">
+	            	</span>
+	            	<span class="txt">渡航日時・<br>渡航先選択</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">02</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-plug.png', 'user_data') }}" alt="オプション選択">
+	            	</span>
+	            	<span class="txt">オプション<br>選択</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">03</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-notes.png', 'user_data') }}" alt="購入者情報登録">
+	            	</span>
+	            	<span class="txt">購入者<br>情報登録</span>
+	            </li>
+	            <li class="listselect--item active">
+	            	<span class="num">04</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-choice.png', 'user_data') }}" alt="受け取り方法選択">
+	            	</span>
+	            	<span class="txt">受け取り<br>方法選択</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">05</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-credit.png', 'user_data') }}" alt="お支払方法選択">
+	            	</span>
+	            	<span class="txt">お支払方法<br>選択</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">06</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="お支払方法選択">
+	            	</span>
+	            	<span class="txt">注文確認</span>
+	            </li>
+	        </ul>
+	        <div class="recieve--method">
+	            <h3 class="ttlbgpink">受け取り⽅法選択</h3>
+	            <div class="securitychoice--list selectgroup">
+		            <div class="securitychoice--item boxselect">
+		            	<a href="../shopping/receive_delivery"></a>
+		                <div class="boxselect--input">
+		                	<input type="radio" id="receive1" name="receive-group">
+							<label for="receive1">宅配便</label>
+		                </div>
+		                <div class="boxselect--inside">
+		                  	<div class="securitychoice--img">
+		                  		<img src="{{ asset('assets/img/icon-deli.png', 'user_data') }}" alt="宅配便">
+		                  	</div>
+		                </div>
+		            </div>
+		            <div class="securitychoice--item boxselect">
+		            	<a href="../shopping/receive_convenience"></a>
+		                <div class="boxselect--input">
+		                	<input type="radio" id="receive2" name="receive-group">
+							<label for="receive2">コンビニ受け取り</label>
+		                </div>
+		                <div class="boxselect--inside">
+		                  	<div class="securitychoice--img">
+		                  		<img src="{{ asset('assets/img/icon-24-hours.png', 'user_data') }}" alt="コンビニ受け取り">
+		                  	</div>
+		                </div>
+		            </div>
+		            <div class="securitychoice--item boxselect">
+		            	<a href="../shopping/receive_office"></a>
+		                <div class="boxselect--input">
+		                	<input type="radio" id="receive3" name="receive-group" checked>
+							<label for="receive3">店頭受け取り</label>
+		                </div>
+		                <div class="boxselect--inside">
+		                  	<div class="securitychoice--img">
+		                  		<img src="{{ asset('assets/img/icon-store.png', 'user_data') }}" alt="店頭受け取り">
+		                  	</div>
+		                </div>
+		            </div>
+	            </div>
+	        </div>
+	        <div class="shipping">
+	            <h3 class="ttlbgpink">店頭受け取り</h3>
+	            <form class="regist--form" action="">
+	              	<div class="border">
+	                	<table>
+	                  		<tr>
+	                    		<th>受け取り⽇時選択</th>
+			                    <td class="blockaddinfo">
+			                      	<p>〒160-0023<br>東京都新宿区⻄新宿7-18-19新宿税理⼠ビル第⼆別館佐⽵ビル2F</p>
+			                      	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3240.2386416890754!2d139.69463241561232!3d35.69574463678268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188d29f1f07711%3A0x3c0eb97fdcd2a12!2zTmjhuq10IELhuqNuLCDjgJIxNjAtMDAyMyBUb2t5bywgU2hpbmp1a3UgQ2l0eSwgTmlzaGlzaGluanVrdSwgNy1jaMWNbWXiiJIxOOKIkjE5IOaWsOWuv-eojueQhuWjq-ODk-ODqyDnrKwy5Yil6aSo!5e0!3m2!1svi!2s!4v1654783114763!5m2!1svi!2s" width="100%" height="550" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			                      	<p> <strong>アクセスマップ</strong></p>
+			                      	<p>テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。</p>
+			                      	<ul class="listthumbs dflex">
+			                        	<li>
+			                        		<img src="{{ asset('assets/img/imgdum.png', 'user_data') }}" alt="">
+			                        	</li>
+			                        	<li>
+			                        		<img src="{{ asset('assets/img/imgdum.png', 'user_data') }}" alt="">
+			                        	</li>
+			                        	<li>
+			                        		<img src="{{ asset('assets/img/imgdum.png', 'user_data') }}" alt="">
+			                        	</li>
+			                      	</ul>
+			                    </td>
+			                </tr>
+			                <tr> 
+			                    <th>受け取り⽇時選択</th>
+			                    <td>
+			                      	<div class="blockdate">
+			                        	<div class="blockdate--input">
+			                          		<div class="startdate" id="startdate"></div>
+			                        	</div>
+			                        	<div class="blockdate--table">
+					                        <dl> 
+					                            <dt>受け取り⽇時</dt>
+					                            <dd> 
+					                              	<input type="text">
+					                            </dd>
+					                        </dl>
+					                        <dl> 
+					                            <dt>希望時間</dt>
+					                            <dd> 
+					                              	<input class="desiredtime" type="text">
+					                            </dd>
+					                        </dl>
+			                          		<div class="productselection selectgroup">
+			                            		<div class="productselection--item boxselect">
+			                              			<div class="boxselect--input">
+			                              				<input type="radio" id="productselection2" name="radio-group" {% if (cartItem['product_1_price'] > 0) %}checked{% endif %}>
+														<label for="productselection2">事前受け取り(3～5日前)</label>
+			                              			</div>
+			                              			<div class="boxselect--inside">
+			                                			<div class="productselection--img">
+			                                				<img src="{{ asset('assets/img/optional-product02.png', 'user_data') }}" alt="事前受け取り(3～5日前)">
+			                                			</div>
+			                                			<div class="productselection--price">
+			                                  				<p class="price">550円/1箱</p>
+			                                			</div>
+			                                			<div class="productselection--txt boxselect--txt">
+							                                <p>3~5日前でも受け取ることができます。</p>
+							                                <p class="note">※2日前までの指定は無料</p>
+			                                			</div>
+			                              			</div>
+			                            		</div>
+			                          		</div>
+			                        	</div>
+			                      	</div>
+			                    </td>
+			                </tr>
+	                	</table>
+	              	</div>
+	            </form>
+	        </div>
+        </div>
+        <section class="simulationft"> 
+	        <div class="simulation simulation--footer">
+	            <div class="container">
+	              	<h3 class="simulation--tit">
+	              		<span class="icon">
+	              			<img src="{{ asset('assets/img/money.svg', 'user_data') }}" alt="シミュレーション結果">
+	              		</span>
+	              		<span>{{ 'シミュレーション結果'|trans }}</span>
+	              	</h3>
+		            <div class="simulation--list">
+		            	{% if(cartItem|length == 0) %}
+	                    <span>{{ 'お申込内容がありません。'|trans }}</span>
+	                    {% else %}
+		                <div class="travellist">
+		                  	<dl class="dflex">
+		                    	<dt>{{ '渡航先①'|trans }}</dt>
+		                    	<dd>{{ '期間: '|trans }}{% if (cartItem['option_no'] == 1) %}20{{ cartItem['rent_from'] }}～{{ cartItem['rent_to'] }}{% endif %}<br>{{ '国名: '|trans }}{% if (cartItem['option_no'] == 1) %}{{ cartItem['country_name_jp'] }}{% endif %}
+		                    		<span class="arrdow">
+		                    			<img src="{{ asset('assets/img/arr-down.svg', 'user_data') }}" alt="arrow">
+		                    		</span>
+		                    	</dd>
+		                  	</dl>
+		                  	<dl class="dflex">
+		                    	<dt>{{ '渡航先'|trans }}
+	                                {% if (cartItem['option_no'] == 2) %}
+	                                {{ '②'|trans }}
+	                                {% elseif (cartItem['option_no'] == 3) %}
+	                                {{ '③'|trans }}
+	                                {% elseif (cartItem['option_no'] == 4) %}
+	                                {{ '④'|trans }}
+	                                {% elseif (cartItem['option_no'] == 5) %}
+	                                {{ '⑤'|trans }}
+	                                {% endif %}</dt>
+		                    	<dd>{{ '期間: '|trans }}{% if (cartItem['option_no'] != 1) %}20{{ cartItem['rent_from'] }}～{{ cartItem['rent_to'] }}{% endif %}<br>{{ '国名: '|trans }}{% if (cartItem['option_no'] != 1) %}{{ cartItem['country_name_jp'] }}{% endif %}</dd>
+		                  	</dl>
+		                </div>
+		                <div class="simulation--sumary">
+		                  	<div class="totalfee">
+		                    	<dl class="dflex">
+		                      		<dt>{{ '合計金額'|trans }}</dt>
+		                      		<dd>{{ cartItem['des_price'] + cartItem['daily_price'] + cartItem['option_price'] + cartItem['product_1_price'] + cartItem['product_2_price'] }}{{ '円'|trans }}<small>{{ '（税込）'|trans }}</small></dd>
+		                    	</dl>
+		                  	</div>
+		                  	<div class="rentalfee">
+		                    	<dl class="dflex">
+		                      		<dt>{{ 'レンタル料（220円/日）'|trans }}</dt>
+		                      		<dd class="price">{{ cartItem['daily_price'] }}{{ '円'|trans }}</dd>
+		                    	</dl>
+			                    <dl class="dflex">
+			                      	<dt>{{ '安⼼保証料（'|trans }}{{ cartItem['option_price'] / (cartItem['daily_price'] / 220) }}{{ '円/⽇）'|trans }}</dt>
+			                      	<dd class="price">{{ cartItem['option_price'] }}{{ '円'|trans }}</dd>
+			                    </dl>
+			                    <dl class="dflex">
+			                      	<dt>{{ 'オプション品料（110円/⽇）'|trans }}</dt>
+			                      	<dd class="price">{{ cartItem['product_1_price'] }}{{ '円'|trans }}</dd>
+			                    </dl>
+		                 	</div>
+		                </div>
+		            	{% endif %}
+		                <div class="mypage--btn simulation--btn">
+		                	<a class="buttonsubmit bgpink btnarr" href="{{ url('shopping_payment_creditcard') }}">{{ '送信する'|trans }}</a>
+		                </div>
+		            </div>
+	            </div>
+	        </div>
+        </section>
+    </section>
+{% endblock %}

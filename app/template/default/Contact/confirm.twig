@@ -1,0 +1,121 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'secondpage' %}
+{% set baner_title = 'お問い合わせ（確認）' %}
+
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__regist">
+        <section class="regist regist--confirm">
+            <div class="container">
+                <h2 class="ttl clblue">{{ 'お問い合わせ（確認）'|trans }}</h2>
+                <div class="ec-contactConfirmRole">
+                    <div class="ec-off1Grid">
+                        <div class="ec-off1Grid__cell">
+                            <form method="post" action="{{ url('contact') }}" class="h-adr">
+                                {{ form_widget(form._token) }}
+                                <p>{{ '内容によっては回答をさしあげるのにお時間をいただくこともございます。
+            また、休業日は翌営業日以降の対応となりますのでご了承ください。
+            '|trans|nl2br }}</p>
+                                <div class="border">
+                                    <table>
+                                        <tr>
+                                            <th>お名前</th>
+                                            <td>
+                                                <span>{{ form.name.name01.vars.data }} {{ form.name.name02.vars.data }}</span>
+                                                <span>{{ form.kana.kana01.vars.data }} {{ form.kana.kana02.vars.data }}</span>
+                                                {{ form_widget(form.name.name01, { type : 'hidden' }) }}
+                                                {{ form_widget(form.name.name02, { type : 'hidden' }) }}
+                                                {{ form_widget(form.kana.kana01, { type : 'hidden' }) }}
+                                                {{ form_widget(form.kana.kana02, { type : 'hidden' }) }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>住所</th>
+                                            <td> <span>{{ '〒'|trans }}{{ form.postal_code.vars.data }}<br>{{ form.address.pref.vars.data }} {{ form.address.addr01.vars.data }}</span>
+                                                <span>{{ form.address.addr02.vars.data }}</span></td>
+                                            {{ form_widget(form.postal_code, { type : 'hidden' }) }}
+                                            {{ form_widget(form.address.pref, { type : 'hidden' }) }}
+                                            {{ form_widget(form.address.addr01, { type : 'hidden' }) }}
+                                            {{ form_widget(form.address.addr02, { type : 'hidden' }) }}
+                                        </tr>
+                                        <tr>
+                                            <th>電話番号</th>
+                                            <td>
+                                                {{ form.phone_number.vars.data }}
+                                                {{ form_widget(form.phone_number, { type : 'hidden' }) }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>メールアドレス</th>
+                                            <td>
+                                                {{ form.email.vars.data }}
+                                                {{ form_widget(form.email, { type : 'hidden' }) }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>お問い合わせ内容</th>
+                                            <td>
+                                                {{ form.contents.vars.data|nl2br }}
+                                                {{ form_widget(form.contents, { type : 'hidden' }) }}
+                                            </td>
+                                        </tr>
+                                        {# エンティティ拡張の自動出力 #}
+                                        {% for f in form|filter(f => f.vars.eccube_form_options.auto_render) %}
+                                            {% if f.vars.eccube_form_options.form_theme %}
+                                                {% form_theme f f.vars.eccube_form_options.form_theme %}
+                                                {{ form_row(f) }}
+                                            {% else %}
+                                                <tr>
+                                                    <th>
+                                                        {{ form_label(f) }}
+                                                    </th>
+                                                    <td>
+                                                        <div class="{{ f.vars.eccube_form_options.style_class }}{{ has_errors(f) ? ' error' }}">
+                                                            {{ f.vars.data }}
+                                                            {{ form_widget(f, { type: 'hidden'}) }}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                <div class="form--submit">
+                                    <div class="regist--btn">
+                                        <button type="submit"
+                                                class="buttonsubmit bgblue btnarr"
+                                                name="mode"
+                                                value="complete">{{ '送信する'|trans }}
+                                        </button>
+                                        <button type="submit"
+                                                class="buttonsubmit bgblue btnarr"
+                                                name="mode"
+                                                value="back">{{ '戻る'|trans }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+{% endblock %}

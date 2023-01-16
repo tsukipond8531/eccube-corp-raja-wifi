@@ -1,0 +1,26 @@
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+
+{% set body_class = 'secondpage page__complete' %}
+
+{% block main %}
+<section class="completed">
+    <div class="container">
+        <h2 class="ttl clblue">ご注文完了</h2>
+        <h3 class="text_center">ご注文ありがとうございました</h3>
+        <p class="text_center">ただいま、ご注文のメールを送らせていただきました。<br>万一、ご確認メールが届かない場合は、トラブルの可能性もありますので大変お手数ではございますがお問い合わせくださいますようお願いいたします。</p>
+        <form action="" method="method">
+            <div class="form--submit">
+                <div class="regist--btn"><a class="buttonsubmit bgblue btnarr" href="{{ url('homepage') }}">トップページへ</a></div>
+                <div class="regist--btn"><a class="buttonsubmit bgpink btnarr" href="{{ url('mypage') }}">マイページへ</a></div>
+            </div>
+        </form>
+    </div>
+
+</section>
+
+{% endblock %}

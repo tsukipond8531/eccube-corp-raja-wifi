@@ -1,0 +1,38 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'secondpage page__regist' %}
+{% set baner_title = 'WiFiレンタルのお申込み' %}
+
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% set body_class = 'registration_page' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__regist">
+        <section class="regist regist--confirm">
+            <div class="container">
+                <h2 class="ttl clblue">{{ '購⼊者情報の登録(完了)'|trans }}</h2>
+                <p class="text_center">正常に登録されました。<br>マイページをご利⽤できるようになりました。<br>今後ともよろしくお願いいたします。</p>
+                <div class="regist--button">
+                    <div class="regist--btn">
+                        <a class="buttonsubmit bgblue btnarr" style="margin-bottom: 3px" href="{{ url('shopping') }}">{{ '受け取り方法選択へ'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}

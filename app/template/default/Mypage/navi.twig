@@ -1,0 +1,24 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+<div class="blockuser user--info blockcontent--left">
+    <div class="blockuser--tit">
+        <p class="name">{{ app.user.name01 }} {{ app.user.name02 }}様</p>
+    </div>
+    <div class="blockuser--content">
+        <ul>
+            <li> <a href="{{ url('mypage') }}">レンタル中のWiFiルーター<br class="breakpc">レンタル期間・渡航国<br>・安全補償の変更</a></li>
+            <li> <a href="{{ url('mypage_creditcard') }}">クレジットカード情報追加・削除</a></li>
+            <li> <a href="{{ url('mypage_router_history') }}">購⼊履歴</a></li>
+            <li> <a href="{{ url('mypage_change') }}">アカウント設定</a></li>
+        </ul>
+    </div>
+    <div class="btnlogout"><a href="{{ url('logout') }}">ログアウト</a></div>
+</div>

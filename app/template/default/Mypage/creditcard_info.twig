@@ -1,0 +1,73 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'mypage secondpage page__mypage' %}
+{% set baner_title = 'クレジットカード情報追加・削除' %}
+
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% set mypageno = 'index' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="router">
+            <div class="container">
+                <h2 class="ttl clblue">クレジットカード情報追加・削除</h2>
+                <div class="blockcontent">
+                    {% include 'Mypage/navi.twig' %}
+                    <div class="blockcontent--right card-select">
+                        <h3 class="ttlbgpink">カード情報</h3>
+                        <form action="">
+                            <div class="blockcart">
+                                <label class="dflex" for="blockcart1">
+                                    <div class="blockcart--img"><img src="{{ asset('assets/img/visablue.png', 'user_data') }}" alt="">
+                                        <div class="name"><span>•••• 1234</span><span>Tanaka Taro</span></div>
+                                    </div>
+                                    <div class="blockcart--info">
+                                        <p>Visa</p>
+                                        <p>末尾が•••• 1234のクレジットカード</p>
+                                        <div class="btndel"><a href="">削除</a></div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="blockcart">
+                                <label class="dflex" for="blockcart2">
+                                    <div class="blockcart--img"><img src="{{ asset('assets/img/visagray.png', 'user_data') }}" alt="">
+                                        <div class="name"><span>•••• 1234</span><span>Tanaka Taro</span></div>
+                                    </div>
+                                    <div class="blockcart--info">
+                                        <p>Visa</p>
+                                        <p>末尾が•••• 1234のクレジットカード</p>
+                                        <div class="btndel"><a href="">削除 </a></div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="blockcart blockcart--add"><a href="{{ url('mypage_creditcard_input') }}"></a>
+                                <label class="dflex" for="">
+                                    <div class="blockcart--img"><img src="{{ asset('assets/img/imgdum2.png', 'user_data') }}" alt="">
+                                        <div class="icon"> <img src="{{ asset('assets/img/icon-pluscircle.svg', 'user_data') }}" alt=""></div>
+                                    </div>
+                                    <div class="blockcart--info">
+                                        <p>クレジットカード情報を追加</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}

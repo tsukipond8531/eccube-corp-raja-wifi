@@ -1,0 +1,60 @@
+# nav
+paidy.admin.nav.payment_list: Paidy決済管理
+
+# flash messages
+paidy.admin.save.success: 登録しました。
+paidy.admin.payment_status.bulk_action.success: '%count%件の %request%処理を行いました。'
+
+# twig
+paidy.admin.config.title: Paidy
+paidy.admin.config.sub_title: プラグイン一覧
+paidy.admin.config.header: 設定
+paidy.admin.config.save: 登録
+paidy.admin.config.required: 必須
+paidy.admin.config.back: プラグイン一覧
+paidy.admin.config.public_key: パブリックキー
+paidy.admin.config.secret_key: シークレットキー
+paidy.admin.config.logo_url: 決済モーダルに表示するロゴのURL
+paidy.admin.config.payment_method: タイトル
+paidy.admin.config.store_name: ストア名
+paidy.admin.config.mail_title: 注文受付メール タイトル
+paidy.admin.config.mail_description_text: 注文受付メール 説明文
+paidy.admin.config.charge_type: チャージタイプ
+paidy.admin.config.webhook_url: Webhook URL
+paidy.admin.config.webhook_request_ip: Webhookリクエスト元IP
+paidy.admin.config.description_disp: Paidy決済の説明表示
+paidy.admin.config.description_disp__msg: 表示する
+paidy.admin.config.description_text: Paidy決済の説明
+paidy.admin.config.link_disp: Paidyへのリンクの表示
+paidy.admin.config.link_disp__msg: 表示する
+
+paidy.admin.payment_status.title: Paidy決済管理
+paidy.admin.payment_status.sub_title: 受注管理
+paidy.admin.payment_status.search: 検索
+paidy.admin.payment_status.search_result_count: '検索結果：%count%件が該当しました'
+paidy.admin.payment_status.search_condition_order_status: 対応状況
+paidy.admin.payment_status.search_condition_paidy_status: Paidy決済状況
+paidy.admin.payment_status.invalid_condition: 検索条件に誤りがあります
+paidy.admin.payment_status.no_result: 検索条件に合致するデータが見つかりませんでした
+paidy.admin.payment_status.change_condition: 検索条件を変えて、再度検索をお試しください
+paidy.admin.payment_status.display_count: '%count%件'
+paidy.admin.payment_status.col_order_date: 受注日時
+paidy.admin.payment_status.col_order_no: 注文番号
+paidy.admin.payment_status.col_order_name: お名前
+paidy.admin.payment_status.col_order_price: 購入金額
+paidy.admin.payment_status.col_order_staus: 対応状況
+paidy.admin.payment_status.col_paidy_refund: 返金
+paidy.admin.payment_status.col_paidy_order_id: Paidy決済ID
+paidy.admin.payment_status.col_paidy_expire_date: Paidy有効期限
+paidy.admin.payment_status.col_paidy_order_amount: Paidy請求済額
+paidy.admin.payment_status.col_paidy_order_status: Paidy状態
+paidy.admin.payment_status.col_payment_date: 入金日
+paidy.admin.payment_status.col_shipping_date: 出荷日
+paidy.admin.payment_status.bulk_label: 一括設定
+paidy.admin.payment_status.bulk_payment_process: 決済処理
+paidy.admin.payment_status.bulk_submit: 一括処理
+paidy.admin.payment_status.bulk_modal_message: 決済処理を行います。よろしいですか？
+paidy.admin.payment_status.bulk_alert: 決済処理が選択されていません
+paidy.admin.payment_status.payment_total_different: 受注のお支払い合計と、Paidy請求済額の差額が発生しています。
+paidy.admin.payment_status.multi_search_label: 注文番号・Paidy決済ID・お名前・会社名・メールアドレス・電話番号
+paidy.admin.payment_status.tooltip.multi_search_label: 情報を入力して一覧の絞り込み検索ができます。

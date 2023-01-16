@@ -1,0 +1,1570 @@
+@charset "utf-8";
+/* SIMULATION */
+
+.simuWrap {
+    position: relative;
+}
+
+.simuTitle {
+    font-size: 40px;
+    color: #162566;
+    text-align: center;
+    font-weight: 900;
+    line-height: 1.2;
+    padding-bottom: 6px;
+}
+
+.simuTitle span {
+    color: #ef2c88;
+}
+
+.simuTitle label {
+    font-size: 58px;
+}
+
+.simuWrap {
+    background: #e4edf3;
+}
+
+.simuPopup {
+    position: relative;
+}
+
+.simuPopup .simulation {
+    padding: 21px 0 43px;
+}
+
+.simuPopup.fancybox__content .simulation {
+    padding: 0;
+}
+
+.simuPopup .simulation .simuTab {
+    display: flex;
+    align-items: flex-start;
+}
+
+.simuPopup .simulation .simuTab .listTab {
+    display: flex;
+}
+
+.simuPopup .simulation .simuTab .listTab li {
+    position: relative;
+    width: 130px;
+    text-align: center;
+    margin-right: 6px;
+}
+
+.simuPopup .simulation .simuTab .listTab li.active {
+    /*width: 121px;*/
+}
+
+
+.simuPopup .simulation .simuTab .listTab li a {
+    display: block;
+    /*position: relative;*/
+    font-size: 16px;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    background: #162566;
+    padding: 6px 37px 9px 0;
+    box-shadow: 0px 6px 8px 0px rgb(18 39 101 / 50%);
+}
+
+.simuPopup .simulation .simuTab .listTab li:first-child a {
+    padding-right: 0 !important;
+}
+
+.simuPopup .simulation .simuTab .listTab li.active a {
+    color: #000;
+    background: #fff;
+}
+
+.simuPopup .simulation .simuTab .listTab li .delete {
+    position: absolute;
+    top: 46%;
+    right: 6px;
+    transform: translateY(-50%);
+    color: #fff;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.simuPopup .simulation .simuTab .listTab li.active .delete {
+    color: #000;
+}
+
+.simuPopup .simulation .simuTab .listTab li .delete:after {
+    content: '';
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+.simuPopup .simulation .simuTab .listTab li.active .delete:after {
+    border-color: #000;
+}
+
+.simuPopup .simulation .simuTab .listTab li .delete:hover:after {
+    opacity: 1;
+}
+
+.simuPopup .simulation .simuTab .addTab {
+    width: 112px;
+    margin-left: 9px;
+}
+
+.simuPopup .simulation .simuTab .addTab a {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    background: #fff;
+    color: #162566;
+    border-radius: 15px;
+    border: 1px solid #162566;
+    text-align: center;
+    box-shadow: 0 3px 0 #162566;
+    transition: all 350ms linear;
+    padding: 4px 0 3px;
+}
+
+.simuPopup .simulation .simuTab .addTab a:hover {
+    transform: translateY(3px);
+    box-shadow: 0 0 0 #162566;
+}
+
+.simuPopup .simulation .simuTab .addTab a span {
+    font-size: 20px;
+    font-weight: bold;
+    vertical-align: -2px;
+    margin-left: -3px;
+    margin-right: 3px;
+    line-height: 1;
+}
+
+.simuPopup .simulation .simuContent {
+    display: flex;
+    position: relative;
+    padding: 19px 25px 11px 35px;
+    background: #fff;
+    border-radius: 0 10px 10px 10px;
+    box-shadow: 0px 9px 8px 0px rgb(18 39 101 / 50%);
+}
+
+.simuPopup .simulation .simuContent .simuLeft {
+    width: calc(100% - 345px);
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuItem {
+    display: none;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuItem.actived {
+    display: block;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 22px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput {
+    position: relative;
+    max-width: 235px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput.date {
+    /*width: 186px;*/
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput+.simuInput {
+    margin-left: 12px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .name {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 55px;
+    height: 100%;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    background: #295dfa;
+    z-index: 1;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .inputStyle {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Noto Sans JP', sans-serif;
+    border: 2px solid #295dfa;
+    padding: 0 20px 0 66px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .countries-suggest.istyping {
+    color: #8e8d8d;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput.date .inputStyle {
+    opacity: 0;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput.date .resultDate {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    font-size: 16px;
+    color: #8f8e8e;
+    font-weight: 500;
+    text-align: right;
+    padding-right: 23px;
+    padding-top: 5px;
+    letter-spacing: 0.7px;
+    line-height: 1.2;
+    border: 2px solid #295dfa;
+    height: 100%;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput.date .resultDate.selected {
+    color: #000;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput.date .resultDate .endDate {
+    display: inline-block;
+    transform: translateX(5px);
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .listArea {
+    position: absolute;
+    width: 100%;
+    max-height: 308px;
+    overflow-y: auto;
+    top: 100%;
+    left: 0;
+    border: 2px solid #295dfa;
+    border-top: 0;
+    background: #fff;
+    padding: 0 12px 0 13px;
+    z-index: 2;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .listArea::-webkit-scrollbar {
+    width: 10px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .listArea::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .listArea::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .listArea li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 15px 2px 11px;
+    transition: all 250ms linear;
+    cursor: pointer;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .listArea li:hover {
+    color: #009aff;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .listArea li+li {
+    border-top: 1px solid #e4edf3;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice {
+    width: 200px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 15px;
+    margin-bottom: -4px;
+    letter-spacing: 1px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .countryDelData {
+    margin-bottom: 5px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .countryDelData a {
+    display: inline-block;
+    width: 140px;
+    font-size: 12px;
+    color: #295dfa;
+    text-align: center;
+    border: 2px solid #295dfa;
+    border-radius: 16px;
+    padding: 3px 5px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .countryDelData a:before {
+    content: "×";
+    display: inline-block;
+    vertical-align: -1px;
+    font-size: 14px;
+    line-height: 1;
+    margin-right: 4px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .countryDelData a:hover {
+    color: #FFF;
+    background-color: #295dfa;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .countryShowPrice {
+    display: flex;
+    width: 100%;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .textPrice {
+    width: 195px;
+    font-size: 15px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .price {
+    width: calc(100% - 65px);
+    letter-spacing: 0;
+    text-align: right;
+    padding-right: 15px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea {
+    position: relative;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapArea {
+    max-width: 607px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn {
+    position: absolute;
+    text-align: center;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn a {
+    display: inline-block;
+    position: relative;
+    font-size: 12px;
+    color: #162566;
+    text-align: center;
+    font-weight: 500;
+    border-radius: 50px;
+    background-color: #fff;
+    padding: 0 11px 1px;
+    border: 1px solid #162566;
+    box-shadow: 0px 2px 0 #162566;
+    transition: .3s;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn a:hover {
+    transform: translateY(2px);
+    box-shadow: 0 0 0 #162566;
+    background-color: #162566;
+    color: #fff;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-1 {
+    top: 96px;
+    right: 167px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-2 {
+    top: 148px;
+    left: 101px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-3 {
+    top: 85px;
+    left: 84px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-4 {
+    top: 54px;
+    left: 190px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-5 {
+    bottom: 56px;
+    left: 191px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-6 {
+    bottom: 83px;
+    right: 92px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-7 {
+    bottom: 64px;
+    right: 171px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-8 {
+    bottom: 91px;
+    left: 18px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-9 {
+    top: 118px;
+    left: 3px;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapArea .cls-5,
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapArea .cls-7 {
+    transition: all 0.3s;
+}
+
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapArea .inActive .cls-5,
+.simuPopup .simulation .simuContent .simuLeft .simuArea .mapArea .inActive .cls-7 {
+    fill: #fada29;
+}
+
+.simuPopup .simulation .simuContent .simuRight {
+    min-width: 285px;
+    margin-top: -9px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultName {
+    position: relative;
+    font-size: 20px;
+    color: #fff;
+    background: #162566;
+    margin-top: 8px;
+    padding: 16px 20px 9px 113px;
+    letter-spacing: 0px;
+    height: 60px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultName:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    width: 50px;
+    height: 57px;
+    background: url(../img/money.svg) no-repeat center center/100%;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent {
+    padding: 16px 22px 40px;
+    background: #f2f2f2;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu {
+    position: relative;
+
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList {
+    position: absolute;
+    width: 100%;
+    border: 1px solid #8e8e8e;
+    background: #fff;
+    /*height: 61px;*/
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.resultCurrent {
+    max-height: 61px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList.resultListSelect {
+    display: none;
+    top: 60px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList.resultListSelect.active {
+    height: inherit;
+    opacity: 1;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList:not(.resultListSelect):before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 13px;
+    right: 7px;
+    border-top: 9px solid #000;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li {
+    display: flex;
+    padding: 9px 14px 8px;
+    color: #8e8d8d;
+    font-weight: 500;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li.selected {
+    display: none;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li {
+    border-bottom: 1px solid #8e8e8e;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li:last-child {
+    border-bottom: none;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li .name {
+    width: 75px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li .info {
+    width: calc(100% - 75px);
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultPrice {
+    margin-top: 86px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultPrice .price {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultPrice .price+.price {
+    margin-top: 10px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultPrice .price .name {
+    letter-spacing: -1px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultPrice .price .numPrice {
+    letter-spacing: 0;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice {
+    position: relative;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 8px;
+    padding-top: 14px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top: 1px solid #122765;
+    width: calc(100% + 20px);
+    margin: 0 -10px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice .countriesTabShow {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice .priceAllTotal {
+    display: flex;
+    justify-content: space-between;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice .numPrice {
+    font-size: 25px;
+    color: #f00139;
+    line-height: 0.8;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice .numPrice label {
+    font-size: 30px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice .numPrice small {
+    font-size: 16px;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSubmit {
+    width: 280px;
+    margin: 22px auto 0;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSubmit button {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    text-align: center;
+    border: 0;
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+    background: #ef2c88;
+    font-family: 'Noto Sans JP', sans-serif;
+    box-shadow: 0px 4px 0 #162566;
+    transition: .3s;
+}
+
+.simuPopup .simulation .simuContent .simuRight .resultContent .resultSubmit button:after {
+    display: inline-block;
+    vertical-align: -4px;
+    content: "";
+    background: url(../img/arr.svg) no-repeat;
+    background-size: 100% 100%;
+    width: 21px;
+    height: 21px;
+    margin-left: 2px;
+}
+
+/*CUSTOMIZE CALENDAR*/
+.daterangepicker:before,
+.daterangepicker:after {
+    content: none;
+}
+
+.daterangepicker .drp-selected {
+    display: none;
+}
+
+.daterangepicker .drp-buttons .btn.cancelBtn {
+    display: none;
+}
+
+.daterangepicker {
+    border-radius: 0;
+    border: 2px solid #295dfa;
+    width: 100%;
+    max-width: 850px;
+    padding: 0 7px 7px;
+    margin-top: -51px;
+    margin-left: 81px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.daterangepicker .drp-calendar {
+    max-width: 47%;
+    width: 100%;
+}
+
+.daterangepicker .drp-calendar.left {
+    padding: 0 0 8px 8px;
+}
+
+.daterangepicker .drp-calendar.right {
+    padding: 0 8px 8px;
+}
+
+.daterangepicker .calendar-table tbody {
+    transform: translateY(-4px);
+}
+
+.daterangepicker .calendar-table th,
+.daterangepicker .calendar-table td {
+    position: relative;
+    /*width: 44px;*/
+    height: 44px;
+    line-height: 1.5;
+    font-size: 14px;
+    border: 0;
+    z-index: 1;
+}
+
+.daterangepicker th.month {
+    font-size: 14px;
+    height: 58px;
+    line-height: 1.4;
+}
+
+.daterangepicker td.active,
+.daterangepicker td.active:hover {
+    background: none;
+}
+
+.daterangepicker td.start-date,
+.daterangepicker td.start-date.end-date {
+    background: none;
+    border-radius: 0;
+}
+
+.daterangepicker td.end-date {
+    background: none;
+    border-radius: 0;
+}
+
+.daterangepicker td.start-date.active {
+    background: linear-gradient(to right, transparent 50%, #e7edfd 50%);
+}
+
+.daterangepicker td.end-date.active {
+    background: linear-gradient(to left, transparent 50%, #e7edfd 50%);
+}
+
+.daterangepicker td.start-date.end-date.active {
+    background: none;
+}
+
+.daterangepicker td.in-range {
+    background: #e7edfd;
+}
+
+.daterangepicker .calendar-table td:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background-color: transparent;
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.daterangepicker td.start-date:before,
+.daterangepicker td.start-date.end-date:before,
+.daterangepicker td.end-date:before {
+    background-color: #3662d8;
+}
+
+.daterangepicker td.off,
+.daterangepicker td.off.in-range,
+.daterangepicker td.off.start-date,
+.daterangepicker td.off.end-date {
+    /*opacity: 0;*/
+    pointer-events: none;
+}
+
+.daterangepicker td.ends {
+    opacity: 0;
+    height: 0;
+}
+
+.daterangepicker .drp-buttons {
+    border-top: 0;
+    padding: 8px 34px;
+}
+
+.daterangepicker .drp-buttons .btn.applyBtn {
+    font-size: 22px;
+    font-weight: 500;
+    background: #295dfa;
+    color: #fff;
+    font-family: 'Noto Sans JP', sans-serif;
+    border-radius: 5px;
+    border: 0;
+    padding: 5px 28px 8px;
+}
+
+.daterangepicker .drp-buttons .btn.applyBtn:hover {
+    opacity: 0.7;
+}
+
+.daterangepicker .calendar-table .next span,
+.daterangepicker .calendar-table .prev span,
+.daterangepicker .drp-calendar.left .calendar-table thead tr:first-child th:first-child:not(.prev):after {
+    display: inline-block;
+    border: solid #295dfa;
+    border-width: 0 3px 3px 0;
+    border-radius: 0;
+    display: inline-block;
+    padding: 5px;
+}
+
+.daterangepicker .drp-calendar.left .calendar-table thead tr:first-child th:first-child:not(.prev):after {
+    content: "";
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    opacity: 0.3;
+}
+
+
+@media (min-width: 564px) {
+    .daterangepicker .drp-calendar.left {
+        margin-right: 43px;
+    }
+
+    .daterangepicker .drp-calendar.left .calendar-table {
+        padding-right: 8px;
+    }
+}
+
+/*POPUPDELETE*/
+
+.popupDelete {
+    display: none;
+    width: 100%;
+    max-width: 465px;
+    background: #fff;
+    border-radius: 10px;
+    text-align: center;
+    padding: 57px 0 45px;
+    overflow: hidden;
+}
+
+.fancybox__content.popupDelete {
+    padding: 57px 0 45px;
+}
+
+.popupDelete .title {
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.popupDelete .btnWrap {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+.popupDelete .btnWrap .btn {
+    width: 185px;
+}
+
+.popupDelete .btnWrap .btn a {
+    display: block;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    background: #295dfa;
+    border-radius: 50px;
+    text-align: center;
+    padding: 5px 0 7px;
+}
+
+.popupDelete .btnWrap .btn.btnSubmit a {
+    background: #162566;
+}
+
+/*LOADDING*/
+.loader {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.loaderIcon {
+    position: absolute;
+    top: 45%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/*FANCYBOX SIMULATION*/
+.fancybox__backdrop {
+    background: var(--fancybox-bg, rgba(24, 24, 27, 0.8));
+}
+
+.fancybox__content {
+    padding: 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fancybox__content .simuPopup .simulation {
+    padding: 21px 40px 43px;
+}
+
+.fancybox__content .simuTitle {
+    padding: 10px 0 6px;
+}
+
+.simuPopup .simulation .simuContent {
+    justify-content: space-between;
+}
+
+.fancybox__content .simuPopup .simulation .simuContent {
+    padding: 25px 30px;
+}
+
+.fancybox__content .simuPopup .simulation .simuContent .simuLeft {
+    width: calc(100% - 350px);
+}
+
+.fancybox__content .simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput {
+    width: 190px;
+}
+
+.fancybox__content .simuPopup .simulation .simuContent .simuRight {
+    width: 335px;
+}
+
+.fancybox__content .simuPopup .simulation .simuContent .simuLeft .simuArea .mapButton .btn.btn-group-7 {
+    bottom: 40px;
+    right: 140px;
+}
+
+
+/*AREASIMULATION*/
+
+/*ONLY PC*/
+@media (min-width: 701px) {
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSubmit button:hover {
+        transform: translateY(4px);
+        box-shadow: 0px 0px 0px 0px rgb(18 39 101 / 0%);
+    }
+}
+
+.fancybox__slide {
+    justify-content: center;
+    align-items: center;
+}
+
+/*CUSTOMIZE POPUP AREA*/
+.popupArea {
+    position: absolute;
+    /*left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);*/
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    flex-direction: row;
+    padding: 0;
+    width: 100%;
+    max-width: 1117px;
+    max-height: 497px;
+    background: #fff;
+    box-shadow: 0px 6px 8px 0px rgb(18 39 101 / 50%);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 2;
+    display: none;
+}
+
+.popupArea.actived {
+    display: block;
+}
+
+.popupArea .areaList {
+    float: left;
+    width: 196px;
+    background: #295dfa;
+    padding: 40px 16px 24px;
+}
+
+.popupArea .areaList .nameTitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    padding: 0 6px;
+}
+
+.popupArea .areaList .areaNameList {
+    margin-top: 25px;
+}
+
+.popupArea .areaList .areaNameList li+li {
+    margin-top: 24px;
+}
+
+.popupArea .areaList .areaNameList li a {
+    position: relative;
+    display: block;
+    color: #fff;
+    font-weight: 500;
+    transition: all 350ms linear;
+}
+
+.popupArea .areaList .areaNameList li a:before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    right: -6px;
+    transform: translateY(-50%);
+    background: url(../img/arr.svg) no-repeat;
+    background-size: 100% 100%;
+    width: 9px;
+    height: 15px;
+}
+
+.popupArea .areaList .areaNameList li.selected a,
+.popupArea .areaList .areaNameList li a:hover {
+    color: #fada29;
+}
+
+.popupArea .areaList .areaNameList li a:hover:before {
+    background: url(../img/arr-pink.svg) no-repeat center center;
+}
+
+.popupArea .countryList {
+    float: right;
+    width: calc(100% - 196px);
+    height: inherit;
+    padding: 27px 51px 27px 40px;
+    overflow-y: auto;
+}
+
+.popupArea .countryList .countryTitle {
+    font-size: 23px;
+    font-weight:700;
+    color: #122765;
+    padding: 0 4px;
+}
+
+.popupArea .countryList .countryTitle small {
+    font-size: 15px;
+}
+
+.popupArea .countryList .countryWrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 31px;
+}
+
+.popupArea .countryList .countryWrap .countryNameList {
+    width: 26.9%;
+}
+
+/*.popupArea .countryList .countryWrap .countryNameList:nth-child(2) {
+    width: 35%;
+}
+
+.popupArea .countryList .countryWrap .countryNameList:nth-child(3) {
+    width: 19.6%;
+}*/
+
+.popupArea .countryList .countryWrap .countryNameList li+li {
+    margin-top: 14px;
+}
+
+.popupArea .countryList .countryWrap .countryNameList li a {
+    display: flex;
+    justify-content: space-between;
+    transition: 0.3s;
+}
+
+.popupArea .countryList .countryWrap .countryNameList li a:hover {
+    color: #295dfa;
+}
+
+.popupArea .countryList .countryWrap .countryNameList li a .name {
+    letter-spacing: -1.5px;
+    text-indent: -12px;
+    padding-left: 12px;
+}
+
+.popupArea .close {
+    position: absolute;
+    top: 2px;
+    right: 9px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #122765;
+    cursor: pointer;
+}
+
+.popupArea .carousel__button.is-close {
+    display: none;
+}
+
+/*SP STYLE*/
+@media (max-width: 700px) {
+    .simuTitle {
+        font-size: 20px;
+        line-height: 1.5;
+        letter-spacing: 1.2px;
+        padding-bottom: 1px;
+    }
+
+    .fancybox__content .simuTitle {
+        padding: 0 0 6px;
+    }
+
+    .simuTitle label {
+        font-size: 29px;
+    }
+
+    .fancybox__content .simuPopup .simulation,
+    .simuPopup .simulation {
+        padding: 12px 0 22px;
+    }
+
+    .simuPopup .simulation .simuTab .listTab li {
+        width: 73px;
+        padding-right: 20px;
+        background: #162566;
+        border-radius: 5px 5px 0 0;
+        margin-right: 9px;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuTab .listTab li.active {
+        width: 75px;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuTab .listTab li {
+        margin-right: 5px;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuTab .listTab li {
+        width: 71px;
+        padding-left: 3px;
+    }
+
+    .simuPopup .simulation .simuTab .listTab li:first-child {
+        padding-right: 0 !important;
+    }
+
+    .simuPopup .simulation .simuTab .listTab li:last-child {
+        margin-right: 0;
+    }
+
+    .simuPopup .simulation .simuTab .listTab li.active {
+        background: #fff;
+        box-shadow: 0px 6px 8px 0px rgb(18,39,101,50%);
+    }
+
+    .simuPopup .simulation .simuTab .listTab li {
+        width: 76px;
+    }
+
+    .simuPopup .simulation .simuTab .listTab li a {
+        font-size: 12px;
+        padding: 6px 0 4px 0;
+        border-radius: 5px 5px 0 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .simuPopup .simulation .simuTab .listTab li .delete {
+        display: inline-block;
+        top: 56%;
+        font-size: 12px;
+        z-index: 2;
+    }
+
+    .simuPopup .simulation .simuTab .listTab li .delete:after {
+        width: 13px;
+        height: 13px;
+        border: 1px solid #fff;
+    }
+
+    .simuPopup .simulation .simuTab .addTab {
+        width: 92px;
+        margin-left: 3px;
+    }
+
+    .simuPopup .simulation .simuTab .addTab a {
+        display: block;
+        font-size: 12px;
+        border-radius: 15px;
+        padding: 2px 0 3px;
+        box-shadow: 0 2px 0 #162566;
+    }
+
+    .simuPopup .simulation .simuTab .addTab a span {
+        display: inline-block;
+        font-size: 13px;
+        vertical-align: 0;
+        margin-left: -3px;
+        margin-right: 3px;
+        margin-top: -1px;
+    }
+
+    .simuPopup .simulation .simuTab .addTab a:hover {
+        transform: translateY(0);
+        box-shadow: 0 2px 0 #162566;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuContent,
+    .simuPopup .simulation .simuContent {
+        flex-direction: column;
+        padding: 12px 25px 29px 25px;
+        border-radius: 0 5px 5px 5px;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuContent .simuLeft,
+    .simuPopup .simulation .simuContent .simuLeft {
+        width: 100%;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput+.simuInput {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 14px;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput,
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput,
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput.date {
+        width: 100%;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .name {
+        width: 43px;
+        font-size: 12px;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput .inputStyle {
+        width: 100%;
+        height: 38px;
+        font-size: 12px;
+        border: 1px solid #295dfa;
+        padding: 0 20px 0 49px;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuInput.date .resultDate {
+        position: absolute;
+        top: 0;
+        font-size: 12px;
+        text-align: left;
+        padding: 3px 48px 0;
+        letter-spacing: 0.7px;
+        line-height: 1.2;
+        border: 1px solid #295dfa;
+        height: 100%;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice {
+        text-align: center;
+        width: 100%;
+        font-size: 14px;
+        margin-left: 0;
+        margin-bottom: 0;
+        margin-top: 17px;
+        letter-spacing: 1px;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .countryDelData {
+        margin-bottom: 10px;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .textPrice {
+        display: inline-flex;
+        width: 57%;
+        padding-left: 24px;
+        text-align: right;
+        letter-spacing: 0.7px;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .textPrice .nameTab {
+        margin-right: 2px;
+    }
+
+    .simuPopup .simulation .simuContent .simuLeft .simuOption .simuPrice .price {
+        width: 38%;
+        margin-left: 0;
+        letter-spacing: 0;
+        padding-right: 23px;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuContent .simuRight,
+    .simuPopup .simulation .simuContent .simuRight {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultName {
+        font-size: 16px;
+        padding: 6px 20px 9px 90px;
+        letter-spacing: 1px;
+        margin-top: 9px;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuContent .simuRight .resultName {
+        padding: 6px 20px 9px 60px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultName:before {
+        top: -8px;
+        left: 45px;
+        width: 44px;
+        height: 51px;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuContent .simuRight .resultName:before {
+        left: 12px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent {
+        padding: 12px 34px 32px;
+    }
+
+    .fancybox__content .simuPopup .simulation .simuContent .simuRight .resultContent {
+        padding: 12px 20px 32px;
+    }
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li:last-child {
+        border-bottom: 1px solid #8e8e8e;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList.resultCurrent {
+        height: 61px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList.resultListSelect {
+        top: 60px;
+        border-bottom: none;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList:not(.resultListSelect):before {
+        top: 11px;
+        right: 7px;
+        border-top: 8px solid #000;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li {
+        font-size: 12px;
+        padding: 7px 11px 8px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li .name {
+        width: 57px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li .info {
+        width: calc(100% - 57px);
+        letter-spacing: -0.2px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSimu .resultList li .info .area {
+        margin-top: 1px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultPrice {
+        margin-top: 67px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultPrice .price {
+        font-size: 15px;
+        letter-spacing: 1px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultPrice .price+.price {
+        margin-top: 5px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice {
+        font-size: 15px;
+        margin-top: 6px;
+        padding-top: 11px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice:before {
+        width: calc(100% + 14px);
+        margin: 0 -7px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice .countriesTabShow {
+        font-size: 13px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice .numPrice {
+        font-size: 18px;
+        color: #f00139;
+        line-height: 0.8;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice .numPrice label {
+        font-size: 23px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .totalPrice .numPrice small {
+        font-size: 12px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSubmit {
+        width: 100%;
+        margin: 17px auto 0;
+        text-align: center;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSubmit button {
+        width: 93%;
+        height: 38px;
+        font-size: 15px;
+        letter-spacing: 0.7px;
+    }
+
+    .simuPopup .simulation .simuContent .simuRight .resultContent .resultSubmit button:after {
+        width: 19px;
+        height: 16px;
+        vertical-align: -3px;
+    }
+
+    /*CUSTOMIZE CALENDAR*/
+    .daterangepicker {
+        padding: 0 7px 15px;
+        margin-left: 0;
+        margin-top: 8px;
+        width: 100%;
+        max-width: 90%;
+        left: 5% !important;
+    }
+
+    body:not(.home) .daterangepicker {
+        /*height: 50%;*/
+        overflow-y: auto;
+    }
+
+    .daterangepicker .drp-calendar {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .daterangepicker .drp-calendar.left,
+    .daterangepicker .drp-calendar.right {
+        padding: 0;
+        margin-right: 0;
+    }
+
+    .daterangepicker .drp-calendar.right {
+        display: none;
+    }
+
+    .daterangepicker .drp-buttons {
+        text-align: center;
+        padding: 8px;
+    }
+
+    .daterangepicker .drp-buttons .btn.applyBtn {
+        font-size: 14px;
+        padding: 5px 30px 8px;
+        margin-left: 0;
+    }
+
+    .daterangepicker th.month {
+        height: 40px;
+        line-height: 1.5;
+    }
+
+    .daterangepicker .calendar-table th,
+    .daterangepicker .calendar-table td {
+        /*width: 44px;
+        height: 44px;*/
+    }
+
+    .daterangepicker td.ends {
+        height: 0;
+        line-height: 0;
+        padding: 0;
+    }
+
+    .popupDelete .btnWrap {
+        padding: 0 20px;
+    }
+
+    .popupDelete .btnWrap .btn {
+        width: 45%;
+    }
+
+    .fancybox__content {
+        padding: 20px 10px;
+    }
+
+    .fancybox__slide::before,
+    .fancybox__slide::after {
+        content: none;
+    }
+
+    .fancybox__track {
+        height: auto;
+    }
+
+    .fancybox__viewport {
+        overflow: auto;
+    }
+
+    .endDate {
+        position: relative;
+        float: right;
+    }
+}
+
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+    .daterangepicker {
+        margin-top: -150px;
+        left: 20% !important;
+        width: 60%;
+    }
+
+    body:not(.home) .daterangepicker {
+        /*margin-top: -140px;*/
+        left: 20% !important;
+        width: 60%;
+    }
+}
+
+@media only screen and (min-device-width: 414px) and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 3) and (orientation: landscape) {
+    .daterangepicker {
+        margin-top: -150px;
+        left: 20% !important;
+        width: 60%;
+        height: 70%;
+    }
+
+    body:not(.home) .daterangepicker {
+        margin-top: -140px;
+        left: 20% !important;
+        width: 60%;
+        height: 75%;
+    }
+}
+
+.startDate {
+    position: absolute;
+    left: 70px;
+}
+
+.calendar-table table {
+    border: none;
+}
+
+.calendar-table table th, .calendar-table table td{
+	padding: 0px;
+}
+.daterangepicker .calendar-table th, .daterangepicker .calendar-table td{
+	width:auto !important;
+}
+.daterangepicker td.start-date:before, .daterangepicker td.start-date.end-date:before, .daterangepicker td.end-date:before{
+	left:53%;
+}

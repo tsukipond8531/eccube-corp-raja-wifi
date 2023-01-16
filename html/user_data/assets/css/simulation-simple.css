@@ -1,0 +1,490 @@
+@charset "utf-8";
+
+/***************************************************************************
+*
+*  SIMULATION-SIMPLE
+*
+***************************************************************************/
+
+.fancybox__backdrop {
+    top: unset;
+    bottom: 0;
+    height: calc(100% - 90px);
+}
+
+.fancybox__content>.carousel__button.is-close {
+    color: #122765 !important;
+    top: 8px;
+    right: 8px;
+}
+
+.fancybox__content>.carousel__button.is-close svg {
+    width: 28px;
+    height: 28px;
+    filter: unset;
+}
+
+.checkCountry {
+    background: #fff;
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 10px;
+    box-shadow: 6px 2px 9px rgba(18, 39, 101, 0.5);
+    padding: 21px 60px 30px;
+}
+
+.checkCountry .titleCheck {
+    color: #122765;
+    font-size: 30px;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.checkCountry .boxSearch {
+    margin-bottom: 34px;
+}
+
+.checkCountry .boxSearch .simuInput {
+    display: flex;
+    max-width: 450px;
+    width: 100%;
+    margin: 0 auto;
+    border: 2px solid #295dfa;
+    position: relative;
+}
+
+.checkCountry .boxSearch .simuInput .name {
+    background: #295dfa;
+    width: 57px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    padding: 11px 2px;
+}
+
+.checkCountry .boxSearch .simuInput .inputStyle {
+    width: calc(100% - 56px);
+    background: #fff;
+    height: 46px;
+    padding: 0 10px 0 13px;
+    box-shadow: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.checkCountry .boxSearch .simuInput .inputStyle::placeholder {
+    color: #8f8e8e;
+}
+
+.checkCountry .boxSearch .simuInput .inputStyle::-moz-placeholder {
+    color: #8f8e8e;
+}
+
+.checkCountry .boxSearch .simuInput .listArea {
+    position: absolute;
+    width: calc(100% + 4px);
+    top: calc(100% + 2px);
+    left: -2px;
+    border: 2px solid #295dfa;
+    border-top: 0;
+    background: #fff;
+    padding: 0 5px 0 13px;
+    z-index: 1;
+    max-height: 206px;
+    overflow: auto;
+}
+
+/*CUSTOME SCROLLBAR*/
+.checkCountry .boxSearch .simuInput .listArea {
+    scrollbar-width: auto;
+    scrollbar-color: #cccccc #ffffff;
+}
+
+.checkCountry .boxSearch .simuInput .listArea::-webkit-scrollbar {
+    width: 10px;
+}
+
+.checkCountry .boxSearch .simuInput .listArea::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.checkCountry .boxSearch .simuInput .listArea::-webkit-scrollbar-thumb {
+    background-color: #cccccc;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+}
+
+.checkCountry .boxSearch .simuInput .listArea li {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 15px 2px 11px;
+    transition: all 250ms linear;
+    cursor: pointer;
+}
+
+.checkCountry .boxSearch .simuInput .listArea li:hover {
+    color: #009aff;
+}
+
+.checkCountry .boxSearch .simuInput .listArea li+li {
+    border-top: 1px solid #e4edf3;
+}
+
+.checkCountry .wrapCheck {
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkCountry .wrapCheck .popular {
+    width: 507px;
+}
+
+.checkCountry .wrapCheck .popular .titlePopular {
+    background: #122765;
+    color: #fff;
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 0 7px;
+}
+
+.checkCountry .wrapCheck .popular .titlePopular .title {
+    position: relative;
+}
+
+.checkCountry .wrapCheck .popular .titlePopular .title:before {
+    content: "";
+    position: absolute;
+    top: 49%;
+    left: -5px;
+    transform: translate(-100%, -50%);
+    background: url(../images/common/popular-crown-icon.png) no-repeat center/cover;
+    width: 29px;
+    height: 25px;
+}
+
+.checkCountry .wrapCheck .popular .listPopular {
+    display: flex;
+    flex-wrap: wrap;
+    background: #e4edf3;
+    padding: 13px 13px 13px 21px;
+}
+
+.checkCountry .wrapCheck .popular .listPopular li {
+    position: relative;
+    width: calc(100% / 4 - 7.5px);
+    margin-right: 10px;
+    margin-top: 15px;
+    padding-left: 10px;
+}
+
+.checkCountry .wrapCheck .popular .listPopular li:before {
+    content: "・";
+    position: absolute;
+    top: 4px;
+    left: -10px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+.checkCountry .wrapCheck .popular .listPopular li a {
+    color: #5b5959;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.checkCountry .choose {
+    width: calc(100% - 541px);
+    margin-top: -6px;
+}
+
+.checkCountry .choose .formChoose .itemChoose {
+    margin-bottom: 29px;
+}
+
+.checkCountry .choose .formChoose .itemChoose .nameChoose {
+    float: left;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.checkCountry .choose .formChoose .itemChoose .nameChoose .small {
+    font-size: 16px;
+}
+
+.checkCountry .choose .formChoose .itemChoose .resultChoose {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+.checkCountry .choose .resultSubmit {
+    width: 320px;
+    margin: 36px auto 0;
+}
+
+.checkCountry .choose .resultSubmit button {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    text-align: center;
+    border: 0;
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+    background: #ef2c88;
+    font-family: 'Noto Sans JP', sans-serif;
+    box-shadow: 0px 4px 0 #000081;
+    transition: .3s;
+}
+
+.checkCountry .choose .resultSubmit button:after {
+    display: inline-block;
+    vertical-align: -4px;
+    content: "";
+    background: url(../images/introduct/icon-arrow.svg) no-repeat;
+    background-size: 100% 100%;
+    width: 21px;
+    height: 21px;
+}
+
+@media (max-width: 1140px) {
+
+    .checkCountry {
+        padding: 20px 20px 30px;
+    }
+
+    .checkCountry .wrapCheck .popular {
+        width: 488px;
+    }
+
+    .checkCountry .choose {
+        width: calc(100% - 500px);
+    }
+
+    .checkCountry .choose .resultSubmit {
+        width: 270px;
+    }
+}
+
+@media (min-width: 920px) {
+
+    .checkCountry .wrapCheck .popular .listPopular li:nth-child(4n) {
+        margin-right: 0;
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular li:nth-child(-n+4) {
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 960px) and (min-width: 701px) {
+    .checkCountry {
+        padding: 20px 15px 30px;
+    }
+
+    .checkCountry .wrapCheck .popular {
+        width: 420px;
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular li {
+        width: calc(100% / 3 - 7px);
+        padding-left: 7px;
+        margin-top: 11px;
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular li:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular li:nth-child(-n+3) {
+        margin-top: 0;
+    }
+
+    .checkCountry .choose {
+        width: calc(100% - 430px);
+    }
+}
+
+/* PC ONLY */
+@media (min-width: 701px) {
+
+    .checkCountry .choose .resultSubmit button:hover {
+        transform: translateY(4px);
+        box-shadow: 0px 0px 0px 0px rgb(18 39 101 / 0%);
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular li a:hover,
+    .checkCountry .wrapCheck .popular .listPopular li:hover:before,
+    .checkCountry .wrapCheck .popular .listPopular li.active:before,
+    .checkCountry .wrapCheck .popular .listPopular li.active a {
+        color: #295dfa;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .hideCTA .fixBtn {
+        display: none;
+    }
+
+    .fancybox__backdrop {
+        height: calc(100% - 39px);
+        background: var(--fancybox-bg, rgba(24, 24, 27, 0.8));
+    }
+
+    .fancybox__content>.carousel__button.is-close {
+        color: #122765 !important;
+        top: -1px;
+        right: -1px;
+    }
+
+    .fancybox__content>.carousel__button.is-close svg {
+        width: 19px;
+        height: 19px;
+    }
+
+    .checkCountry {
+        padding: 34px 32px;
+        width: 91%;
+        border-radius: 5px;
+    }
+
+    .checkCountry .titleCheck {
+        font-size: 17px;
+        margin-bottom: 17px;
+    }
+
+    .checkCountry .boxSearch {
+        margin-bottom: 15px;
+    }
+
+    .checkCountry .boxSearch .simuInput {
+        border-radius: 5px;
+    }
+
+    .checkCountry .boxSearch .simuInput.hasSuggest {
+        border-radius: 5px 5px 0 0;
+    }
+
+    .checkCountry .boxSearch .simuInput .name {
+        font-size: 13px;
+        padding: 9px 2px 7px;
+    }
+
+    .checkCountry .boxSearch .simuInput .inputStyle {
+        font-size: 13px;
+        height: 35px;
+        padding-left: 11px;
+        border-radius: 0 5px 5px 0;
+    }
+
+    .checkCountry .wrapCheck {
+        flex-direction: column;
+    }
+
+    .checkCountry .wrapCheck .popular {
+        width: 100%;
+        margin-bottom: 17px;
+    }
+
+    .checkCountry .wrapCheck .popular .titlePopular {
+        font-size: 14px;
+        padding: 7px 0 6px 22px;
+        letter-spacing: 0.3px;
+    }
+
+    .checkCountry .wrapCheck .popular .titlePopular .title:before {
+        width: 18px;
+        height: 16px;
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular {
+        padding: 14px 5px 17px 10px;
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular li {
+        width: calc(100% / 3 - 7px);
+        padding-left: 3px;
+        margin-top: 11px;
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular li:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular li:nth-child(-n+3) {
+        margin-top: 0;
+    }
+
+    .checkCountry .wrapCheck .popular .listPopular li a {
+        font-size: 12px;
+    }
+
+    .checkCountry .choose {
+        width: 100%;
+    }
+
+    .checkCountry .choose .formChoose {
+        padding-left: 4px;
+    }
+
+    .checkCountry .choose .formChoose .itemChoose {
+        margin-bottom: 23px;
+    }
+
+    .checkCountry .choose .formChoose .itemChoose:last-child {
+        margin-bottom: 0;
+    }
+
+    .checkCountry .choose .formChoose .itemChoose .nameChoose {
+        font-size: 13px;
+    }
+
+    .checkCountry .choose .formChoose .itemChoose .resultChoose {
+        font-size: 13px;
+    }
+
+    .checkCountry .choose .formChoose .itemChoose .nameChoose .small {
+        font-size: 12px;
+    }
+
+    .checkCountry .choose .resultSubmit {
+        width: 230px;
+        margin: 18px auto 0;
+    }
+
+    .checkCountry .choose .resultSubmit button {
+        font-size: 14px;
+        height: 35px;
+    }
+
+    .checkCountry .choose .resultSubmit button:after {
+        width: 15px;
+        height: 15px;
+        transform: translate(4px, -1px);
+    }
+
+    .checkCountry .loaderIcon {
+        top: 42%;
+        left: 42%;
+    }
+
+}
+
+@media (orientation: landscape) and (max-width: 700px) {
+    .fancybox__slide {
+        padding-bottom: 60px;
+    }
+}

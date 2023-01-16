@@ -1,0 +1,254 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'secondpage page__login' %}
+{% set baner_title = 'WiFiレンタルのお申込み' %}
+
+{% set ProductNum = 0 %}
+
+{% block stylesheet %}
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+
+{% block main %}
+
+    <section class="login">
+        <div class="container">
+            <h2 class="ttl clblue">{{ "購入者情報登録" | trans }}</h2>
+            <ul class="listselect">
+                <li class="listselect--item">
+                    <span class="num">01</span><span class="icon">
+                        <img src="{{ asset('assets/img/icon-calendar.png', 'user_data') }}" alt="渡航日時・渡航先選択">
+                    </span>
+                    <span class="txt">{{ '渡航日時・'|trans }}<br>{{ '渡航国選択'|trans }}</span>
+                </li>
+                <li class="listselect--item">
+                    <span class="num">02</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-plug.png', 'user_data') }}" alt="オプション選択">
+                    </span>
+                    <span class="txt">{{ 'オプション'|trans }}<br>{{ '選択'|trans }}</span>
+                </li>
+                <li class="listselect--item active">
+                    <span class="num">03</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-notes.png', 'user_data') }}" alt="購入者情報登録">
+                    </span>
+                    <span class="txt">{{ '購入者'|trans }}<br>{{ '情報登録'|trans }}</span></li>
+                <li class="listselect--item">
+                    <span class="num">04</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-choice.png', 'user_data') }}" alt="受け取り方法選択">
+                    </span>
+                    <span class="txt">{{ '受け取り'|trans }}<br>{{ '方法選択'|trans }}</span></li>
+                <li class="listselect--item">
+                    <span class="num">05</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-credit.png', 'user_data') }}" alt="お支払方法選択">
+                    </span>
+                    <span class="txt">{{ 'お支払方法'|trans }}<br>{{ '選択'|trans }}</span></li>
+                <li class="listselect--item">
+                    <span class="num">06</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="お支払方法選択">
+                    </span>
+                    <span class="txt">{{ '注文確認'|trans }}</span></li>
+            </ul>
+            <div class="buyerinfo">
+                <h3 class="ttlbgpink">{{ '初めてご利用の方'|trans }}</h3>
+                <h2 class="ttl clblue">{{ '購⼊者情報⼊⼒開始'|trans }}</h2>
+            </div>
+                <ul class="listselect listselect--buyer">
+                    <li class="listselect--item active">
+                        <span class="num">01</span>
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon-bag.png', 'user_data') }}" alt="購⼊者情報⼊⼒開始">
+                        </span>
+                        <span class="txt">{{ '購⼊者情報'|trans }}<br>{{ '⼊⼒開始'|trans }}</span>
+                    </li>
+                    <li class="listselect--item">
+                        <span class="num">02</span>
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon-tha.png', 'user_data') }}" alt="購⼊者情報の⼊⼒">
+                        </span>
+                        <span class="txt">{{ '購⼊者情報'|trans }}<br>{{ 'の⼊⼒'|trans }}</span>
+                    </li>
+                    <li class="listselect--item">
+                        <span class="num">03</span>
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="購⼊者情報の確認">
+                        </span>
+                        <span class="txt">{{ '購⼊者情報'|trans }}<br>{{ 'の確認'|trans }}</span>
+                    </li>
+                    <li class="listselect--item">
+                        <span class="num">04</span>
+                        <span class="icon">
+                            <img src="{{ asset('assets/img/icon-check.png', 'user_data') }}" alt="⼊⼒完了">
+                        </span>
+                        <span class="txt">{{ '⼊⼒完了'|trans }}</span></li>
+                </ul>
+            <p class="text_center">{{ '新規に情報登録をしていていただくと、送料無料となります。'|trans }}</p>
+            <div class="regist--btn">
+                <a class="buttonsubmit bgblue btnarr" href="{{ url('shopping_regist_input')}}">{{ '⼊⼒する'|trans }}</a>
+            </div>
+            <div class="userlogin" id="userlogin">
+                <h3 class="ttlbgpink">{{ '既にご利⽤されたことのある⽅'|trans }}</h3>
+                <div class="userlogin--form">
+                    <form action="{{ url('mypage_login') }}" method="post" name="shopping_login" id="shopping_login">
+                        <input type="hidden" name="_target_path" value="shopping" />
+                        <input type="hidden" name="_failure_path" value="shopping_login" />
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                        <div class="userlogin--table">
+                            {% if error %}
+                                <p class="ec-errorMessage">{{ error.messageKey|trans(error.messageData, 'validators')|nl2br }}</p>
+                            {% endif %}
+                            <div class="border">
+                                <table class="styleblue">
+                                    <tr> 
+                                        <th><span class="required"></span>{{ 'メールアドレス'|trans }}</th>
+                                        <td> 
+                                            {{ form_widget(form.login_email, { attr: { 'style' : 'ime-mode: disabled;', placeholder: 'メールアドレス'|trans, 'autofocus': true }}) }}
+                                        </td>
+                                    </tr>
+                                    <tr> 
+                                        <th><span class="required"> </span>{{ 'パスワード'|trans }}</th>
+                                        <td>
+                                            {{ form_widget(form.login_pass, { attr: { placeholder: 'パスワード'|trans }}) }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="link"><a href="{{ url('forgot') }}">{{ 'メールアドレス・パスワードを忘れた場合'|trans }}</a></p>
+                            <!-- <p class="link"><a href="{{ url('mypage_change') }}">{{ '個⼈情報を変更したい場合'|trans }}</a></p> -->
+                        </div>
+                        <div class="userlogin--submit">
+                            <div class="regist--btn">
+                                <!-- <a class="buttonsubmit bgblue" href="./receive_delivery">海外Wi-Fiレンタルショップ<br>のお申込みを続ける</a> -->
+                                <button type="submit" class="buttonsubmit bgblue">{{ '海外Wi-Fiレンタルショップ'|trans }}<br>{{ 'のお申込みを続ける'|trans}}</button>
+                            </div>
+                            <label for="ck1">
+                                <input class="mr05 save_login" type="checkbox" id="ck1" name="agreement" value="1">{{ '購⼊者情報登録を保持'|trans }}
+                            </label>
+                            <p class="link"><a href="{{ url('help_privacy' )}}">{{ '個⼈情報保護⽅針'|trans }}</a>{{ 'に同意して接続'|trans }}<br>{{ '（2022年0⽉00⽇改定）'|trans }}</p>
+                            <p class="note">{{ '※ご本⼈様以外がこの端末を使う場合は必ずチェックを外し、'|trans }}<br>{{ 'お買い物完了後はトップページより接続解除してください。'|trans }}</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="simulationft"> 
+        <div class="simulation simulation--footer">
+            <div class="container">
+                <h3 class="simulation--tit">
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/money.svg', 'user_data') }}" alt="シミュレーション結果">
+                    </span>
+                    <span>{{ 'お申込内容'|trans }}</span>
+                </h3>
+                    <div class="simulation--list">
+                        {% if(Cart is empty) %}
+                        <span>{{ 'お申込内容がありません。'|trans }}</span>
+                        {% else %}
+                        <div class="travellist">
+                            {% set TotalRentalPrice = 0 %}
+                            {% set SecurityFee = 0 %}
+							{% set Option1Fee = 0 %}
+							{% set Option2Fee = 0 %}
+                            {% set Days = 0 %}
+                            {% for CartItemIndex, CartItem in Cart.CartItems %}
+                              {% set ProductClass = CartItem.ProductClass %}
+                              {% set Product = ProductClass.Product %}
+                              {% set Contents = Product.Name|split('_') %}
+                                {% if ((Product.Id == 3) or (Product.Id == 4) or (Product.Id == 5)) %}
+                                    {% set SecurityFee = ProductClass.price02_inc_tax %}
+                                    {% set Days = CartItem.Quantity %}
+                                {% endif %}
+								{% if (Product.Id == 6) %}
+                                    {% set Option1Fee = ProductClass.price02_inc_tax %}
+                                {% endif %}
+								{% if (Product.Id == 7) %}
+                                    {% set Option2Fee = ProductClass.price02_inc_tax %}
+                                {% endif %}
+                              {% if (Product.Id > 7) %}
+                                {% set ProductNum = ProductNum + 1 %}
+                                {% set TotalRentalPrice = TotalRentalPrice + ProductClass.Price02 - ProductClass.Price01 %}
+                                <dl class="dflex list_item">
+                                    <dt>{{ '渡航国'|trans }}
+                                        {% if (CartItemIndex == 0) %}①
+                                          {% elseif (CartItemIndex == 1) %}②
+                                          {% elseif (CartItemIndex == 2) %}③
+                                          {% elseif (CartItemIndex == 3) %}④
+                                          {% elseif (CartItemIndex == 4) %}⑤
+                                        {% endif %}</dt>
+                                    <dd>{{ '期間: '|trans }}20{{ Contents[1] }}～{{ Contents[2][3:5] }}<br>{{ '国名: '|trans }}{{ Contents[0] }}</dd>
+                                </dl>
+                              {% endif %}
+                            {% endfor %}
+                            <input type="hidden" id="product_num" name="" value="{{ProductNum}}">
+                        </div>
+                        <div class="simulation--sumary">
+                            <div class="totalfee">
+                                <dl class="dflex">
+                                    <dt>{{ '合計金額'|trans }}</dt>
+                                    <!-- <dd>{{ (Cart.TotalPrice - (Cart.TotalPrice / 1.1 - SecurityFee * Days - Option1Fee * Days - Option2Fee - TotalRentalPrice) * 0.1)|number_format }}{{ '円'|trans }}<small>{{ '（税込）'|trans }}</small></dd> -->
+									<dd>{{ Cart.TotalPrice|number_format }}{{ '円'|trans }}<small>{{ '（税込）'|trans }}</small></dd>
+                                </dl>
+                            </div>
+                            <div class="rentalfee">
+                                <dl class="dflex">
+                                    <dt>{{ 'レンタル料（220円/日）'|trans }}</dt>
+                                    <dd class="price">{{ (1.1 * TotalRentalPrice)|number_format }}{{ '円'|trans }}</dd>
+                                </dl>
+                                <dl class="dflex">
+                                    <dt>{{ '安⼼補償料（'|trans }}{{ SecurityFee|number_format }}{{ '円/⽇）'|trans }}</dt>
+                                    <dd class="price">{{ (SecurityFee * Days)|number_format }}{{ '円'|trans }}</dd>
+                                </dl>
+                                <dl class="dflex">
+                                    <dt>{{ 'オプション料（110円/⽇）'|trans }}</dt>
+                                    <dd class="price">{{ (Option1Fee * Days)|number_format }}{{ '円'|trans }}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                        {% endif %}
+                    <div class="mypage--btn simulation--btn">
+                        <a class="buttonsubmit bgpink btnarr" href="">{{ '送信する'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+			window.scrollTo(0, 0);
+            // $('.list_item').css('flex', '0 0 (100/{{ ProductNum }})%');
+            var product_num = $('#product_num').val();
+            if ( product_num > 5) {
+                $('.list_item').css('flex', '0 0 17%');
+            } else if ( product_num == 5 ) {
+                $('.list_item').css('flex', '0 0 20%');
+            } else if ( product_num == 4 ) {
+                $('.list_item').css('flex', '0 0 25%');
+            } else if ( product_num == 3 ) {
+                $('.list_item').css('flex', '0 0 34%');
+            } else if ( product_num == 2 ) {
+                $('.list_item').css('flex', '0 0 50%');
+            } else {
+                $('.list_item').css('flex', '0 0 100%');
+            }
+        });
+    </script>
+{% endblock %}

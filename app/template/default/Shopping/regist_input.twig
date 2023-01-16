@@ -1,0 +1,283 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'secondpage page__regist' %}
+{% set baner_title = 'WiFiレンタルのお申込み' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block stylesheet %}
+    <script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+    <script src="{{ asset('assets/js/jquery.formatphonenumber.js', 'user_data') }}"></script>
+{% endblock %} 
+
+{% block main %}
+    <section class="regist regist--input">
+        <div class="container">
+            <h2 class="ttl clblue">{{ '購⼊者情報の⼊⼒'|trans }}</h2>
+            <ul class="listselect listselect--buyer">
+                <li class="listselect--item">
+                    <span class="num">01</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-bag.png', 'user_data') }}" alt="購⼊者情報⼊⼒開始">
+                    </span>
+                    <span class="txt">購⼊者情報<br>⼊⼒開始</span>
+                </li>
+                <li class="listselect--item active">
+                    <span class="num">02</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-tha.png', 'user_data') }}" alt="購⼊者情報の⼊⼒">
+                    </span>
+                    <span class="txt">購⼊者情報<br>の⼊⼒</span>
+                </li>
+                <li class="listselect--item">
+                    <span class="num">03</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="購⼊者情報の確認">
+                    </span>
+                    <span class="txt">購⼊者情報<br>の確認</span>
+                </li>
+                <li class="listselect--item">
+                    <span class="num">04</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-check.png', 'user_data') }}" alt="⼊⼒完了">
+                    </span>
+                    <span class="txt">⼊⼒完了</span>
+                </li>
+            </ul>
+            <form class="regist--form h-adr" method="post" action="{{ url('shopping_regist_confirm')}}" novalidate>
+                <span class="p-country-name" style="display:none;">Japan</span>
+                    {{ form_widget(form._token) }}
+                <div class="border">
+                    <table>
+                        <tr> 
+                            <th><span class="required"> </span>お名前</th>
+                            <td> 
+                                <ul class="listinput dflex">
+                                    <li>
+                                        <div class="ec-input{{ has_errors(form.name.name01) ? ' error'}}">
+                                            {{ form_widget(form.name.name01, { 'attr': { 'placeholder': '姓', 'maxlength': '20' }}) }}
+                                            {{ form_errors(form.name.name01) }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ec-input{{ has_errors(form.name.name02) ? ' error'}}">
+                                            {{ form_widget(form.name.name02, { 'attr': { 'placeholder': '名', 'maxlength': '20' }}) }}
+                                            {{ form_errors(form.name.name02) }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ec-input{{ has_errors(form.kana.kana01) ? ' error' }}">
+                                            {{ form_widget(form.kana.kana01, {'attr': { 'placeholder': 'セイ', 'maxlength': '20' }}) }}
+                                            {{ form_errors(form.kana.kana01) }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ec-input{{ has_errors(form.kana.kana02) ? ' error' }}">
+                                            {{ form_widget(form.kana.kana02, {'attr': { 'placeholder': 'メイ', 'maxlength': '20' }}) }}
+                                            {{ form_errors(form.kana.kana02) }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th>会社名</th>
+                            <td> 
+                                <div class="ec-Input{{ has_errors(form.company_name) ? ' error' }}">
+                                    {{ form_widget(form.company_name, {'attr': { 'placeholder': '○○株式会社' }}) }}
+                                    {{ form_errors(form.company_name) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th> <span class="required"> </span>住所</th>
+                            <td> 
+                                <dl class="dflex address">〒
+                                    <div class="ec-zipInput{{ has_errors(form.postal_code) ? ' error' }}">
+                                        {{ form_widget(form.postal_code, {'attr': { 'maxlength': '8' }}) }}
+                                        {{ form_errors(form.postal_code) }}
+                                    </div>
+                                    <span class="link jp_address">
+                                        <a class="overseas_area" href="javascript:void(0);" target="_blank">{{ '海外の⽅はこちら'|trans }}</a>
+                                    </span>
+                                    <span class="link overseas_address">
+                                        <a class="jp_area" href="javascript:void(0);" target="_blank">{{ '国内の⽅はこちら'|trans }}</a>
+                                    </span>
+                                </dl>
+                                <dl class="overseas_address dflex">
+                                    <dt>住所</dt>
+                                    <dd>
+                                        <div class="ec-input{{ has_errors(form.overseas_address) ? ' error' }}">
+                                            {{ form_widget(form.overseas_address,  { 'attr': { 'placeholder': '住所を入力してください。' }}) }}
+                                            {{ form_errors(form.overseas_address) }}
+                                        </div>
+                                    </dd>
+                                </dl>
+								<div class="dflex jp_address">
+									<span>郵便番号を入力してください。都道府県と市区町村が自動入力されます。</span>
+								</div>
+                                <!-- <div class="btnlocal">
+                                    <a href="https://www.post.japanpost.jp/zipcode/" target="_blank">
+                                        <span>{{ '郵便番号から⾃動⼊⼒'|trans }}</span>
+                                    </a>
+                                </div> -->
+                                <dl class="dflex jp_address"> 
+                                    <dt>都道府県</dt>
+                                    <dd> 
+                                        <div class="ec-select{{ has_errors(form.address.pref) ? ' error' }}">
+                                            {{ form_widget(form.address.pref) }}
+                                            {{ form_errors(form.address.pref) }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <dl class="dflex jp_address"> 
+                                    <dt>市区町村名・番地</dt>
+                                    <dd> 
+                                        <div class="ec-input{{ has_errors(form.address.addr01) ? ' error' }}">
+                                            {{ form_widget(form.address.addr01, { 'attr': { 'placeholder': '市区町村名・番地（例: 千代⽥区神⽥神保町1-3-5）', 'maxlength': '50' }}) }}
+                                            {{ form_errors(form.address.addr01) }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                                <dl class="dflex jp_address"> 
+                                    <dt>建物名</dt>
+                                    <dd> 
+                                        <div class="ec-input{{ has_errors(form.address.addr02) ? ' error' }}">
+                                            {{ form_widget(form.address.addr02,  { 'attr': { 'placeholder': '"建物名（例: 神保ビルディング4F）', 'maxlength': '50' }}) }}
+                                            {{ form_errors(form.address.addr02) }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><span class="required"> </span>電話番号</th>
+                            <td>
+                                <div class="ec-telInput{{ has_errors(form.phone_number) ? ' error' }}">
+                                    {{ form_widget(form.phone_number, {'attr': { 'maxlength': '13' }}) }}
+                                    {{ form_errors(form.phone_number) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> <span class="required"> </span>メールアドレス</th>
+                            <td>
+                                <div class="ec-input{{ has_errors(form.email.first) ? ' error' }}">
+                                    {{ form_widget(form.email.first, { 'attr': { 'placeholder': '例：ec-cube@example.com', 'maxlength': '60' }}) }}
+                                    {{ form_errors(form.email.first) }}
+                                </div>
+                                <div class="ec-input{{ has_errors(form.email.second) ? ' error' }}">
+                                    {{ form_widget(form.email.second, { 'attr': { 'placeholder': '確認のためもう一度入力してください' }}) }}
+                                    {{ form_errors(form.email.second) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th><span class="required"> </span>パスワード</th>
+                            <td>
+                                <ul class="listpass">
+                                    <li>
+                                        <div class="ec-input{{ has_errors(form.password.first) ? ' error' }}">
+                                            {{ form_widget(form.password.first, {
+                                                'attr': { 'maxlength': '60', 'placeholder': '半角英数記号%min%〜%max%文字'|trans({ '%min%': eccube_config.eccube_password_min_len, '%max%': eccube_config.eccube_password_max_len }) },
+                                                'type': 'password'
+                                            }) }}
+                                            {{ form_errors(form.password.first) }}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ec-input{{ has_errors(form.password.second) ? ' error' }}">
+                                            {{ form_widget(form.password.second, {
+                                                'attr': { 'placeholder': '確認のためにもう⼀度⼊⼒してください'|trans },
+                                                'type': 'password'
+                                            }) }}
+                                            {{ form_errors(form.password.second) }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th><span class="required"> </span>⽣年⽉⽇</th>
+                            <td> 
+                                <div class="listsel ec-birth{{ has_errors(form.birth) ? ' error' }}">
+                                    {{ form_widget(form.birth.year) }}<span>/</span>
+                                    {{ form_widget(form.birth.month) }}<span>/</span>
+                                    {{ form_widget(form.birth.day) }}
+                                    {{ form_errors(form.birth) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th><span class="required"> </span>性別</th>
+                            <td>
+                                <div class="listradio ec-radio{{ has_errors(form.sex) ? ' error' }}">
+                                    {{ form_widget(form.sex) }}
+                                    {{ form_errors(form.sex) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th>レンタル⽤途</th>
+                            <td> 
+                                <div class="listselrentalusage ec-select{{ has_errors(form.rental_usage_id) ? ' error' }}">
+                                    {{ form_widget(form.rental_usage_id) }}
+                                    {{ form_errors(form.rental_usage_id) }}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr> 
+                            <th><span class="required"> </span>メールマガジン送付について</th>
+                            <td class="sending">
+                                <div class="listradio ec-radio{{ has_errors(form.magazine_usage_id) ? ' error' }}">
+                                    {{ form_widget(form.magazine_usage_id) }}
+                                    {{ form_errors(form.magazine_usage_id) }}
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="regist--button regist--btn">                  
+					<div class="ec-checkbox{{ has_errors(form.user_policy_check) ? ' error' }}">
+						<label>
+							{{ form_widget(form.user_policy_check) }}
+							{{ '<a class="ec-link" href="%url%" target="_blank">利用規約に</a>同意してお進みください'|trans({ '%url%': url('help_agreement') })|raw }}
+						</label>
+						{{ form_errors(form.user_policy_check) }}
+					</div>
+                    <div class="regist--btn">
+                        <button class="buttonsubmit bgblue btnarr" type="submit" name="mode" value="confirm">{{ '同意して次へ進む'|trans }}</button>
+                    </div>
+                    <div class="regist--btn">
+                        <a class="buttonsubmit bgblack" href="./login">{{ '同意しない'|trans }}</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascript %}
+
+    <script type="text/javascript">
+        $('#entry_phone_number').formatPhoneNumber();
+        $('#entry_postal_code').formatPhoneNumber({format: '###-####'});
+        $(document).ready(function(){
+            $('.overseas_address').css('display', 'none');
+        });
+        $('.overseas_area').on('click', function(e) {
+            e.preventDefault();
+            $('.jp_address').css('display', 'none');
+            $('.overseas_address').css('display', 'flex');
+			$('#entry_postal_code').off('keyup keydown keypress');
+            $('#entry_phone_number').off('keyup keydown keypress');
+        });
+        $('.jp_area').on('click', function(e) {
+            e.preventDefault();
+            $('.jp_address').css('display', 'flex');
+            $('.overseas_address').css('display', 'none');
+			$('#entry_postal_code').formatPhoneNumber({format: '###-####'});
+            $('#entry_phone_number').formatPhoneNumber();
+        });
+    </script>
+    
+{% endblock javascript %}

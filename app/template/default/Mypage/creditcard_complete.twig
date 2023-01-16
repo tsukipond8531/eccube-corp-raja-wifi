@@ -1,0 +1,44 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'mypage secondpage page__mypage' %}
+{% set baner_title = 'クレジットカード情報追加・削除' %}
+
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% set mypageno = 'index' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="router">
+            <div class="container">
+                <h2 class="ttl clblue">クレジットカード情報追加</h2>
+                <div class="blockcontent">
+                    {% include 'Mypage/navi.twig' %}
+                    <div class="blockcontent--right regist regist--confirm mypageregist--confirm">
+                        <h3 class="ttl text_center">変更完了</h3>
+                        <p class="text_center">クレジットカード情報の追加が完了いたしました。</p>
+                        <div class="form--submit">
+                            <div class="regist--btn">
+                                <a class="buttonsubmit bgblue btnarr"
+                                   href="{{ url('mypage') }}">{{ 'マイページへ'|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}

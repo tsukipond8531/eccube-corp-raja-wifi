@@ -1,0 +1,73 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+<!-- HEADER -->
+<header class="header container">
+    <div class="header__top">
+    <div class="header__top--logo" id="header_logo"><img src="{{ asset('assets/img/logo.png', 'user_data') }}" alt=""></div>
+    <div class="header__top--menu">
+        <div class="icon icon--user">
+        <div class="icon__inside"><span class="icon--img"><img src="{{ asset('assets/img/icon-userblue.svg', 'user_data') }}" alt="mypage"></span></div>
+        </div>
+        <div class="icon icon--mypage"><a class="icon__inside" href="{{ url('mypage') }}"><span class="icon--txt">マイページ</span></a></div>
+        {# <div class="icon icon__hamburger js-hamburger">
+			<span class="icon--wifi show">
+                <img src="{{ asset('assets/img/common/wifi.png', 'user_data') }}" alt="wifi">
+            </span>
+            <span class="icon--wifi hide">
+                <img src="{{ asset('assets/img/common/close.png', 'user_data') }}" alt="wifi">
+            </span>
+			<span class="icon--txt">Menu</span>
+		</div> #}
+    </div>
+    </div>
+    <!-- /Header Top -->
+    <div class="header__nav">
+        <nav class="header__nav--inside mainMenuWrap">
+            <ul class="menu">
+    			{# <li class="menu--item"><a href="https://k-wifi.maruisora.com/introduction/">初めてのお客様へ</a></li>
+    			<li class="menu--item"><a href="https://k-wifi.maruisora.com/#">対象国と通信料金</a></li>
+    			<li class="menu--item"><a href="https://k-wifi.maruisora.com/delivery/">受取り返却について</a></li>
+    			<li class="menu--item"><a href="https://k-wifi.maruisora.com/faq/">よくあるご質問</a></li>
+    			<li class="menu--item"><a href="https://k-wifi.maruisora.com/#">法人のお客様</a></li>
+    			<li class="menu--item dissp"><a href="https://k-wifi.maruisora.com/news/">ニュース・お知らせ</a></li>
+    			<li class="menu--item dissp"><a href="https://k-wifi.maruisora.com/sample-page/">サンプルページ</a></li>
+    			<li class="menu--item btnCharge btnHeadnav js-hoverimg"><a href="{{ url('homepage') ~ '#chargesimulation' }}"><img src="{{ asset('assets/img/simulation-btn_off.png', 'user_data') }}" alt="simulation"></a></li>
+    			<li class="menu--item btnSignup btnHeadnav"><a href="{{ url('homepage') ~ '#chargesimulation' }}">お申込みは<br>こちら</a></li> #}
+    			{# <li class="menu--item btnMypage btnHeadnav"><a href="{{ url('mypage') }}">マイページ</a></li> #}
+            </ul>
+    		<div class="menuBtnwrap dissp">
+                <p class="menuBtn simulation anchor"><a href="#areaSimu"><img src="https://k-wifi.maruisora.com/wp-content/themes/kwtheme/assets/images/common/simulation-menu-sp-btn.png"></a></p>
+                <p class="menuBtn sign"><a href="javascript:void(0);"><img src="https://k-wifi.maruisora.com/wp-content/themes/kwtheme/assets/images/common/sign-menu-sp-btn.png"></a></p>
+            </div>
+            <p class="btnclose dissp"><a href="javascript:void(0);">閉じる</a></p>
+        </nav>
+    </div>
+    <div class="popupHeader" id="popupHeader">
+        <h2 class="title">トップページに戻ります。<br>本当によろしいですか？</h2>
+        <div class="btnWrap">
+            <p class="btn btnCancel"><a href="javascript:void(0);" data-fancybox-close class="hover">キャンセル</a></p>
+            <p class="btn btnSubmit"><a href="https://k-wifi.maruisora.com/" class="hover">はい</a></p>
+        </div>
+        {# <p class="close" data-fancybox-close>×</p> #}
+    {# </div> #}
+    <!-- /Global Nav -->
+</header>
+<!-- /END HEADER -->
+<script type="text/javascript">
+    $('#header_logo').on('click', function() {
+        Fancybox.show([{ src: "#popupHeader", type: "inline" }]);
+    });
+
+    $(document).on('click', '.popupHeader .btnSubmit a', function(){
+        Fancybox.close(true);
+        window.location.href = "https://k-wifi.maruisora.com/";
+    });
+</script>

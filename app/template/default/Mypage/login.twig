@@ -1,0 +1,68 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'mypage secondpage page__mypage' %}
+{% set baner_title = '既にご利⽤されたことのある⽅の認証' %}
+
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="login">
+            <div class="container">
+                <h2 class="ttl clblue">既にご利⽤されたことのある⽅の認証</h2>
+                <form name="login_mypage" id="login_mypage" method="post" action="{{ url('mypage_login') }}">
+                    {% if app.session.flashBag.has('eccube.login.target.path') %}
+                        {% for targetPath in app.session.flashBag.peek('eccube.login.target.path') %}
+                            <input type="hidden" name="_target_path" value="{{ targetPath }}" />
+                        {% endfor %}
+                    {% endif %}
+                    <div class="border">
+                        <table class="styleblue">
+                            <tr>
+                                <th><span class="required"></span>メールアドレス</th>
+                                <td>
+                                    {{ form_widget(form.login_email, {'attr': {'style' : 'ime-mode: disabled;', 'placeholder' : 'メールアドレス', 'autofocus': true}}) }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span class="required"></span>パスワード</th>
+                                <td>
+                                    {{ form_widget(form.login_pass,  {'attr': {'placeholder' : 'パスワード' }}) }}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="ec-login__input">
+                        {% for reset_complete in app.session.flashbag.get('password_reset_complete') %}
+                            <p>{{ reset_complete|trans }}</p>
+                        {% endfor %}
+                        {% if error %}
+                            <p class="ec-errorMessage">{{ error.messageKey|trans(error.messageData, 'validators')|nl2br }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="form--submit">
+                        <p class="link text_center">登録される場合は必ず<a href="{{ url('help_agreement') }}">利⽤規約</a>に同意の上、ご登録ください。</p>
+                        <p class="link text_center"><a href="{{ url('forgot') }}">パスワードをお忘れの⽅はこちら</a></p>
+                        {# <p class="link text_center"><a href="{{ url('entry') }}">{{ '新規会員登録'|trans }}</a></p> #}
+                        <div class="regist--btn"><button type="submit" class="buttonsubmit bgblue btnarr">{{ '送信する'|trans }}</button></div>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                </form>
+            </div>
+        </section>
+    </section>
+{% endblock %}

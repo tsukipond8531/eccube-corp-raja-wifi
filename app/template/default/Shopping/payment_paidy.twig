@@ -1,0 +1,166 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'secondpage payment page__payment' %}
+{% set baner_title = 'WiFiレンタルのお申込み' %}
+{% block main %}
+	<section class="main__body content__payment payment">
+		<div class="container">
+	        <h2 class="ttl clblue">お⽀払⽅法</h2>
+	        <ul class="listselect">
+	            <li class="listselect--item">
+	            	<span class="num">01</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-calendar.png', 'user_data') }}" alt="渡航日時・渡航先選択">
+	            	</span>
+	            	<span class="txt">渡航日時・<br>渡航先選択</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">02</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-plug.png', 'user_data') }}" alt="オプション選択">
+	            	</span>
+	            	<span class="txt">オプション<br>選択</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">03</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-notes.png', 'user_data') }}" alt="購入者情報登録">
+	            	</span>
+	            	<span class="txt">購入者<br>情報登録</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">04</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-choice.png', 'user_data') }}" alt="受け取り方法選択">
+	            	</span>
+	            	<span class="txt">受け取り<br>方法選択</span>
+	            </li>
+	            <li class="listselect--item active">
+	            	<span class="num">05</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-credit.png', 'user_data') }}" alt="お支払方法選択">
+	            	</span>
+	            	<span class="txt">お支払方法<br>選択</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">06</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="お支払方法選択">
+	            	</span>
+	            	<span class="txt">注文確認</span>
+	            </li>
+	        </ul>
+	        <div class="payment--method payment--paidy">
+	            <h3 class="ttlbgpink">お⽀払⽅法を選択</h3>
+	            <div class="payment--list dflex">
+		            <div class="payment--item"> 
+		                <h4>クレジットカード払い</h4>
+		                <div class="payment--box">
+		                	<a href="../shopping/payment_creditcard"></a>
+		                  	<input id="method1" type="radio" name="radio-group">
+		                  	<label class="dflex" for="method1">
+		                    	<div class="payment--txt">
+		                    		<span>クレジットカード</span>
+		                    	</div>
+		                    	<div class="payment--img">
+		                    		<img src="{{ asset('assets/img/icon-credit2.png', 'user_data') }}" alt="">
+		                    	</div>
+		                  	</label>
+		                  	<p>海外作成カード、VISAデビット、JCBデビット、auWALLET、その他プリペイド式クレジットカードはご利用いただくことはできません。</p>
+		                </div>
+		            </div>
+		            <div class="payment--item"> 
+		                <h4>ペイディ</h4>
+		                <div class="payment--box">
+		                	<a href="../shopping/payment_paidy"></a>
+		                  	<input id="method2" type="radio" name="radio-group">
+		                  	<label class="dflex" for="method2">
+		                    	<div class="payment--txt">
+		                    		<span>ペイディ</span>
+		                    	</div>
+		                    	<div class="payment--img">
+		                    		<img src="{{ asset('assets/img/logo-paidy.png', 'user_data') }}" alt="">
+		                    	</div>
+		                  	</label>
+		                  	<p>メールアドレスと携帯電話だけでお買い物ができます。<br>お支払いは翌月でOK。翌月10日までに、コンビニ払い、銀行口座、口座振り込みでお支払いください。</p>
+		                </div>
+		            </div>
+	            </div>
+	        </div>
+	        <div class="paydyabout">
+	            <h3 class="ttlbgpink">ペイディについて</h3>
+	            <div class="paydyabout--box">
+	              	<div class="paydyabout--img">
+	              		<img src="{{ asset('assets/img/visawhite.png', 'user_data') }}" alt="">
+	              	</div>
+	              	<p class="text_center">”お申し込みを確定する”をクリックした後、安全に決済するために、後払い（ペイディ）にリダイレクトされます。</p>
+	            </div>
+	        </div>
+        </div>
+        <section class="simulationft"> 
+	        <div class="simulation simulation--footer">
+	            <div class="container">
+	              	<h3 class="simulation--tit">
+	              		<span class="icon">
+	              			<img src="{{ asset('assets/img/money.svg', 'user_data') }}" alt="シミュレーション結果">
+	              		</span>
+	              		<span>{{ 'お申込内容'|trans }}</span>
+	              	</h3>
+		            <div class="simulation--list">
+		            	{% if(cartItem|length == 0) %}
+	                    <span>{{ 'お申込内容がありません。'|trans }}</span>
+	                    {% else %}
+		                <div class="travellist">
+		                  	<dl class="dflex">
+		                    	<dt>{{ '渡航先①'|trans }}</dt>
+		                    	<dd>{{ '期間: '|trans }}{% if (cartItem['option_no'] == 1) %}20{{ cartItem['rent_from'] }}～{{ cartItem['rent_to'] }}{% endif %}<br>{{ '国名: '|trans }}{% if (cartItem['option_no'] == 1) %}{{ cartItem['country_name_jp'] }}{% endif %}
+		                    		<span class="arrdow">
+		                    			<img src="{{ asset('assets/img/arr-down.svg', 'user_data') }}" alt="arrow">
+		                    		</span>
+		                    	</dd>
+		                  	</dl>
+		                  	<dl class="dflex">
+		                    	<dt>{{ '渡航先'|trans }}
+                                {% if (cartItem['option_no'] == 2) %}
+                                {{ '②'|trans }}
+                                {% elseif (cartItem['option_no'] == 3) %}
+                                {{ '③'|trans }}
+                                {% elseif (cartItem['option_no'] == 4) %}
+                                {{ '④'|trans }}
+                                {% elseif (cartItem['option_no'] == 5) %}
+                                {{ '⑤'|trans }}
+                                {% endif %}</dt>
+		                    	<dd>{{ '期間: '|trans }}{% if (cartItem['option_no'] != 1) %}20{{ cartItem['rent_from'] }}～{{ cartItem['rent_to'] }}{% endif %}<br>{{ '国名: '|trans }}{% if (cartItem['option_no'] != 1) %}{{ cartItem['country_name_jp'] }}{% endif %}</dd>
+		                  	</dl>
+		                </div>
+		                <div class="simulation--sumary">
+		                  	<div class="totalfee">
+		                    	<dl class="dflex">
+		                      		<dt>{{ '合計金額'|trans }}</dt>
+		                      		<dd>{{ cartItem['des_price'] + cartItem['daily_price'] + cartItem['option_price'] + cartItem['product_1_price'] + cartItem['product_2_price'] }}{{ '円'|trans }}<small>{{ '（税込）'|trans }}</small></dd>
+		                    	</dl>
+		                  	</div>
+		                  	<div class="rentalfee">
+		                    	<dl class="dflex">
+		                      		<dt>{{ 'レンタル料（220円/日）'|trans }}</dt>
+		                      		<dd class="price">{{ cartItem['daily_price'] }}{{ '円'|trans }}</dd>
+		                    	</dl>
+		                    	<dl class="dflex">
+		                      		<dt>{{ '安⼼保証料（'|trans }}{{ cartItem['option_price'] / (cartItem['daily_price'] / 220) }}{{ '円/⽇）'|trans }}</dt>
+		                      		<dd class="price">{{ cartItem['option_price'] }}{{ '円'|trans }}</dd>
+		                    	</dl>
+		                    	<dl class="dflex">
+		                      		<dt>{{ 'オプション品料（110円/⽇）'|trans }}</dt>
+		                      		<dd class="price">{{ cartItem['product_1_price'] }}{{ '円'|trans }}</dd>
+		                    	</dl>
+		                  	</div>
+		                </div>
+		                {% endif %}
+		                <div class="mypage--btn simulation--btn">
+		                	<a class="buttonsubmit bgpink btnarr" href="{{ url('shopping_confirm') }}">送信する</a>
+		                </div>
+		            </div>
+	            </div>
+	          </div>
+        </section>
+	</section>
+{% endblock %}

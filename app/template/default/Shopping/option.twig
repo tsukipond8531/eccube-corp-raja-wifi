@@ -1,0 +1,491 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'secondpage optionselection page__option' %}
+{% set baner_title = 'WiFiレンタルのお申込み' %}
+{% set total_rental = 0 %}
+{% set total_price = 0 %}
+
+{% block stylesheet %}
+	<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+
+{% block main %}
+{# <form class="" id="form" method="post" action="{{ url('shopping_option') }}"> #}
+	<section class="main__body content__option" style="position: relative;">
+		<section class="optionselection">
+      <div class="container">
+        <h2 class="ttl clblue">{{ 'オプション選択'|trans }}</h2>
+        <ul class="listselect">
+            <li class="listselect--item">
+            	<span class="num">01</span>
+            	<span class="icon">
+            		<img src="{{ asset('assets/img/icon-calendar.png', 'user_data') }}" alt="渡航日時・渡航先選択">
+            	</span>
+            	<span class="txt">{{ '渡航日時・'|trans }}<br>{{ '渡航国選択'|trans }}</span>
+            </li>
+            <li class="listselect--item active">
+            	<span class="num">02</span>
+            	<span class="icon">
+            		<img src="{{ asset('assets/img/icon-plug.png', 'user_data') }}" alt="オプション選択">
+            	</span>
+            	<span class="txt">{{ 'オプション'|trans }}<br>{{ '選択'|trans }}</span>
+            </li>
+            <li class="listselect--item">
+            	<span class="num">03</span>
+            	<span class="icon">
+            		<img src="{{ asset('assets/img/icon-notes.png', 'user_data') }}" alt="購入者情報登録">
+            	</span>
+            	<span class="txt">{{ '購入者'|trans }}<br>{{ '情報登録'|trans }}</span>
+            </li>
+            <li class="listselect--item">
+            	<span class="num">04</span>
+            	<span class="icon">
+            		<img src="{{ asset('assets/img/icon-choice.png', 'user_data') }}" alt="受け取り方法選択">
+            	</span>
+            	<span class="txt">{{ '受け取り'|trans }}<br>{{ '方法選択'|trans }}</span>
+            </li>
+            <li class="listselect--item">
+            	<span class="num">05</span>
+            	<span class="icon">
+            		<img src="{{ asset('assets/img/icon-credit.png', 'user_data') }}" alt="お支払方法選択">
+            	</span>
+            	<span class="txt">{{ 'お支払方法'|trans }}<br>{{ '選択'|trans }}</span>
+            </li>
+            <li class="listselect--item">
+            	<span class="num">06</span>
+            	<span class="icon">
+            		<img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="お支払方法選択">
+            	</span>
+            	<span class="txt">{{ '注文確認'|trans }}</span>
+            </li>
+        </ul>
+      </div>
+  	</section>
+    <section class="securitychoice" id="securitychoice_sec"> 
+        <div class="container">
+	        <h2 class="ttl ttlline">
+	        	<span>{{ '安心補償選択'|trans }}</span>
+	        </h2>
+	        <div class="securitychoice--list selectgroup">
+	            <div class="securitychoice--item boxselect">
+		            <div class="boxselect--input">
+		            	<input type="radio" id="optionselection1" name="radio-group" value="1" checked>
+									<label for="optionselection1">{{ '安心補償フル'|trans }}
+										<span class="priceSp">{{ '330円/1日（税込）'|trans }}</span>
+									</label>
+		            </div>
+		            <div class="boxselect--inside">
+		                <div class="securitychoice--img">
+		                	<img src="{{ asset('assets/img/security-choice01.png', 'user_data') }}" alt="安心補償フル">
+		                </div>
+		                <div class="securitychoice--price">
+		                  	<p class="price">{{ '330円/1日（税込）'|trans }}</p>
+		                </div>
+		                <div class="securitychoice--txt boxselect--txt">
+		                  	<p class="txt_center">{{ '全てのトラブルに対応'|trans }}<br>{{ 'すべて無償対応！'|trans }}</p>
+		                  	<p class="font_14">【端末】<br>すべて100％補償（紛失・盗難・破損・水没）<br>【コンセントプラグ】※オプション<br>すべて100％補償（紛失・盗難・破損・水没）</p>
+		                </div>
+		            </div>
+	            </div>
+	            <div class="securitychoice--item boxselect">
+		            <div class="boxselect--input">
+		            	<input type="radio" id="optionselection2" name="radio-group" value="2">
+									<label for="optionselection2">{{ '安心補償ライト'|trans }}
+										<span class="priceSp">{{ '165円/1日（税込）'|trans }}</span>
+									</label>
+		            </div>
+		            <div class="boxselect--inside">
+		                <div class="securitychoice--img">
+		                	<img src="{{ asset('assets/img/security-choice02.png', 'user_data') }}" alt="安心補償ライト">
+		                </div>
+		                <div class="securitychoice--price">
+		                  	<p class="price">{{ '165円/1日（税込）'|trans }}</p>
+		                </div>
+		                <div class="securitychoice--txt boxselect--txt">
+		                  	<p class="txt_center">{{ '破損/故障/水漏れは100%補償'|trans }}</p><br>
+		                  	<p class="font_14">【端末】<br>紛失／盗難など：11,000円のご負担<br>【コンセントプラグ】※オプション<br>紛失／盗難：1,100円のご負担</p>
+		                </div>
+		            </div>
+	            </div>
+	            <div class="securitychoice--item boxselect">
+		            <div class="boxselect--input">
+		            	<input type="radio" id="optionselection3" name="radio-group" value="3">
+									<label for="optionselection3">{{ '未加入'|trans }}
+										<span class="priceSp">{{ '0円（税込）'|trans }}</span>
+									</label>
+		            </div>
+		            <div class="boxselect--inside">
+		                <div class="securitychoice--img">
+		                	<img src="{{ asset('assets/img/security-choice03.png', 'user_data') }}" alt="未加入">
+		                </div>
+		                <div class="securitychoice--price">
+		                  	<p class="price">{{ '0円（税込）'|trans }}</p>
+		                </div>
+		                <div class="securitychoice--txt boxselect--txt">
+		                  	<p class="txt_center">{{ '補償なし'|trans }}</p><br>
+		                  	<p class="font_14">【端末】<br>端末損害金：22,000円のご負担<br>【コンセントプラグ】※オプション<br>紛失／盗難／破損：2,200円のご負担</p>
+		                </div>
+		            </div>
+	            </div>
+	        </div>
+        </div>
+    </section>
+    <section class="productselection">
+        <h2 class="ttl ttlline">
+        	<span>{{ 'オプション選択'|trans }}</span>
+        </h2>
+        <div class="container">
+	        <div class="productselection--list selectgroup">
+	            <div class="productselection--item boxselect">
+		            <div class="boxselect--input">
+		            	<input type="checkbox" id="productselection1" name="checkbox-group" checked>
+									<label for="productselection1">{{ 'マルチ変換プラグ'|trans }}</label>
+		            </div>
+		            <div class="boxselect--inside">
+		                <div class="productselection--img">
+		                	<img src="{{ asset('assets/img/optional-product01.png', 'user_data') }}" alt="マルチ変換プラグ">
+		                </div>
+		                <div class="productselection--price">
+		                  	<p class="price">{{ '110円/1日（税込）'|trans }}</p>
+		                </div>
+		            </div>
+	            </div>
+	            <div class="productselection--item boxselect">
+		            <div class="boxselect--input">
+		            	<input type="checkbox" id="productselection2" name="checkbox-group">
+									<label for="productselection2">{{ '事前受け取り(3～5日前)'|trans }}</label>
+		            </div>
+		            <div class="boxselect--inside">
+		                <div class="productselection--img">
+		                	<img src="{{ asset('assets/img/optional-product02.png', 'user_data') }}" alt="事前受け取り(3～5日前)">
+		                </div>
+		                <div class="productselection--price">
+		                  	<p class="price font_20">{{ '1箱 550円（税込）/同梱可能'|trans }}</p>
+		                </div>
+		                <div class="productselection--txt boxselect--txt">
+		                  	{# <p>{{ '同梱可能。'|trans }}</p> #}
+		                  	<p class="note txt_center">{{ '※2日前までの指定は無料'|trans }}</p>
+		                </div>
+		            </div>
+	            </div>
+	            <div class="productselection--item">
+		            <div class="simulation">
+		                <h3 class="simulation--tit">
+		                	<span class="icon">
+		                		<img src="{{ asset('assets/img/money.svg', 'user_data') }}" alt="シミュレーション結果">
+		                	</span>
+		                	<span>{{ 'お申込内容'|trans }}</span>
+		                </h3>
+		                <div class="simulation--list resultContent" style="padding: 16px 22px 10px">
+			                <div class="resultSimu">
+			                	<input type="hidden" id="cart_pre_id" name="cart_pre_id" value="{{ Cart.PreOrderId }}">
+			                	{% for CartItemIndex, CartItem in Cart.CartItems %}
+			                      {% set ProductClass = CartItem.ProductClass %}
+			                      {% set Product = ProductClass.Product %}
+			                      {% set Contents = Product.Name|split('_') %}
+			                      {% if (Product.Id > 7) %}
+			                      {% set total_rental = total_rental + (ProductClass.Price01 * 1.1)|round %}
+			                      {% set total_price = total_price + (ProductClass.Price02 * 1.1)|round %}
+				                    {% if CartItemIndex < 1 %}
+		                            <ul class="resultList resultCurrent" id="result_current" onclick="showList();">
+		                                <li ><p id="des_si_title_{{ CartItemIndex + 1 }}">{{ '渡航国'|trans }}
+		                                    {% if (CartItemIndex == 0) %}①
+		                                      {% elseif (CartItemIndex == 1) %}②
+		                                      {% elseif (CartItemIndex == 2) %}③
+		                                      {% elseif (CartItemIndex == 3) %}④
+		                                      {% elseif (CartItemIndex == 4) %}⑤
+		                                    {% endif %}
+		                                </p>
+		                                <div class="info">
+		                                  <p class="date" id="des_date_{{ CartItemIndex + 1 }}" >{{ '期間: '|trans }}<span>20{{ Contents[1] }}～{{ Contents[2][3:5] }}</span></p>
+		                                  <p class="area" id="des_area_{{ CartItemIndex + 1 }}">{{ '国名: '|trans }}<span>{{ Contents[0] }}</span></p>
+		                                </div>
+		                                </li>
+		                            </ul>
+		                            {% endif %}
+
+		                            {% if CartItemIndex < 1 %}
+		                            <ul class="resultList resultListSelect" id="result_list_select">
+		                            {% endif %}
+		                            	<li onclick="listClick(this);" {% if CartItemIndex == 0 %} class="selected" {% endif %}>
+		                                  <p id="des_si_title_{{ CartItemIndex + 1 }}" >{{ '渡航国'|trans }}
+		                                    {% if (CartItemIndex == 0) %}①
+		                                    {% elseif (CartItemIndex == 1) %}②
+		                                    {% elseif (CartItemIndex == 2) %}③
+		                                    {% elseif (CartItemIndex == 3) %}④
+		                                    {% elseif (CartItemIndex == 4) %}⑤
+		                                    {% endif %}
+		                                  </p>
+		                                  <div class="info">
+		                                    <p class="date" id="des_date_{{ CartItemIndex + 1 }}" >{{ '期間: '|trans }}<span>20{{ Contents[1] }}～{{ Contents[2][3:5] }}</span></p>
+		                                    <p class="area" id="des_area_{{ CartItemIndex + 1 }}">{{ '国名: '|trans }}<span>{{ Contents[0] }}</span></p>
+		                                  </div>
+		                                  <input type="hidden" id="des_price_{{ CartItemIndex + 1 }}" value="{{ ProductClass.Price01|number_format }}">
+				                              <input type="hidden" id="daily_price_{{ CartItemIndex + 1 }}" value="{{ (ProductClass.Price02 - ProductClass.Price01)|number_format }}">
+				                              <input type="hidden" id="days_{{ CartItemIndex + 1 }}" value="{{ (ProductClass.Price02 - ProductClass.Price01) / 200 }}">
+				                              <input type="hidden" id="total_price_{{ CartItemIndex + 1 }}" value="{{ ProductClass.Price02|number_format }}">
+		                                </li>
+		                            {% if (CartItemIndex + 1) == Cart.CartItems|length %}
+		                              </ul>
+		                            {% endif %}
+			                      {% endif %}
+			                    {% endfor %}
+			                </div>
+			                <div class="rentalfee">
+			                    <dl class="dflex">
+			                      	<dt>{{ '通信料'|trans }}</dt>
+			                      	<dd class="price" id="des_price">{{ total_rental|number_format }}円</dd>
+			                      	<input type="hidden" id="total_rental" name="" value="{{ total_rental }}">
+			                    </dl>
+			                    <dl class="dflex">
+			                      	<dt>{{ 'レンタル料（220円/日）'|trans }}</dt>
+			                      	<dd class="price" id="daily_price">{{ (total_price - total_rental)|number_format }}円</dd>
+			                      	<input type="hidden" id="subtotal_price" name="" value="{{ total_price }}">
+			                    </dl>
+			                    <dl class="dflex securityfee">
+				                		<dt class="security_title" >{{ '安心補償フル（'|trans }}{{ '330円/⽇）'|trans }}</dt>
+				                		<dd class="security_price">{{ (330 * (total_price - total_rental) / 220)|number_format }}{{ '円'|trans }}</dd>
+				                	</dl>
+			                	<dl class="dflex option1fee">
+			                		<dt>{{ 'オプション料（110円/⽇）'|trans }}</dt>
+			                		<dd class="option_1_price">{{ ((total_price - total_rental) / 2)|number_format }}{{ '円'|trans }}</dd>
+			                	</dl>
+			                	<dl class="dflex option2fee" style="display: none;">
+			                		<dt>{{ '事前受け取り（550円/1箱）'|trans }}</dt>
+			                		<dd class="option_2_price">{{ '550円'|trans }}</dd>
+			                	</dl>
+			                </div>
+			                <div class="totalfee" style="margin-bottom: 0px; padding-top:0px">
+			                    <dl class="dflex">
+			                      	<dt>{{ '合計金額'|trans }}</dt>
+			                      	<dd id="total_price">{{ (total_rental + 3 * (total_price - total_rental))|number_format }}{{ '円'|trans }}<small>{{ '（税込）'|trans }}</small></dd>
+			                    </dl>
+			                </div>
+			                <div class="btnsutmit">
+			                	<button id="submit" name="mode" value="complete">{{ 'この内容でお申し込み'|trans }}</button>
+			                	{# <a href="" id="submit">{{ 'この内容でお申し込み'|trans }}</a> #}
+			                </div>
+		                </div>
+		            </div>
+	            </div>
+	        </div>
+        </div>
+    </section>
+    <div class="loader"><div class="loaderIcon"></div></div>
+	</section>
+{# </form> #}
+
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript">
+	var option = '1';
+	var product_1 = '1';
+	var product_2 = '0';
+	var des_price = 0;
+	var total_price = 0;
+
+	function listClick(element) {
+      if($('.resultListSelect').css('display') == 'block') {
+        $('.resultListSelect').css('display','none');
+      } else {
+
+        $('.resultListSelect').css('display','block');
+      }
+
+      var index = element.children[0].id.substring(13);
+
+      $('.selected').removeClass('selected');
+
+      $('#result_current').html('<li>'+element.innerHTML+'</li>');
+      element.classList.add('selected');
+
+      var str_sub_title = '#daily_price_' + index;
+      $('#daily_price').html($(str_sub_title).val() + '円');
+      
+      str_sub_title = '#des_price_' + index;
+      $('#des_price').html($(str_sub_title).val() + '円');
+
+      // str_sub_title = '#days_' + index;
+      // if (option == '1') {
+      // 	$('.security_price').html(($(str_sub_title).val() * 300) + '円');
+      // } else if (option == '2') {
+      // 	$('.security_price').html(($(str_sub_title).val() * 150) + '円');
+      // } else {
+      // 	$('.security_price').html('0円');
+      // }
+      
+      // $('#option_1_price').html(($(str_sub_title).val() * 100) + '円');
+	
+	  // calculateTotalPrice();      
+    }
+
+    function showList() {
+      if($('.resultListSelect').css('display') == 'block') {
+        $('.resultListSelect').css('display','none');
+      } else {
+        $('.resultListSelect').css('display','block');
+      }
+    }
+
+    function calculateTotalPrice() {
+			var index = $('.selected').children()[0].id.substring(13);
+			var str_days = '#days_' + index;
+			// var days = $(str_days).val();
+			
+			// str_days = '#total_price_' + index;
+			var total_price = parseInt($('#subtotal_price').val());
+			var total_rental = parseInt($('#total_rental').val());
+			var days = (total_price - total_rental) / 220;
+			total_price = total_rental + (total_price - total_rental);
+
+			
+			if (product_1 == '1') {
+				total_price += (110 * days);
+				$('.option_1_price').html(numberWithCommas(days * 110) + '円');
+			}
+			if (option == '1') {
+				total_price += parseInt((330 * days));
+				$('.security_price').html(numberWithCommas(days * 330) + '円');
+			} else if (option == '2') {
+				total_price += parseInt((165 * days));
+				$('.security_price').html(numberWithCommas(days * 165) + '円');
+			} else {
+				$('.security_price').html(numberWithCommas(days * 0) + '円');
+			}
+			if (product_2 == '1') {
+				total_price += 550;
+			}
+			$('#total_price').html(numberWithCommas(total_price) + '円<small>（税込）</small>');
+		}
+
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	$(document).ready(function () {
+		$('html, body').animate({
+        scrollTop: $("#securitychoice_sec").offset().top - 100
+    }, 2000);
+		var $simuLoader = $('.loader');
+
+		des_price = {{ Cart.CartItems[0].ProductClass.Price01 }};
+	  total_price = {{ Cart.CartItems[0].ProductClass.Price02 }};
+		// $('.resultSimu').on('click', 'ul', function () {
+	 //        var index = Math.floor($("ul").index($(this)) / 2);
+	 //      });
+
+		// $('.resultSimu').each(function(){
+		// 	var $active, $content, $links = $(this).find('ul');
+		// 	$active = $($links.filter('li')[0] || $links[0]);
+		// 	$active.addClass('resultCurrent');
+		// 	$active.removeClass('resultListSelect');
+		// 	$(this).on('click', 'li', function(e){
+		// 		if (e.offsetX > (this.offsetWidth - 32)) {
+		// 	    	if($('.resultListSelect').css('display') == 'block') {
+		// 	    		$('.resultListSelect').css('display','none');
+		// 	    	} else {
+		// 	    		$('.resultListSelect').css('display','block');
+		// 	    	}
+		// 	    } else {
+		// 	    	$('.resultListSelect').css('display','none');
+		// 	    }
+		// 	});
+		// });
+
+		$('.selectgroup input[name=radio-group]').on('change', function() {
+			option = $('.selectgroup input[name=radio-group]:checked').val();
+			switch(option) {
+				case '1':
+					$('.security_title').html('安心補償フル（330円/⽇）');
+					$('.securityfee').css('display', 'flex');
+					calculateTotalPrice();
+					break;
+				case '2':
+					$('.security_title').html('安心補償ライト（165円/⽇）');
+					$('.securityfee').css('display', 'flex');
+					calculateTotalPrice();
+					break;
+				case '3':
+					$('.security_title').html('未加入（0円/⽇）');
+					$('.securityfee').css('display', 'none');
+					calculateTotalPrice();
+					break;
+				default:
+					break;
+			}
+		});
+
+		const product_1_check = document.getElementById('productselection1');
+
+		product_1_check.addEventListener('change', e => {
+		  	if(e.target.checked === true) {
+		  		product_1 = '1';
+		  		$('.totalfee').css('margin-bottom', '0px');
+		  		$('.totalfee').css('padding-top', '0px');
+		  		$('.resultContent').css('padding', '16px 22px 10px');
+		  		$('.option1fee').css('display', 'flex');
+		  		calculateTotalPrice();
+		  	}
+			if(e.target.checked === false) {
+				product_1 = '0';
+				$('.resultContent').css('padding', '16px 22px 43px');
+				$('.option1fee').css('display', 'none');
+				calculateTotalPrice();
+		  	}
+		});
+
+
+ 
+		const product_2_check = document.getElementById('productselection2');
+
+		product_2_check.addEventListener('change', e => {
+		  	if(e.target.checked === true) {
+		  		product_2 = '1';
+		  		$('.option2fee').css('display', 'flex');
+		  		calculateTotalPrice();
+		  	}
+			if(e.target.checked === false) {
+				product_2 = '0';
+				$('.option2fee').css('display', 'none');
+				calculateTotalPrice();
+		  	}
+		});
+
+		var pre_order_id = $('#cart_pre_id').val();
+
+		$('#submit').on('click', function (e) {
+			$(this).prop('disabled', true);
+			$simuLoader.stop().fadeIn(100);
+			$.ajax({
+		        url: '{{ url('add_option_product') }}',
+		        type: 'POST',
+		        dataType: 'json',
+		        data: {
+		           'security_option': option,
+		           'option_product_1': product_1,
+		           'option_product_2': product_2,
+		           'pre_order_id': pre_order_id,
+		        },
+		        success:function(data){
+		        		console.log(data);
+		            $simuLoader.stop().fadeOut(100);
+		        },
+		        error:function (err) {
+		        	$simuLoader.stop().fadeOut(100);
+		        	$('#submit').prop('disabled', false);
+		        },
+		        complete: function(data) {
+		        	console.log(data);
+		        	$simuLoader.stop().fadeOut(100);
+		        	$('#submit').prop('disabled', false)
+		        	window.location.href = "{{ url('shopping') }}";
+	          }
+		    });
+		})
+	});
+	
+</script>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'secondpage page__regist' %}
+{% set baner_title = 'WiFiレンタルのお申込み' %}
+
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__regist">
+        <section class="regist regist--confirm">
+            <div class="container">
+                <h2 class="ttl clblue">{{ '購⼊者情報の⼊⼒完了'|trans }}</h2>
+                <ul class="listselect listselect--buyer">
+                    <li class="listselect--item"><span class="num">01</span><span class="icon"><img src="{{ asset('assets/img/icon-bag.png', 'user_data') }}" alt="購⼊者情報⼊⼒開始"></span><span class="txt">購⼊者情報<br>⼊⼒開始</span></li>
+                    <li class="listselect--item"><span class="num">02</span><span class="icon"><img src="{{ asset('assets/img/icon-tha.png', 'user_data') }}" alt="購⼊者情報の⼊⼒"></span><span class="txt">購⼊者情報<br>の⼊⼒</span></li>
+                    <li class="listselect--item"><span class="num">03</span><span class="icon"><img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="購⼊者情報の確認"></span><span class="txt">購⼊者情報<br>の確認</span></li>
+                    <li class="listselect--item active"><span class="num">04</span><span class="icon"><img src="{{ asset('assets/img/icon-check.png', 'user_data') }}" alt="⼊⼒完了"></span><span class="txt">⼊⼒完了</span></li>
+                </ul>
+                <p class="ec-reportDescription">{{ '現在、仮会員の状態です。ただいま、ご入力いただいたメールアドレス宛に、ご本人様確認用のメールをお送りいたしました。
+メール本文内のURLをクリックすると、本会員登録が完了となります。
+'|trans|nl2br }}</p>
+                <div class="regist--button">
+                    <div class="regist--btn">
+                        <a class="buttonsubmit bgblue btnarr" href="{{ url('homepage') }}">{{ 'トップページへ'|trans }}</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}

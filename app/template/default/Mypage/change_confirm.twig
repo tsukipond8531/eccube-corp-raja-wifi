@@ -1,0 +1,162 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'mypage secondpage page__mypage' %}
+{% set baner_title = 'アカウント設定' %}
+
+{% extends 'default_frame.twig' %}
+
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block javascript %}
+    <script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock javascript %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="mypage">
+            <div class="container">
+                <h2 class="ttl clblue">アカウント変更確認</h2>
+                <div class="blockcontent">
+                    {% include 'Mypage/navi.twig' %}
+                    <div class="blockcontent--right regist regist--confirm mypageregist--confirm">
+                        <form method="post" action="{{ url('mypage_change') }}">
+                            {{ form_widget(form._token) }}
+                            <div class="border">
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <th>お名前</th>
+                                        <td>
+                                            <span>{{ form.name.name01.vars.data }} {{ form.name.name02.vars.data }}</span>
+                                            <span>{{ form.kana.kana01.vars.data }} {{ form.kana.kana02.vars.data }}</span>
+                                            {{ form_widget(form.name.name01, { type : 'hidden' }) }}
+                                            {{ form_widget(form.name.name02, { type : 'hidden' }) }}
+                                            {{ form_widget(form.kana.kana01, { type : 'hidden' }) }}
+                                            {{ form_widget(form.kana.kana02, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>会社名</th>
+                                        <td>
+                                            {{ form.company_name.vars.data }}
+                                            {{ form_widget(form.company_name, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>住所</th>
+                                        <td>
+                                            {{ '〒'|trans }}{{ form.postal_code.vars.data }}
+                                            {{ form_widget(form.postal_code, { type : 'hidden' }) }}
+                                            {# 都道府県・住所 #}
+                                            {% if form.overseas_address.vars.data != '' %}
+                                                {{ form.overseas_address.vars.data }}
+                                            {% else %}
+                                                {{ form.address.pref.vars.data }} {{ form.address.addr01.vars.data }} {{ form.address.addr02.vars.data }}
+                                            {% endif %}
+                                            
+                                            {{ form_widget(form.address.pref, { type : 'hidden' }) }}
+                                            {{ form_widget(form.address.addr01, { type : 'hidden' }) }}
+                                            {{ form_widget(form.address.addr02, { type : 'hidden' }) }}
+                                            {{ form_widget(form.overseas_address, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>電話番号 </th>
+                                        <td>{{ form.phone_number.vars.data }}
+                                            {{ form_widget(form.phone_number, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>メールアドレス</th>
+                                        <td>
+                                            {{ form.email.vars.data }}
+                                            {{ form_widget(form.email.first, { type : 'hidden' }) }}
+                                            {{ form_widget(form.email.second, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>パスワード</th>
+                                        <td>
+                                            ********
+                                            {{ form_widget(form.password.first, { type : 'hidden' }) }}
+                                            {{ form_widget(form.password.second, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>生年月日</th>
+                                        <td>
+                                            {{ form.birth.vars.data ? form.birth.vars.data|date_day() }}
+                                            {{ form_widget(form.birth.year, { type : 'hidden' }) }}
+                                            {{ form_widget(form.birth.month, { type : 'hidden' }) }}
+                                            {{ form_widget(form.birth.day, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>性別</th>
+                                        <td>
+                                            {{ form.sex.vars.data }}
+                                            {{ form_widget(form.sex, { type: 'hidden'}) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>レンタル⽤途</th>
+                                        <td>
+                                            {% if form.rental_usage_id.vars.data == 1 %}
+                                                <span>おひとり様両行</span>
+                                            {% elseif form.rental_usage_id.vars.data == 2 %}
+                                                <span>友だち・家族旅行</span>
+                                            {% elseif form.rental_usage_id.vars.data == 3 %}
+                                                <span>出張</span>
+                                            {% elseif form.rental_usage_id.vars.data == 4 %}
+                                                <span>駐在</span>
+                                            {% elseif form.rental_usage_id.vars.data == 5 %}
+                                                <span>その他</span>
+                                            {% endif %}
+                                            {{ form_widget(form.rental_usage_id, { type: 'hidden'}) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>メールマガジン送付について</th>
+                                        <td>
+                                            {% if form.magazine_usage_id.vars.data == 1 %}
+                                                <span>HTMLメールを希望</span>
+                                            {% elseif form.magazine_usage_id.vars.data == 2 %}
+                                                <span>テキストメールを希望</span>
+                                            {% elseif form.magazine_usage_id.vars.data == 3 %}
+                                                <span>希望しない</span>
+                                            {% else %}
+                                                <span>希望しない</span>
+                                            {% endif %}
+                                            {{ form_widget(form.magazine_usage_id, { type: 'hidden'}) }}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="regist--button">
+                                <div class="regist--btn">
+                                    <button class="buttonsubmit bgblue btnarr" type="submit" name="mode" value="complete">{{ '変更する'|trans }}</button>
+                                </div>
+                                <div class="regist--btn">
+                                    <button class="buttonsubmit bgblack" type="submit" name="mode" value="back">{{ '戻る'|trans }}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}

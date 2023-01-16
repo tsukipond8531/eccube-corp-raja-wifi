@@ -1,0 +1,80 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'secondpage page__mypage' %}
+{% set baner_title = 'パスワード再発行(再設定)' %}
+
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="forgot">
+            <div class="container">
+                <h2 class="ttl clblue">{{ 'パスワード再発行(再設定)'|trans }}</h2>
+                <form id="form1" method="post" novalidate>
+                    {{ form_widget(form._token) }}
+                    <div class="border">
+                        <table class="styleblue">
+                            <tr>
+                                <th><span class="required"></span>メールアドレス</th>
+                                <td>
+                                    <div class="ec-input{{ has_errors(form.login_email) ? ' error' }}">
+                                        {{ form_widget(form.login_email, {
+                                            'attr': { 'placeholder': 'メールアドレスをご⼊⼒ください'|trans },
+                                            'type': 'email',
+                                            'maxlength' : '150'
+                                        }) }}
+                                        {{ form_errors(form.login_email) }}
+                                        {% if error %}
+                                            <p class="ec-errorMessage">{{ error }}</p>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><span class="required"></span>パスワード</th>
+                                <td>
+                                    <div class="ec-input{{ has_errors(form.password.first) ? ' error' }}">
+                                        {{ form_widget(form.password.first, {
+                                            'attr': { 'placeholder': '半角英数記号%min%〜%max%文字'|trans({ '%min%': eccube_config.eccube_password_min_len, '%max%': eccube_config.eccube_password_max_len }) },
+                                            'type': 'password'
+                                        }) }}
+                                        {{ form_errors(form.password.first) }}
+                                    </div>
+                                    <div class="ec-input{{ has_errors(form.password.second) ? ' error' }}">
+                                        {{ form_widget(form.password.second, {
+                                            'attr': { 'placeholder': '確認のためもう一度入力してください'|trans },
+                                            'type': 'password'
+                                        }) }}
+                                        {{ form_errors(form.password.second) }}
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form--submit">
+                        <div class="regist--btn">
+                            <button type="submit" class="buttonsubmit bgblue btnarr">{{ '登録する'|trans }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}
+

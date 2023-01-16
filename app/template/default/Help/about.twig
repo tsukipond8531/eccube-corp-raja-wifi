@@ -1,0 +1,73 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'secondpage' %}
+{% set baner_title = '当サイトについて' %}
+
+{% extends 'default_frame.twig' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__commerce">
+      <section class="commerce">
+        <div class="container">
+          <h2 class="ttl clblue">{{ '当サイトについて'|trans }}</h2>
+          <table> 
+                {% if BaseInfo.shop_name|default is not empty %}
+                    <tr>
+                        <th>{{ '店名'|trans }}</th>
+                        <td>{{ BaseInfo.shop_name }}</td>
+                    </tr>
+                {% endif %}
+                {% if BaseInfo.company_name|default is not empty %}
+                    <tr>
+                        <th>{{ '会社名'|trans }}</th>
+                        <td>{{ BaseInfo.company_name }}</td>
+                    </tr>
+                {% endif %}
+                {% if BaseInfo.postal_code|default is not empty %}
+                    <tr>
+                        <th>{{ '住所'|trans }}</th>
+                        <td>
+                            {{ '〒'|trans }}{{ BaseInfo.postal_code }}<br />
+                            {{ BaseInfo.pref }}{{ BaseInfo.addr01 }}{{ BaseInfo.addr02 }}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if BaseInfo.phone_number|default is not empty %}
+                    <tr>
+                        <th>{{ '電話番号'|trans }}</th>
+                        <td>{{ BaseInfo.phone_number }}</td>
+                    </tr>
+                {% endif %}
+                {% if BaseInfo.business_hour|default is not empty %}
+                    <tr>
+                        <th>{{ '店舗営業時間'|trans }}</th>
+                        <td>{{ BaseInfo.business_hour }}</td>
+                    </tr>
+                {% endif %}
+                {% if BaseInfo.business_hour|default is not empty %}
+                    <tr>
+                        <th>{{ '取り扱い商品'|trans }}</th>
+                        <td>{{ BaseInfo.good_traded|nl2br }}</td>
+                    </tr>
+                {% endif %}
+                {% if BaseInfo.message|default is not empty %}
+                    <tr>
+                        <th>{{ 'メッセージ'|trans }}</th>
+                        <td>{{ BaseInfo.message|nl2br }}</td>
+                    </tr>
+                {% endif %}
+          </table>
+        </div>
+      </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}

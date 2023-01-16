@@ -1,0 +1,1297 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'homepage' %}
+
+{% block stylesheet %}
+
+ <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+ <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
+ <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+ <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+{% endblock %}
+
+
+{% block main %}
+<!-- MAIN BODY -->
+    <section class="main__body content__top">
+      <section class="mainmv">
+        <div class="container">
+          <div class="slick slick-slider">
+            <div class="slick--item"><img class="dispc" src="{{ asset('assets/img/slider1.jpg', 'user_data') }}" alt="海外WiFiレンタルショップ"><img class="dissp" src="{{ asset('assets/img/slider1_sp.jpg', 'user_data') }}" alt="海外WiFiレンタルショップ"></div>
+            <div class="slick--item"><img class="dispc" src="{{ asset('assets/img/slider2.jpg', 'user_data') }}" alt="海外WiFiレンタルショップ"><img class="dissp" src="{{ asset('assets/img/slider2_sp.jpg', 'user_data') }}" alt="海外WiFiレンタルショップ"></div>
+            <div class="slick--item"><img class="dispc" src="{{ asset('assets/img/slider3.jpg', 'user_data') }}" alt="海外WiFiレンタルショップ"><img class="dissp" src="{{ asset('assets/img/slider3_sp.jpg', 'user_data') }}" alt="海外WiFiレンタルショップ"></div>
+          </div>
+        </div>
+      </section>
+      <section class="sec01">
+        <div class="container">
+          <dl class="dflex">
+            <dt>NEWS</dt>
+            <dd><a href=""><span>2022/02/28</span> 年末年始の営業時間及びお申込み期限変更のお知らせ</a></dd>
+          </dl>
+          <p class="alinka"><a href="">他のお知らせを確認>> </a></p>
+        </div>
+      </section>
+      <section class="sec02">
+        <div class="container">
+          <div class="listbrn dflex slick2">
+            <div class="listbrn--item"><a href=""><img src="{{ asset('assets/img/common/brn01.png', 'user_data') }}" alt=""></a></div>
+            <div class="listbrn--item"><a href=""><img src="{{ asset('assets/img/common/brn02.png', 'user_data') }}" alt=""></a></div>
+            <div class="listbrn--item"><a href=""><img src="{{ asset('assets/img/common/brn03.png', 'user_data') }}" alt=""></a></div>
+          </div>
+          <h2 class="ttl clblue">渡航日時・渡航先選択</h2>
+          <ul class="listselect">
+            <li class="listselect--item active"><span class="num">01</span><span class="icon"><img src="{{ asset('assets/img/icon-calendar.png', 'user_data') }}" alt="渡航日時・渡航先選択"></span><span class="txt">渡航日時・<br>渡航先選択</span></li>
+            <li class="listselect--item"><span class="num">02</span><span class="icon"><img src="{{ asset('assets/img/icon-plug.png', 'user_data') }}" alt="オプション選択"></span><span class="txt">オプション<br>選択</span></li>
+            <li class="listselect--item"><span class="num">03</span><span class="icon"><img src="{{ asset('assets/img/icon-notes.png', 'user_data') }}" alt="購入者情報登録"></span><span class="txt">購入者<br>情報登録</span></li>
+            <li class="listselect--item"><span class="num">04</span><span class="icon"><img src="{{ asset('assets/img/icon-choice.png', 'user_data') }}" alt="受け取り方法選択"></span><span class="txt">受け取り<br>方法選択</span></li>
+            <li class="listselect--item"><span class="num">05</span><span class="icon"><img src="{{ asset('assets/img/icon-credit.png', 'user_data') }}" alt="お支払方法選択"></span><span class="txt">お支払方法<br>選択</span></li>
+            <li class="listselect--item"><span class="num">06</span><span class="icon"><img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="お支払方法選択"></span><span class="txt">注文確認</span></li>
+          </ul>
+          <div id="chargesimulation">
+            <h3 class="ttlbgpink">渡航日時・渡航先選択</h3>
+            <div class="text_center">
+              <h2 class="ttlCharge"><span class="clpink">簡単<strong>30</strong>秒！</span><span class="clblue">料金シミュレーション</span></h2>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="sec03">
+        <div class="container">
+          <div class="blockmap">
+            <div class="tabslist">
+              <ul class="dflex tabslist__list tab__list">
+                {% if Carts|length > 0 %}
+                  {% for CartIndex, Cart in Carts %}
+                    {% for CartItemIndex, CartItem in Cart.CartItems %}
+                      {% set ProductClass = CartItem.ProductClass %}
+                      {% set Product = ProductClass.Product %}
+                      {% set Contents = Product.Name|split('_') %}
+                      {% if (Product.Id > 7) %}
+                      <li class="tabslist__list--li tab__link">
+                        <a class="tab_title" href="#tab{{ CartItemIndex + 1 }}">
+                          <span>渡航先</span>
+                          {% if (CartItemIndex == 0) %}
+                          <span class="num">①</span>
+                          {% elseif (CartItemIndex == 1) %}
+                          <span class="num">②</span>
+                          {% elseif (CartItemIndex == 2) %}
+                          <span class="num">③</span>
+                          {% elseif (CartItemIndex == 3) %}
+                          <span class="num">④</span>
+                          {% elseif (CartItemIndex == 4) %}
+                          <span class="num">⑤</span>
+                          {% endif %}
+                        </a>
+                        <span class="delete" onClick="deleteTab(this);"><img src="{{ asset('assets/img/close-white.svg', 'user_data') }}" alt=""></span>
+                      </li>
+                      {% endif %}
+                    {% endfor %}
+                  {% endfor %}
+                {% else %}
+                <li class="tabslist__list--li tab__link">
+                  <a class="tab_title" href="#tab1">
+                    <span>渡航先</span>
+                    <span class="num">①</span>
+                  </a>
+                  <span class="delete" onClick="deleteTab(this);"><img src="{{ asset('assets/img/close-white.svg', 'user_data') }}" alt=""></span>
+                </li>
+                {% endif %}
+                <li class="tabslist__list--li more">
+                  <button><img src="{{ asset('assets/img/plus.svg', 'user_data') }}" alt="plusicon"><span>渡航先追加</span></button>
+                </li>
+              </ul>
+            </div>
+            {% if Carts|length > 0 %}
+              {% for CartIndex, Cart in Carts %}
+                {% for CartItemIndex, CartItem in Cart.CartItems %}
+                  {% set ProductClass = CartItem.ProductClass %}
+                  {% set Product = ProductClass.Product %}
+                  {% set Contents = Product.Name|split('_') %}
+                  {% if (Product.Id > 7) %}
+                  <div class="tabscontent dflex" id="tab{{ CartItemIndex + 1 }}">
+                    <input type="hidden" id="product_id_{{ CartItemIndex + 1 }}" value="{{Product.Id}}" >
+                    <input type="hidden" id="cartitem_id_{{ CartItemIndex + 1 }}" value="{{CartItem.Id}}" >
+                    <input type="hidden" id="productclass_id_{{ CartItemIndex + 1 }}" value="{{CartItem.ProductClass.id}}" name="">
+                    <div class="map">
+                      <div class="map--search">
+                        <div class="input--group continents">
+                          <div class="label">エリア</div>
+                          <select placeholder="アジア" id="continents_select_{{ CartItemIndex + 1 }}" class="continent">
+                            <option value="*">------</option>
+                            <option value="AS">アジア</option>
+                            <option value="AF">オセオニア</option>
+                            <option value="EU">欧州</option>
+                            <option value="SA">南アメリカ</option>
+                            <option value="NA">北アメリカ</option>
+                            <option value="US">ハワイ/グアム/サイパン</option>
+                          </select>
+                        </div>
+                        <div class="input--group location">
+                          <div class="label">国名</div>
+                          <select placeholder="シンガポール" id="country_select_{{ CartItemIndex + 1 }}" class="country">
+                            <option value="{{ Contents[4] }}">{{ Contents[0] }}</option>
+                          </select>
+                        </div>
+                        <div class="input--group date">
+                          <div class="label">期間</div>
+                          <input type="text" class = "daterange" name="daterange" id="daterange_{{ CartItemIndex + 1 }}" placeholder="04/20〜04/21" value="20{{ Contents[2] }}～{{ Contents[3][3:5] }}">
+                        </div>
+                        <div class="destination">
+                          <span class="destination--num" id="des_title_{{ CartItemIndex + 1 }}">渡航先
+                          {% if (CartItemIndex == 0) %}
+                          ①
+                          {% elseif (CartItemIndex == 1) %}
+                          ②
+                          {% elseif (CartItemIndex == 2) %}
+                          ③
+                          {% elseif (CartItemIndex == 3) %}
+                          ④
+                          {% elseif (CartItemIndex == 4) %}
+                          ⑤
+                          {% endif %}
+                          </span>
+                          <span>通信料合計</span><span class="destination--price" id="price_{{ CartItemIndex + 1 }}">{{ ProductClass.Price01|number_format }}円</span></div>
+                      </div>
+                      <div class="map--images">
+                        <!-- <img src="./images/map2.svg" alt=""> -->
+                        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 659.3 347.9" style="enable-background:new 0 0 659.3 347.9;" xml:space="preserve">
+                          <style type="text/css">
+                            path:hover {
+                                /*opacity: 0.5;*/
+                                fill:#defd07;
+                              }
+                            .st0{fill:#16255B; opacity: 0.3;}
+                            .st1{fill:none;}
+                            .st2{fill:#2857F7;stroke:#000000;stroke-miterlimit:10;}
+                            .st3{fill:#FBD03A;stroke:#000000;stroke-miterlimit:10;}
+                            .st4{fill:none;stroke:#000000;stroke-miterlimit:10;}
+                            .st5{fill:none;stroke:#000000;}
+                            .st6{fill:#FFFFFF; stroke:#16255B; font-family:'YuGothic-Medium'; font-size:12px;}
+                          </style>
+                          <g id="Group_191" transform="translate(-507.997,-1612)">
+                            <g id="Group_19" transform="matrix(0.9721391,0,0,0.95434073,-479.21545,849.08447)">
+                              <g id="Group_17" transform="translate(1016,807.094)">
+                                <g id="Group_16">
+                                  <g id="g12009_guam" transform="matrix(1.0286594,0,0,1.0478438,-0.49465719,-7.6777056)">
+                                    <path class="st2" d="m 930.95626,1816.9185 -2.5184,4.2416 1.72312,1.9882 2.91605,0.6627 1.98821,0.1326 2.38585,-1.7232 v -1.5905 l -2.12076,-3.5788 -2.78349,-0.5302 z" id="path12016" transform="translate(-508,-1612)" />
+                                    <!-- <path d="m 443.89878,216.45017 2.7835,3.84387 1.85566,-0.66273 1.45803,-0.13255 2.25331,2.25331 2.5184,-1.19293 0.13255,-3.18114 -1.85567,-0.39764 -4.90426,-2.38586 z" id="path14110" /> -->
+                                    <path class="st2" d="m 458.61156,221.22188 2.25331,3.04859 5.56699,0.66274 1.98822,-3.44624 -5.16936,-1.45802 -2.25331,-0.13255 z" id="path14112" />
+                                    <path class="st2" d="m 468.55262,224.27047 0.39765,1.72312 2.25331,3.18114 1.72311,2.91605 1.06038,0.26509 6.75993,-2.38585 -1.98821,-5.16936 -2.65095,-0.39764 -2.38586,-0.53019 -1.98821,-1.06038 h -1.06038 z" id="path14114" />
+                                    <path class="st2" d="m 481.54229,236.72994 0.26509,3.71133 -1.72312,2.91605 -1.45802,2.25331 2.5184,4.63916 0.39765,1.45803 -1.19293,3.84388 4.77171,3.97642 0.66274,0.66274 6.36228,-7.29012 8.61559,-3.44623 -2.5184,-6.22974 -13.25476,-7.29011 -2.12076,-0.39765 z" id="path14116" />
+                                  </g>
+                                  <g id="g6779_s_america">
+                                    <path id="Path_42" class="st0" d="m 547.1,212.8 -3.7,23.3 19.7,18.8 v 7 l -3.1,27.5 -5.9,31.7 4.8,19.1 h 10.4 l 21.6,-51.4 15.4,-19.4 10.1,-2 12.1,-27.8 -30.9,-13.3 -10.9,-13.9 -32.3,-5.9 c -0.15486,0.0982 -7.70235,6.23889 -7.3,6.3 z"/>
+                                  </g>
+                                  <g id="g6015_n_america">
+                                    <path id="Path_47" class="st0" d="m 567.8,7 -16.4,18 32,14.1 10.7,40.9 12.4,-2.8 15.4,-16.8 21.5,-9.8 5.1,-34.7 9.4,-12.4 H 629.8 L 606.5,0 l -16.4,5.8 -8,2 z"/>
+                                    <path id="Path_46" class="st0" d="m 541,27.2 c -0.9,0.6 -3.4,2 -4.3,1.8 -0.9,-0.2 -3.7,-5.7 -3.7,-5.7 0,0 -5.7,8 -5.4,9.4 0.3,1.4 4.6,11.7 4.6,11.7 l 12.7,0.8 9.7,9.5 v 13.4 l -7.6,2.4 0.3,4.9 11.9,-0.8 9.8,10.8 6.8,-10 -8.8,-12 8.8,6 1.1,-10.1 -10.6,-6.1 -0.4,-6.8 -13.6,-12 -6.4,0.4 -2.7,-1.2 -0.5,-4.7 z"/>
+                                    <path id="Path_45" class="st0" d="m 509.1,24 -5.1,9.3 4.3,7.4 7.5,-4.1 -2,-6.2 z"/>
+                                    <path id="Path_44" class="st0" d="m 482.9,25 -6.4,7.3 4.1,7.5 1.7,2.7 -2.6,3.7 1.4,3.8 7.8,2.5 11.1,0.7 5.4,-1.8 1.5,-5.2 -8,-2.8 0.3,-11.9 -15.4,-3.9 -0.6,-1.7 z"/>
+                                    <path id="Path_43" class="st0" d="m 477.7,22.8 v 2.9 l -3.4,4.2 -1.8,1.9 1.1,7.6 -3.5,2.3 -5.7,-0.7 -3.4,-6.8 0.5,-7.4 3.7,-5.8 z"/>
+                                    <path id="Path_77" class="st0" d="m 437.7,49.1 -34.8,-10.4 -15.7,23 6.5,32.6 22.7,-9 31.7,5.9 19.9,35.1 v 32 l 20.2,21.9 v -15.4 l 12.6,25.8 46.3,22.2 c 0,0 7.2867,-6.38211 7.3,-6.3 l -35.7,-19.9 -1.7,-13.8 20.8,-0.8 7,12.4 2,-19.9 34,-43.9 11.5,-5.5 -18,-25.8 -9.3,6.2 -5.6,-14.1 -13.4,6.7 0.3,25.5 -30,-21.3 23.9,-21.1 -1.4,-25.5 -30.9,14.7 -7.7,-2.3 -13.1,-0.4 -30.7,-12.6 z"/>
+                                  </g>
+                                  <g id="g6205_ocean">
+                                    <path id="Path_39" class="st0" d="m 354.2,308.5 -3.6,-2.8 -10.4,13.3 4.1,3.6 -2.1,2.7 c 0,0 3.1,0.3 3.4,0 0.3,-0.3 11.9,-15.2 11.9,-15.2 z"/>
+                                    <path id="Path_38" class="st0" d="m 357.5,296.4 -3.5,2.1 -0.8,7.2 4.3,1.8 4.3,-5.4 z"/>
+                                    <path id="Path_37" class="st0" d="m 308.8,305.7 -7.5,1.1 2.1,14.5 5.4,-2.8 -1.7,-5.5 2.2,-2.9 z"/>
+                                    <path id="Path_36" class="st0" d="m 299.8,247.5 -4.4,15.2 -8.7,-1.4 1.3,-12.4 -8.1,-0.3 -32,19.9 1.1,23.9 32.6,-2.9 13.9,12.6 H 315 l 5.8,-23 z"/>
+                                    <path id="Path_35" class="st0" d="m 315.4,246.1 -9.4,-11.4 -6.9,-2.2 -2,9.8 9.8,8.1 5.6,4.2 4.1,-1 -8,-7.5 z"/>
+                                  </g>
+                                  <g id="g6395_asia" >
+                                    <path id="Path_34" class="st0" d="m 299.1,232.5 -9,-6 -11.2,0.7 2.8,8.6 9.7,2.7 c 0,0 0.8,5.6 1.3,5.6 0.5,0 4.5,-1.8 4.5,-1.8 z"/>
+                                    <path id="Path_33" class="st0" d="m 294.2,143.7 c 0,0 3.6,1.9 3.6,2.2 0,0.3 -0.4,2.7 -0.5,4.3 0,1.9 0.2,3.9 0.5,5.8 -0.1,1.6 -0.3,3.2 -0.5,4.7 l -7.4,2.7 c -0.6,0.8 -1.2,1.6 -2,2.2 -0.8,0.7 -1.7,1.2 -2.6,1.5 -1.4,0.3 -1.7,-0.3 -3.4,0.7 -1.7,1 -1.3,2.1 -2.8,2 -1.5,-0.1 -3.4,0 -3.9,-0.9 -0.5,-0.9 -1.5,-4.9 -0.8,-5.3 0.7,-0.4 6.4,-5.4 6.4,-5.4 l 8,-3.4 c 0,0 6.3,-3.9 6.2,-4.2 -0.1,-0.3 -0.8,-6.9 -0.8,-6.9 z"/>
+                                    <path id="Path_32" class="st0" d="m 302.5,136.1 h -4.7 c -1,0.5 -2,1.1 -2.8,1.8 -0.4,0.6 -0.9,2.4 -0.5,3.1 1.3,1.1 2.6,2.2 4,3.2 0,0 3.7,0.1 4.8,-0.8 1.1,-0.9 3.6,-2.7 3.1,-3.6 -0.5,-0.9 -3.9,-3.7 -3.9,-3.7 z"/>
+                                    <path id="Path_31" class="st0" d="m 300.8,113 -2.9,-2.7 c 0,0 -0.4,1.4 -0.5,2 -0.1,0.6 0.7,7.8 0.7,8.4 0,0.6 0.2,8.4 0.2,8.4 0,0 -0.2,2.2 0.8,1.7 1,-0.5 4,-0.5 4.1,-1.8 -0.1,-2.2 -0.4,-4.3 -0.7,-6.4 -0.1,-0.8 0.3,-5.6 0.2,-6.1 -0.6,-1.2 -1.2,-2.3 -1.9,-3.5 z"/>
+                                    <path id="Path_30" class="st0" d="m 263.3,179.1 c -0.3,-0.1 -5.8,4.6 -5.8,4.6 0,0 -1.1,4.4 -0.8,4.6 0.3,0.2 7.4,0 7.4,0 z"/>
+                                    <path id="Path_29" class="st0" d="m 264.7,194.6 c -0.4,0 -8,2 -8,2 0,0 -1.2,2.5 0,2.9 2.1,0.8 4.1,1.8 6.1,2.9 1.6,1 3.3,1.8 5.1,2.6 z"/>
+                                    <path id="Path_28" class="st0" d="m 270.4,208.6 -7.1,1.8 c 0,0 2,6.9 2.2,6.9 0.2,0 5.7,-2.5 5.7,-2.5 z"/>
+                                    <path id="Path_27" class="st0" d="m 264.1,228.4 2.7,-2.5 -3.8,-1.3 -4.4,2.9 -2.8,3.3 c 0.1,1.6 0.3,3.1 0.6,4.7 0.2,0.1 4.3,1.8 4.9,1.2 1.3,-1.2 2.5,-2.5 3.6,-3.8 0,-0.2 -0.8,-4.5 -0.8,-4.5 z"/>
+                                    <path id="Path_26" class="st0" d="m 247.9,243.7 -1.2,-5.3 c 0,0 -7.9,-2.7 -8.1,-2.7 -0.2,0 -6.2,4.6 -6.2,4.6 0,0 -1.8,2.7 -0.8,2.9 1,0.2 10.7,2.9 10.7,2.9 z"/>
+                                    <path id="Path_25" class="st0" d="m 252.9,213 5.7,4.8 -2.5,3.9 0.2,4.6 c 0,0 -4,4.1 -4.1,4.3 -0.1,0.2 -3,4 -3.7,4 -0.7,0 -4.8,-0.6 -5.3,-0.6 -0.9,-0.4 -1.7,-1 -2.5,-1.6 0,0 -1.5,-2.5 -1.7,-2.9 -0.2,-0.4 -1.7,-3.2 -1.7,-3.2 l 3.2,-4.5 5.2,0.8 z"/>
+                                    <path id="Path_24" class="st0" d="m 217.3,215.8 -4.4,3.7 2.7,7.6 14.4,12.6 4,-8.6 -12.1,-7.4 -3,-4.9 z"/>
+                                    <path id="Path_23" class="st0" d="m 190.6,213.7 -2.6,-4.1 -3.7,3.6 2,6 h 4.3 z"/>
+                                    <path id="Path_21" class="st0" d="M 352.4,44.9 330.5,48.5 297,31.9 295.7,41.4 273,38.6 266.5,28.3 H 247.1 L 240.2,22 233.5,28.7 236.7,9.3 217.8,6.6 180.7,31.7 159.3,54 147.3,51.4 107.5,76.3 96.2,61.8 111.8,66.4 V 55 l -24,-16 -8,5.1 0.3,0.6 20.3,36.7 -4.6,9.1 h 11.8 l 2.1,4.2 -5.1,5.5 17.3,8.4 6.3,-2.9 2.1,8.4 -5.9,6.7 -10.9,16 6.3,9.7 2.9,7.6 0.8,6.3 22.7,28.6 h 26.1 l 9.3,23.2 21.5,-27.8 10.1,12.6 3.4,-0.8 2.3,4.8 -1.5,12.6 4.4,3.4 v 4 l 2.3,2.5 4.6,2.9 1.7,-4.2 -2.3,-5.1 -5.9,-7.4 1.9,-8 7.6,9.3 7.6,-10.1 -7.4,-12.4 h 15.4 l 16.4,-17.3 -7.8,-15 5.1,-6.3 6.3,9.3 6.5,1.3 -1.3,-10.7 12.6,-7.8 9.7,-27.8 -9.7,-6.3 14.5,-13.1 20.6,1.3 8.2,-11.2 1.1,1.1 -12,16.6 9.3,19.6 c 0,0 8.2,-25.9 16,-31 5.5,-3.4 11.3,-6.5 17.3,-9.1 l 1.9,-0.8 v -8.4 l 16.4,2.9 1.7,-12 z"/>
+                                  </g>
+                                  <g id="g6202_africa">
+                                    <path id="Path_40" class="st0" d="m 130.2,248.4 4.1,3.8 -6,20 -6.1,1.4 c 0,0 -3.8,-2.3 -3.8,-2.7 0.9,-1.8 1.9,-3.5 3.1,-5.2 l 0.6,-5.7 -0.1,-4.3 4.9,-1.6 z"/>
+                                    <path id="Path_22" class="st0" d="m 56.6,153.1 -32.4,10.1 -12.4,41.3 20,16.8 14.7,-5.9 10.1,4 v 15 l 9.1,13.9 -2.3,25.3 c 0,0 9.7,10.7 10.3,19.4 l 20.4,-8.2 c 0,0 9.3,-22.5 18.3,-29.1 l 1.1,-24.2 17.3,-17.9 V 205 l -12.2,2.1 -16.6,-29.5 -1.3,-1.5 2.8,-8.2 -24.5,-1.4 -2.7,3.6 z"/>
+                                  </g>
+                                  <g id="g6199_europe">
+                                    <path id="Path_41" class="st0" d="m 10.4,65.4 c 0,0 6.6,5.5 6,6 -0.6,0.5 -6,6.3 -6,6.3 L 0,76.8 V 71 Z"/>
+                                    <path id="Path_20" class="st0" d="m 122.7,154 -2.9,-7.6 -6.3,-9.7 10.9,-16 5.9,-6.7 -2.1,-8.4 -6.3,2.9 -17.3,-8.4 5.1,-5.5 -2.1,-4.2 H 95.7 l 4.6,-9.1 -20.2,-36.6 -0.8,-0.4 -19.5,19 v 6.9 l -12.7,15.6 3.8,11.4 5.9,1.1 3.2,-4.4 5.5,13.7 7.5,-11.1 -0.4,-7.8 -2.5,-8.6 8.2,-12.4 5.7,2.1 -4.2,9.9 v 9.5 l 13.7,2.5 -9.3,2.7 -7.6,15.8 -8.2,-1.7 -6.9,1.7 -3.6,-4.4 -3.6,-2.5 -2.1,1.5 -14.3,17.7 c 0,0 -1.3,-7.6 -1.3,-8.2 v -13.7 l -3.6,-4.3 -4.4,1.1 -1.3,2.3 4,4 -2.5,20 c 0,0 1.7,4.2 2.7,4.6 2,1.2 4,2.6 5.9,4 l -2.9,2.1 -2.3,2.3 h -4.8 l -3.2,0.8 1.5,18.7 12.8,-2.7 1.3,-8.6 8,-1.7 4.2,-4.2 6.8,0.2 12.7,13.5 c 0,0 2.1,-4.6 1.9,-5.3 -0.2,-0.7 -10.7,-12.2 -10.7,-12.2 h 4 l 7.6,3.4 4.4,12.8 12.4,-8.2 2.3,-10.5 2.1,9.5 -5.7,9.3 -2.5,4.8 h 15.6 l 2.9,1.1 -2.9,12.8 -2.3,5.9 20.4,23.8 8.8,1.3 16.4,-12.2 -22.7,-28.6 z"/>
+                                  </g>
+                                  <line
+                                    id="Line_7"
+                                    class="st1"
+                                    x1="553.20001"
+                                    y1="205.89999"
+                                    x2="547.20001"
+                                    y2="212.8"
+                                    style="display:inline;fill:none" />
+                                </g>
+                              </g>
+                              <g id="Group_18" transform="translate(1016,799.935)">
+                                <g id="g11676"/>
+                                  <g filter="url(#Rectangle_314)" id="g9497_guam" onClick="getCountryNames('US')" transform="matrix(1.0286594,0,0,1.0478438,-0.4947,-0.51870557)">
+                                    <path class="st2" onClick="setActive(this)" d="m 423.63826,203.00895 2.06196,2.24941 3.74901,0.56235 2.43685,-0.7498 0.74981,-1.87451 -1.31216,-2.2494 -1.1247,-2.24941 -2.99921,-0.18745 -2.43686,2.24941 -0.98412,2.88205" id="path9656" transform="translate(-0.003)"/>
+                                    <path onClick="setActive(this)" d="m 447.27874,210.81689 2.71723,3.37997 2.45213,-0.53019 2.5184,1.65684 2.71723,-0.99411 0.26509,-2.71722 -2.38586,-0.13255 -3.7776,-2.45213 z" id="path11568" />
+                                    <path class="st2" onClick="setActive(this)" d="m 462.05779,215.45606 1.98822,2.65095 5.50072,0.2651 1.78939,-3.0486 -6.42855,-1.19293 z" id="path11570" />
+                                    <path class="st2" onClick="setActive(this)" d="m 485.25362,230.23511 -0.86156,1.2592 0.59646,3.18115 -0.9941,2.31958 -1.92194,2.84977 2.84977,5.63327 -1.12666,4.0427 3.64506,3.31369 1.12666,0.59647 6.5611,-6.69366 8.28422,-3.51251 -3.18114,-6.42855 -13.71867,-6.75993 z" id="path11574" />
+                                  </g>
+                                  <g id="g5823_s_america" onClick="getCountryNames('SA')">
+                                    <path id="Path_76" onClick="setActive(this)" class="st2" d="m 547.1,212.8 -3.7,23.3 19.7,18.8 v 7 l -3.1,27.5 -5.9,31.7 4.8,19.1 h 10.4 l 21.6,-51.4 15.4,-19.4 10.1,-2 12.1,-27.8 -30.9,-13.3 -10.9,-13.9 -33.61797,-6.39118 c 0,0 -3.19856,3.83539 -5.98203,6.79118 z"/>
+                                  </g>
+                                  <g id="g5032_n_america" onClick="getCountryNames('NA')">
+                                    <path id="Path_75" onClick="setActive(this)" class="st2" d="m 567.8,7 -16.4,18 32,14.1 10.7,40.9 12.4,-2.8 15.4,-16.8 21.5,-9.8 5.1,-34.7 9.4,-12.4 H 629.8 L 606.5,0 l -16.4,5.8 -8,2 z"/>
+                                    <path id="Path_74" onClick="setActive(this)" class="st2" d="m 541,27.2 c -0.9,0.6 -3.4,2 -4.3,1.8 -0.9,-0.2 -3.7,-5.7 -3.7,-5.7 0,0 -5.7,8 -5.4,9.4 0.3,1.4 4.6,11.7 4.6,11.7 l 12.7,0.8 9.7,9.5 v 13.4 l -7.6,2.4 0.3,4.9 11.9,-0.8 9.8,10.8 6.8,-10 -8.8,-12 8.8,6 1.1,-10.1 -10.6,-6.1 -0.4,-6.8 -13.6,-12 -6.4,0.4 -2.7,-1.2 -0.5,-4.7 z"/>
+                                    <path id="Path_73" onClick="setActive(this)" class="st2" d="m 509.1,24 -5.1,9.3 4.3,7.4 7.5,-4.1 -2,-6.2 z"/>
+                                    <path id="Path_72" onClick="setActive(this)" class="st2" d="m 482.9,25 -6.4,7.3 4.1,7.5 1.7,2.7 -2.6,3.7 1.4,3.8 7.8,2.5 11.1,0.7 5.4,-1.8 1.5,-5.2 -8,-2.8 0.3,-11.9 -15.4,-3.9 -0.6,-1.7 z"/>
+                                    <path id="Path_71" onClick="setActive(this)" class="st2" d="m 477.7,22.8 v 2.9 l -3.4,4.2 -1.8,1.9 1.1,7.6 -3.5,2.3 -5.7,-0.7 -3.4,-6.8 0.5,-7.4 3.7,-5.8 z"/>
+                                    <path id="Path_70"  onClick="setActive(this)" class="st2" d="m 437.7,49.1 -34.8,-10.4 -15.7,23 6.5,32.6 22.7,-9 31.7,5.9 19.9,35.1 v 32 l 20.2,21.9 v -15.4 l 12.6,25.8 46.3,22.2 c 0,0 0.10214,0.0121 6.16348,-6.57785 L 518.7,186.6 517,172.8 l 20.8,-0.8 7,12.4 2,-19.9 34,-43.9 11.5,-5.5 -18,-25.8 -9.3,6.2 -5.6,-14.1 -13.4,6.7 0.3,25.5 -30,-21.3 23.9,-21.1 -1.4,-25.5 -30.9,14.7 -7.7,-2.3 -13.1,-0.4 -30.7,-12.6 z"/>
+                                  </g>
+                                  <g id="g5799_ocean" onClick="getCountryNames('OC')">
+                                    <path id="Path_64" onClick="setActive(this)" class="st2" d="m 299.8,247.5 -4.4,15.2 -8.7,-1.4 1.3,-12.4 -8.1,-0.3 -32,19.9 1.1,23.9 32.6,-2.9 13.9,12.6 H 315 l 5.8,-23 z"/>
+                                    <path id="Path_67" onClick="setActive(this)" class="st2" d="m 354.2,308.5 -3.6,-2.8 -10.4,13.3 4.1,3.6 -2.1,2.7 c 0,0 3.1,0.3 3.4,0 0.3,-0.3 11.9,-15.2 11.9,-15.2 z"/>
+                                    <path id="Path_66" onClick="setActive(this)" class="st2" d="m 357.5,296.4 -3.5,2.1 -0.8,7.2 4.3,1.8 4.3,-5.4 z"/>
+                                    <path id="Path_65" onClick="setActive(this)" class="st4" d="m 308.8,305.7 -7.5,1.1 2.1,14.5 5.4,-2.8 -1.7,-5.5 2.2,-2.9 z"/>
+                                    <path id="Path_63" onClick="setActive(this)" class="st2" d="m 315.4,246.1 -9.4,-11.4 -6.9,-2.2 -2,9.8 9.8,8.1 5.6,4.2 4.1,-1 -8,-7.5 z"/>
+                                  </g>
+                                  <g id="g5808_asia" onClick="getCountryNames('AS')">
+                                    <path id="Path_62" onClick="setActive(this)" class="st2" d="m 299.1,232.5 -9,-6 -11.2,0.7 2.8,8.6 9.7,2.7 c 0,0 0.8,5.6 1.3,5.6 0.5,0 4.5,-1.8 4.5,-1.8 z"/>
+                                    <path id="Path_49" onClick="setActive(this)" class="st2" d="M 352.4,44.9 330.5,48.5 297,31.9 295.7,41.4 273,38.6 266.5,28.3 H 247.1 L 240.2,22 233.5,28.7 236.7,9.3 217.8,6.6 180.7,31.7 159.3,54 147.3,51.4 107.5,76.3 96.2,61.8 111.8,66.4 V 55 l -24,-16 -8,5.1 0.3,0.6 20.3,36.7 -4.6,9.1 h 11.8 l 2.1,4.2 -5.1,5.5 17.3,8.4 6.3,-2.9 2.1,8.4 -5.9,6.7 -10.9,16 6.3,9.7 2.9,7.6 0.8,6.3 22.7,28.6 h 26.1 l 9.3,23.2 21.5,-27.8 10.1,12.6 3.4,-0.8 2.3,4.8 -1.5,12.6 4.4,3.4 v 4 l 2.3,2.5 4.6,2.9 1.7,-4.2 -2.3,-5.1 -5.9,-7.4 1.9,-8 7.6,9.3 7.6,-10.1 -7.4,-12.4 h 15.4 l 16.4,-17.3 -7.8,-15 5.1,-6.3 6.3,9.3 6.5,1.3 -1.3,-10.7 12.6,-7.8 9.7,-27.8 -9.7,-6.3 14.5,-13.1 20.6,1.3 8.2,-11.2 1.1,1.1 -12,16.6 9.3,19.6 c 0,0 8.2,-25.9 16,-31 5.5,-3.4 11.3,-6.5 17.3,-9.1 l 1.9,-0.8 v -8.4 l 16.4,2.9 1.7,-12 z"/>
+                                    <path id="Path_51" onClick="setActive(this)" class="st2" d="m 190.6,213.7 -2.6,-4.1 -3.7,3.6 2,6 h 4.3 z"/>
+                                    <path id="Path_52" onClick="setActive(this)" class="st2" d="m 217.3,215.8 -4.4,3.7 2.7,7.6 14.4,12.6 4,-8.6 -12.1,-7.4 -3,-4.9 z"/>
+                                    <path id="Path_53" onClick="setActive(this)" class="st2" d="m 252.9,213 5.7,4.8 -2.5,3.9 0.2,4.6 c 0,0 -4,4.1 -4.1,4.3 -0.1,0.2 -3,4 -3.7,4 -0.7,0 -4.8,-0.6 -5.3,-0.6 -0.9,-0.4 -1.7,-1 -2.5,-1.6 0,0 -1.5,-2.5 -1.7,-2.9 -0.2,-0.4 -1.7,-3.2 -1.7,-3.2 l 3.2,-4.5 5.2,0.8 z"/>
+                                    <path id="Path_54" onClick="setActive(this)" class="st2" d="m 247.9,243.7 -1.2,-5.3 c 0,0 -7.9,-2.7 -8.1,-2.7 -0.2,0 -6.2,4.6 -6.2,4.6 0,0 -1.8,2.7 -0.8,2.9 1,0.2 10.7,2.9 10.7,2.9 z"/>
+                                    <path id="Path_55" onClick="setActive(this)" class="st2" d="m 264.1,228.4 2.7,-2.5 -3.8,-1.3 -4.4,2.9 -2.8,3.3 c 0.1,1.6 0.3,3.1 0.6,4.7 0.2,0.1 4.3,1.8 4.9,1.2 1.3,-1.2 2.5,-2.5 3.6,-3.8 0,-0.2 -0.8,-4.5 -0.8,-4.5 z"/>
+                                    <path id="Path_56" onClick="setActive(this)" class="st2" d="m 270.4,208.6 -7.1,1.8 c 0,0 2,6.9 2.2,6.9 0.2,0 5.7,-2.5 5.7,-2.5 z"/>
+                                    <path id="Path_57" onClick="setActive(this)" class="st2" d="m 264.7,194.6 c -0.4,0 -8,2 -8,2 0,0 -1.2,2.5 0,2.9 2.1,0.8 4.1,1.8 6.1,2.9 1.6,1 3.3,1.8 5.1,2.6 z"/>
+                                    <path id="Path_58" onClick="setActive(this)" class="st2" d="m 263.3,179.1 c -0.3,-0.1 -5.8,4.6 -5.8,4.6 0,0 -1.1,4.4 -0.8,4.6 0.3,0.2 7.4,0 7.4,0 z"/>
+                                    <path id="Path_59" onClick="setActive(this)" class="st2" d="m 300.8,113 -2.9,-2.7 c 0,0 -0.4,1.4 -0.5,2 -0.1,0.6 0.7,7.8 0.7,8.4 0,0.6 0.2,8.4 0.2,8.4 0,0 -0.2,2.2 0.8,1.7 1,-0.5 4,-0.5 4.1,-1.8 -0.1,-2.2 -0.4,-4.3 -0.7,-6.4 -0.1,-0.8 0.3,-5.6 0.2,-6.1 -0.6,-1.2 -1.2,-2.3 -1.9,-3.5 z"/>
+                                    <path id="Path_60" onClick="setActive(this)" class="st2" d="m 302.5,136.1 h -4.7 c -1,0.5 -2,1.1 -2.8,1.8 -0.4,0.6 -0.9,2.4 -0.5,3.1 1.3,1.1 2.6,2.2 4,3.2 0,0 3.7,0.1 4.8,-0.8 1.1,-0.9 3.6,-2.7 3.1,-3.6 -0.5,-0.9 -3.9,-3.7 -3.9,-3.7 z"/>
+                                    <path id="Path_61" onClick="setActive(this)" class="st2" d="m 294.2,143.7 c 0,0 3.6,1.9 3.6,2.2 0,0.3 -0.4,2.7 -0.5,4.3 0,1.9 0.2,3.9 0.5,5.8 -0.1,1.6 -0.3,3.2 -0.5,4.7 l -7.4,2.7 c -0.6,0.8 -1.2,1.6 -2,2.2 -0.8,0.7 -1.7,1.2 -2.6,1.5 -1.4,0.3 -1.7,-0.3 -3.4,0.7 -1.7,1 -1.3,2.1 -2.8,2 -1.5,-0.1 -3.4,0 -3.9,-0.9 -0.5,-0.9 -1.5,-4.9 -0.8,-5.3 0.7,-0.4 6.4,-5.4 6.4,-5.4 l 8,-3.4 c 0,0 6.3,-3.9 6.2,-4.2 -0.1,-0.3 -0.8,-6.9 -0.8,-6.9 z"/>
+                                  </g>
+                                  <g id="g5795_africa" onClick="getCountryNames('AF')">
+                                    <path id="Path_50" onClick="setActive(this)" class="st2" d="m 56.6,153.1 -32.4,10.1 -12.4,41.3 20,16.8 14.7,-5.9 10.1,4 v 15 l 9.1,13.9 -2.3,25.3 c 0,0 9.7,10.7 10.3,19.4 l 20.4,-8.2 c 0,0 9.3,-22.5 18.3,-29.1 l 1.1,-24.2 17.3,-17.9 V 205 l -12.2,2.1 -16.6,-29.5 -1.3,-1.5 2.8,-8.2 -24.5,-1.4 -2.7,3.6 z"/>
+                                    <path id="Path_68" onClick="setActive(this)" class="st2" d="m 130.2,248.4 4.1,3.8 -6,20 -6.1,1.4 c 0,0 -3.8,-2.3 -3.8,-2.7 0.9,-1.8 1.9,-3.5 3.1,-5.2 l 0.6,-5.7 -0.1,-4.3 4.9,-1.6 z"/>
+                                  </g>
+                                  <g id="g5784_europe" onClick="getCountryNames('EU')">
+                                    <path id="Path_48" onClick="setActive(this)" class="st2" d="m 122.7,154 -2.9,-7.6 -6.3,-9.7 10.9,-16 5.9,-6.7 -2.1,-8.4 -6.3,2.9 -17.3,-8.4 5.1,-5.5 -2.1,-4.2 H 95.7 l 4.6,-9.1 -20.2,-36.6 -0.8,-0.4 -19.5,19 v 6.9 l -12.7,15.6 3.8,11.4 5.9,1.1 3.2,-4.4 5.5,13.7 7.5,-11.1 -0.4,-7.8 -2.5,-8.6 8.2,-12.4 5.7,2.1 -4.2,9.9 v 9.5 l 13.7,2.5 -9.3,2.7 -7.6,15.8 -8.2,-1.7 -6.9,1.7 -3.6,-4.4 -3.6,-2.5 -2.1,1.5 -14.3,17.7 c 0,0 -1.3,-7.6 -1.3,-8.2 v -13.7 l -3.6,-4.3 -4.4,1.1 -1.3,2.3 4,4 -2.5,20 c 0,0 1.7,4.2 2.7,4.6 2,1.2 4,2.6 5.9,4 l -2.9,2.1 -2.3,2.3 h -4.8 l -3.2,0.8 1.5,18.7 12.8,-2.7 1.3,-8.6 8,-1.7 4.2,-4.2 6.8,0.2 12.7,13.5 c 0,0 2.1,-4.6 1.9,-5.3 -0.2,-0.7 -10.7,-12.2 -10.7,-12.2 h 4 l 7.6,3.4 4.4,12.8 12.4,-8.2 2.3,-10.5 2.1,9.5 -5.7,9.3 -2.5,4.8 h 15.6 l 2.9,1.1 -2.9,12.8 -2.3,5.9 20.4,23.8 8.8,1.3 16.4,-12.2 -22.7,-28.6 z"/>
+                                    <path id="Path_69" onClick="setActive(this)" class="st2" d="m 10.4,65.4 c 0,0 6.6,5.5 6,6 -0.6,0.5 -6,6.3 -6,6.3 L 0,76.8 V 71 Z"/>
+                                  </g>
+                                  <!-- <path d="m 471.53495,218.57093 1.85566,3.24741 1.65685,1.59057 1.52429,2.65095 6.89248,-2.58467 -1.06038,-3.77761 -4.10898,-0.86156 -2.5184,-1.19293 -1.2592,-0.79528 z" id="path11572" transform="matrix(1.0286594,0,0,1.0478438,-0.4947,-0.51870557)" /> -->
+                                </g>
+                              </g>
+                              <g id="Group_Title">
+                                <g id="Group_189" class="st6">
+                                  <g transform="matrix(1.2573697,0,0,1,381.9421,1612)" filter="url(#Rectangle_27)" id="g325">
+                                    <g id="Rectangle_27-9" data-name="Rectangle 27" transform="translate(460.79,101.75)">
+                                      <rect width="58" height="20" rx="10" stroke="none" id="rect320" x="0" y="0" />
+                                      <rect x="0.5" y="0.5" width="57" height="19" rx="9.5" fill="none" id="rect322" />
+                                    </g>
+                                  </g>
+                                  <text id="北アメリカ" x="966.78998" y="1727.75">
+                                    <tspan id="tspan1164" x="966.78998" y="1727.75">北アメリカ</tspan>
+                                  </text>
+                                </g>
+                                <g id="Group_22" class="st6" transform="matrix(1,0,0,0.99967228,-46.350995,157.86156)">
+                                  <g transform="matrix(0.76621618,0,0,1.0126094,522.17453,1469.093)" filter="url(#Rectangle_27-2)" id="g336">
+                                    <g id="Rectangle_27-10" transform="translate(87.79,91.75)">
+                                      <rect width="74" height="20" rx="10" stroke="none" id="rect331" x="0" y="0" />
+                                      <rect x="0.5" y="0.5" width="73" height="19" rx="9.5" fill="none" id="rect333" />
+                                    </g>
+                                  </g>
+                                  <text id="欧州" x="606.64221" y="1576.9003">
+                                    <tspan id="tspan2847" x="606.64221" y="1576.9003">欧州</tspan>
+                                  </text>
+                                </g>
+                                <g id="Group_131" class="st6" transform="translate(-55.651,270.75)">
+                                  <g transform="translate(563.65,1341.25)" filter="url(#Rectangle_27-4)" id="g358">
+                                    <g id="Rectangle_27-12"  transform="translate(25.79,220.75)">
+                                      <rect width="74" height="20" rx="10" stroke="none" id="rect353" x="0" y="0" />
+                                      <rect x="0.5" y="0.5" width="73" height="19" rx="9.5" fill="none" id="rect355" />
+                                    </g>
+                                  </g>
+                                  <text id="アフリカ" transform="translate(624.442,1576)">
+                                    <tspan x="-24" y="0" id="tspan360">アフリカ</tspan>
+                                  </text>
+                                </g>
+                                <g id="Group_132" class="st6" transform="translate(133.349,311.75)">
+                                  <g transform="translate(374.65,1300.25)" filter="url(#Rectangle_27-5)" id="g369">
+                                    <g id="Rectangle_27-13" transform="translate(214.79,261.75)">
+                                      <rect width="74" height="20" rx="10" stroke="none" id="rect364" x="0" y="0" />
+                                      <rect x="0.5" y="0.5" width="73" height="19" rx="9.5" fill="none" id="rect366" />
+                                    </g>
+                                  </g>
+                                  <text id="オセオニア" transform="translate(626.442,1576)">
+                                    <tspan x="-30" y="0" id="tspan371">オセオニア</tspan>
+                                  </text>
+                                </g>
+                                <g id="Group_133" class="st6" transform="translate(261.666,299.75)">
+                                  <g transform="translate(246.33,1312.25)" filter="url(#Rectangle_27-6)" id="g380">
+                                    <g id="Rectangle_27-14" transform="translate(346,249.75)">
+                                      <rect width="155.683" height="20" rx="10" stroke="none" id="rect375" x="0" y="0" />
+                                      <rect x="0.5" y="0.5" width="154.683" height="19" rx="9.5" fill="none" id="rect377" />
+                                    </g>
+                                  </g>
+                                  <text id="ハワイ_グアム_サイパン" transform="translate(670.334,1576)">
+                                    <tspan x="-65.771004" y="0" id="tspan382">ハワイ/グアム/サイパン</tspan>
+                                  </text>
+                                </g>
+                                <g id="Group_134" class="st6" transform="translate(443.349,284.75)">
+                                  <g transform="matrix(1.1810345,0,0,0.99209706,-30.174555,1329.1053)" filter="url(#Rectangle_27-8)" id="g402">
+                                    <g id="Rectangle_27-16" transform="translate(523.79,234.75)">
+                                      <rect width="58" height="20" rx="10" stroke="none" id="rect397" x="0" y="0" />
+                                      <rect x="0.5" y="0.5" width="57" height="19" rx="9.5" fill="none" id="rect399" />
+                                    </g>
+                                  </g>
+                                  <text id="南アメリカ" x="593.34198" y="1576">
+                                    <tspan id="tspan1166" x="593.34198" y="1576">南アメリカ</tspan>
+                                  </text>
+                                </g>
+                                <g id="Group_26" class="st6" transform="translate(170.29,56.75)">
+                                  <g id="Rectangle_29" transform="translate(538,1619.25)">
+                                    <rect width="61" height="20" rx="10" stroke="none" id="rect408" x="0" y="0" />
+                                    <rect x="0.5" y="0.5" width="60" height="19" rx="9.5" fill="none" id="rect410"/>
+                                  </g>
+                                  <text id="アジア" transform="translate(569,1633.25)">
+                                    <tspan x="-18" y="0" id="tspan413">アジア</tspan>
+                                  </text>
+                                </g>
+                            </g>
+                          </g>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="simulation">
+                      <h3 class="simulation--tit simulation-top">
+                        <span class="icon">
+                          <img src="{{ asset('assets/img/money.svg', 'user_data') }}" alt="シミュレーション結果"></span><span class="simulation_tit">シミュレーション結果</span></h3>
+                      <div class="simulation--list resultContent">
+                        <div class="resultSimu">
+                          {% for SubCartItemIndex, SubCartItem in Cart.CartItems %}
+                            {% set SubProductClass = SubCartItem.ProductClass %}
+                            {% set SubProduct = SubProductClass.Product %}
+                            {% set SubContents = SubProduct.Name|split('_') %}
+                            {% if (SubProduct.Id > 7) %}
+                              {% if SubCartItemIndex < 1 %}
+                              <ul class="resultList resultCurrent" id="result_current_{{ CartItemIndex + 1 }}" onclick="showList();">
+                                <li ><p id="des_si_title_{{ CartItemIndex + 1 }}">{{ '渡航先'|trans }}
+                                    {% if (CartItemIndex == 0) %}①
+                                      {% elseif (CartItemIndex == 1) %}②
+                                      {% elseif (CartItemIndex == 2) %}③
+                                      {% elseif (CartItemIndex == 3) %}④
+                                      {% elseif (CartItemIndex == 4) %}⑤
+                                    {% endif %}
+                                </p>
+                                <div class="info">
+                                  <p class="date" id="des_date_{{ CartItemIndex + 1 }}" >{{ '期間: '|trans }}<span>20{{ Contents[2] }}～{{ Contents[3][3:5] }}</span></p>
+                                  <p class="area" id="des_area_{{ CartItemIndex + 1 }}">{{ '国名: '|trans }}<span>{{ Contents[0] }}</span></p>
+                                </div>
+                                </li>
+                              </ul>
+                              {% endif %}
+
+                              {% if SubCartItemIndex < 1 %}
+                              <ul class="resultList resultListSelect" id="result_list_select_{{ CartItemIndex + 1 }}">
+                              {% endif %}
+                                <li id="list_{{ SubCartItemIndex + 1 }}" onclick="listClick(this);" {% if SubCartItemIndex == CartItemIndex %} class="selected" {% endif %}>
+                                  <p id="des_si_title_{{ SubCartItemIndex + 1 }}" >{{ '渡航先'|trans }}
+                                    {% if (SubCartItemIndex == 0) %}①
+                                    {% elseif (SubCartItemIndex == 1) %}②
+                                    {% elseif (SubCartItemIndex == 2) %}③
+                                    {% elseif (SubCartItemIndex == 3) %}④
+                                    {% elseif (SubCartItemIndex == 4) %}⑤
+                                    {% endif %}
+                                  </p>
+                                  <div class="info">
+                                    <p class="date" id="des_date_{{ SubCartItemIndex + 1 }}" >{{ '期間: '|trans }}<span>20{{ SubContents[2] }}～{{ SubContents[3][3:5] }}</span></p>
+                                    <p class="area" id="des_area_{{ SubCartItemIndex + 1 }}">{{ '国名: '|trans }}<span>{{ SubContents[0] }}</span></p>
+                                  </div>
+                                </li>
+                              {% if (SubCartItemIndex + 1) == Cart.CartItems|length %}
+                              </ul>
+                              {% endif %}
+                            {% endif %}
+                          {% endfor %}
+                        </div>
+                        <div class="rentalfee">
+                          <dl class="dflex">
+                            <dt>通信料</dt>
+                            <input type="hidden" id="des_price_{{ CartItemIndex + 1 }}" value="{{ ProductClass.Price01|number_format }}">
+                            <input type="hidden" id="daily_price_{{ CartItemIndex + 1 }}" value="{{ (ProductClass.Price02 - ProductClass.Price01)|number_format }}">
+                            <input type="hidden" id="total_price_{{ CartItemIndex + 1 }}" value="{{ ProductClass.Price02|number_format }}">
+                            <dd class="price" id="des_{{ CartItemIndex + 1 }}">
+                              {{ ProductClass.Price01|number_format }}円
+                            </dd>
+                          </dl>
+                          <dl class="dflex">
+                            <dt>レンタル料（220円/日）</dt>
+                            <dd class="price" id="daily_{{ CartItemIndex + 1 }}">{{ (ProductClass.Price02 - ProductClass.Price01)|number_format }}円</dd>
+                          </dl>
+                        </div>
+                        <div class="totalfee">
+                          <dl class="dflex">
+                            <dt>合計金額</dt>
+                            <dd id="total_{{ CartItemIndex + 1 }}">{{ ProductClass.Price02|number_format }}円<small>（税込）</small></dd>
+                          </dl>
+                        </div>
+                        <div class="btnsutmit">
+                          <a id="btn_apply_{{ CartItemIndex + 1 }}" href="{{ url('shopping_option') }}">この内容でお申し込み</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}                    
+                {% endfor %}
+              {% endfor %}
+            {% else %}
+            <div class="tabscontent dflex" id="tab1">
+              <input type="hidden" id="product_id_1" value="" >
+              <input type="hidden" id="cartitem_id_1" value="" >
+              <input type="hidden" id="productclass_id_1" value="" name="">
+              <div class="map">
+                <div class="map--search">
+                  <div class="input--group continents">
+                    <div class="label">エリア</div>
+                    <select placeholder="アジア" id="continents_select_1" class="continent">
+                      <option value="*">------</option>
+                      <option value="AS">アジア</option>
+                      <option value="AF">オセオニア</option>
+                      <option value="EU">欧州</option>
+                      <option value="SA">南アメリカ</option>
+                      <option value="NA">北アメリカ</option>
+                      <option value="US">ハワイ/グアム/サイパン</option>
+                    </select>
+                  </div>
+                  <div class="input--group location">
+                    <div class="label">国名</div>
+                    <select placeholder="シンガポール" id="country_select_1" class="country">
+                      <option value="none">------</option>
+                    </select>
+                  </div>
+                  <div class="input--group date">
+                    <div class="label">期間</div>
+                    <input type="text" class = "daterange" name="daterange" id="daterange_1" placeholder="04/20〜04/21">
+                  </div>
+                  <div class="destination"><span class="destination--num" id="des_title_1">渡航先①</span><span>通信料合計</span><span class="destination--price" id="price_1">ーー円</span></div>
+                </div>
+                <div class="map--images">
+                  <!-- <img src="./images/map2.svg" alt=""> -->
+                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 659.3 347.9" style="enable-background:new 0 0 659.3 347.9;" xml:space="preserve">
+                    <style type="text/css">
+                      path:hover {
+                          /*opacity: 0.5;*/
+                          fill:#defd07;
+                        }
+                      .st0{fill:#16255B; opacity: 0.3;}
+                      .st1{fill:none;}
+                      .st2{fill:#2857F7;stroke:#000000;stroke-miterlimit:10;}
+                      .st3{fill:#FBD03A;stroke:#000000;stroke-miterlimit:10;}
+                      .st4{fill:none;stroke:#000000;stroke-miterlimit:10;}
+                      .st5{fill:none;stroke:#000000;}
+                      .st6{fill:#FFFFFF; stroke:#16255B; font-family:'YuGothic-Medium'; font-size:12px;}
+                    </style>
+                    <g id="Group_191" transform="translate(-507.997,-1612)">
+                      <g id="Group_19" transform="matrix(0.9721391,0,0,0.95434073,-479.21545,849.08447)">
+                        <g id="Group_17" transform="translate(1016,807.094)">
+                          <g id="Group_16">
+                            <g id="g12009_guam" transform="matrix(1.0286594,0,0,1.0478438,-0.49465719,-7.6777056)">
+                              <path class="st2" d="m 930.95626,1816.9185 -2.5184,4.2416 1.72312,1.9882 2.91605,0.6627 1.98821,0.1326 2.38585,-1.7232 v -1.5905 l -2.12076,-3.5788 -2.78349,-0.5302 z" id="path12016" transform="translate(-508,-1612)" />
+                              <!-- <path d="m 443.89878,216.45017 2.7835,3.84387 1.85566,-0.66273 1.45803,-0.13255 2.25331,2.25331 2.5184,-1.19293 0.13255,-3.18114 -1.85567,-0.39764 -4.90426,-2.38586 z" id="path14110" /> -->
+                              <path class="st2" d="m 458.61156,221.22188 2.25331,3.04859 5.56699,0.66274 1.98822,-3.44624 -5.16936,-1.45802 -2.25331,-0.13255 z" id="path14112" />
+                              <path class="st2" d="m 468.55262,224.27047 0.39765,1.72312 2.25331,3.18114 1.72311,2.91605 1.06038,0.26509 6.75993,-2.38585 -1.98821,-5.16936 -2.65095,-0.39764 -2.38586,-0.53019 -1.98821,-1.06038 h -1.06038 z" id="path14114" />
+                              <path class="st2" d="m 481.54229,236.72994 0.26509,3.71133 -1.72312,2.91605 -1.45802,2.25331 2.5184,4.63916 0.39765,1.45803 -1.19293,3.84388 4.77171,3.97642 0.66274,0.66274 6.36228,-7.29012 8.61559,-3.44623 -2.5184,-6.22974 -13.25476,-7.29011 -2.12076,-0.39765 z" id="path14116" />
+                            </g>
+                            <g id="g6779_s_america">
+                              <path id="Path_42" class="st0" d="m 547.1,212.8 -3.7,23.3 19.7,18.8 v 7 l -3.1,27.5 -5.9,31.7 4.8,19.1 h 10.4 l 21.6,-51.4 15.4,-19.4 10.1,-2 12.1,-27.8 -30.9,-13.3 -10.9,-13.9 -32.3,-5.9 c -0.15486,0.0982 -7.70235,6.23889 -7.3,6.3 z"/>
+                            </g>
+                            <g id="g6015_n_america">
+                              <path id="Path_47" class="st0" d="m 567.8,7 -16.4,18 32,14.1 10.7,40.9 12.4,-2.8 15.4,-16.8 21.5,-9.8 5.1,-34.7 9.4,-12.4 H 629.8 L 606.5,0 l -16.4,5.8 -8,2 z"/>
+                              <path id="Path_46" class="st0" d="m 541,27.2 c -0.9,0.6 -3.4,2 -4.3,1.8 -0.9,-0.2 -3.7,-5.7 -3.7,-5.7 0,0 -5.7,8 -5.4,9.4 0.3,1.4 4.6,11.7 4.6,11.7 l 12.7,0.8 9.7,9.5 v 13.4 l -7.6,2.4 0.3,4.9 11.9,-0.8 9.8,10.8 6.8,-10 -8.8,-12 8.8,6 1.1,-10.1 -10.6,-6.1 -0.4,-6.8 -13.6,-12 -6.4,0.4 -2.7,-1.2 -0.5,-4.7 z"/>
+                              <path id="Path_45" class="st0" d="m 509.1,24 -5.1,9.3 4.3,7.4 7.5,-4.1 -2,-6.2 z"/>
+                              <path id="Path_44" class="st0" d="m 482.9,25 -6.4,7.3 4.1,7.5 1.7,2.7 -2.6,3.7 1.4,3.8 7.8,2.5 11.1,0.7 5.4,-1.8 1.5,-5.2 -8,-2.8 0.3,-11.9 -15.4,-3.9 -0.6,-1.7 z"/>
+                              <path id="Path_43" class="st0" d="m 477.7,22.8 v 2.9 l -3.4,4.2 -1.8,1.9 1.1,7.6 -3.5,2.3 -5.7,-0.7 -3.4,-6.8 0.5,-7.4 3.7,-5.8 z"/>
+                              <path id="Path_77" class="st0" d="m 437.7,49.1 -34.8,-10.4 -15.7,23 6.5,32.6 22.7,-9 31.7,5.9 19.9,35.1 v 32 l 20.2,21.9 v -15.4 l 12.6,25.8 46.3,22.2 c 0,0 7.2867,-6.38211 7.3,-6.3 l -35.7,-19.9 -1.7,-13.8 20.8,-0.8 7,12.4 2,-19.9 34,-43.9 11.5,-5.5 -18,-25.8 -9.3,6.2 -5.6,-14.1 -13.4,6.7 0.3,25.5 -30,-21.3 23.9,-21.1 -1.4,-25.5 -30.9,14.7 -7.7,-2.3 -13.1,-0.4 -30.7,-12.6 z"/>
+                            </g>
+                            <g id="g6205_ocean">
+                              <path id="Path_39" class="st0" d="m 354.2,308.5 -3.6,-2.8 -10.4,13.3 4.1,3.6 -2.1,2.7 c 0,0 3.1,0.3 3.4,0 0.3,-0.3 11.9,-15.2 11.9,-15.2 z"/>
+                              <path id="Path_38" class="st0" d="m 357.5,296.4 -3.5,2.1 -0.8,7.2 4.3,1.8 4.3,-5.4 z"/>
+                              <path id="Path_37" class="st0" d="m 308.8,305.7 -7.5,1.1 2.1,14.5 5.4,-2.8 -1.7,-5.5 2.2,-2.9 z"/>
+                              <path id="Path_36" class="st0" d="m 299.8,247.5 -4.4,15.2 -8.7,-1.4 1.3,-12.4 -8.1,-0.3 -32,19.9 1.1,23.9 32.6,-2.9 13.9,12.6 H 315 l 5.8,-23 z"/>
+                              <path id="Path_35" class="st0" d="m 315.4,246.1 -9.4,-11.4 -6.9,-2.2 -2,9.8 9.8,8.1 5.6,4.2 4.1,-1 -8,-7.5 z"/>
+                            </g>
+                            <g id="g6395_asia" >
+                              <path id="Path_34" class="st0" d="m 299.1,232.5 -9,-6 -11.2,0.7 2.8,8.6 9.7,2.7 c 0,0 0.8,5.6 1.3,5.6 0.5,0 4.5,-1.8 4.5,-1.8 z"/>
+                              <path id="Path_33" class="st0" d="m 294.2,143.7 c 0,0 3.6,1.9 3.6,2.2 0,0.3 -0.4,2.7 -0.5,4.3 0,1.9 0.2,3.9 0.5,5.8 -0.1,1.6 -0.3,3.2 -0.5,4.7 l -7.4,2.7 c -0.6,0.8 -1.2,1.6 -2,2.2 -0.8,0.7 -1.7,1.2 -2.6,1.5 -1.4,0.3 -1.7,-0.3 -3.4,0.7 -1.7,1 -1.3,2.1 -2.8,2 -1.5,-0.1 -3.4,0 -3.9,-0.9 -0.5,-0.9 -1.5,-4.9 -0.8,-5.3 0.7,-0.4 6.4,-5.4 6.4,-5.4 l 8,-3.4 c 0,0 6.3,-3.9 6.2,-4.2 -0.1,-0.3 -0.8,-6.9 -0.8,-6.9 z"/>
+                              <path id="Path_32" class="st0" d="m 302.5,136.1 h -4.7 c -1,0.5 -2,1.1 -2.8,1.8 -0.4,0.6 -0.9,2.4 -0.5,3.1 1.3,1.1 2.6,2.2 4,3.2 0,0 3.7,0.1 4.8,-0.8 1.1,-0.9 3.6,-2.7 3.1,-3.6 -0.5,-0.9 -3.9,-3.7 -3.9,-3.7 z"/>
+                              <path id="Path_31" class="st0" d="m 300.8,113 -2.9,-2.7 c 0,0 -0.4,1.4 -0.5,2 -0.1,0.6 0.7,7.8 0.7,8.4 0,0.6 0.2,8.4 0.2,8.4 0,0 -0.2,2.2 0.8,1.7 1,-0.5 4,-0.5 4.1,-1.8 -0.1,-2.2 -0.4,-4.3 -0.7,-6.4 -0.1,-0.8 0.3,-5.6 0.2,-6.1 -0.6,-1.2 -1.2,-2.3 -1.9,-3.5 z"/>
+                              <path id="Path_30" class="st0" d="m 263.3,179.1 c -0.3,-0.1 -5.8,4.6 -5.8,4.6 0,0 -1.1,4.4 -0.8,4.6 0.3,0.2 7.4,0 7.4,0 z"/>
+                              <path id="Path_29" class="st0" d="m 264.7,194.6 c -0.4,0 -8,2 -8,2 0,0 -1.2,2.5 0,2.9 2.1,0.8 4.1,1.8 6.1,2.9 1.6,1 3.3,1.8 5.1,2.6 z"/>
+                              <path id="Path_28" class="st0" d="m 270.4,208.6 -7.1,1.8 c 0,0 2,6.9 2.2,6.9 0.2,0 5.7,-2.5 5.7,-2.5 z"/>
+                              <path id="Path_27" class="st0" d="m 264.1,228.4 2.7,-2.5 -3.8,-1.3 -4.4,2.9 -2.8,3.3 c 0.1,1.6 0.3,3.1 0.6,4.7 0.2,0.1 4.3,1.8 4.9,1.2 1.3,-1.2 2.5,-2.5 3.6,-3.8 0,-0.2 -0.8,-4.5 -0.8,-4.5 z"/>
+                              <path id="Path_26" class="st0" d="m 247.9,243.7 -1.2,-5.3 c 0,0 -7.9,-2.7 -8.1,-2.7 -0.2,0 -6.2,4.6 -6.2,4.6 0,0 -1.8,2.7 -0.8,2.9 1,0.2 10.7,2.9 10.7,2.9 z"/>
+                              <path id="Path_25" class="st0" d="m 252.9,213 5.7,4.8 -2.5,3.9 0.2,4.6 c 0,0 -4,4.1 -4.1,4.3 -0.1,0.2 -3,4 -3.7,4 -0.7,0 -4.8,-0.6 -5.3,-0.6 -0.9,-0.4 -1.7,-1 -2.5,-1.6 0,0 -1.5,-2.5 -1.7,-2.9 -0.2,-0.4 -1.7,-3.2 -1.7,-3.2 l 3.2,-4.5 5.2,0.8 z"/>
+                              <path id="Path_24" class="st0" d="m 217.3,215.8 -4.4,3.7 2.7,7.6 14.4,12.6 4,-8.6 -12.1,-7.4 -3,-4.9 z"/>
+                              <path id="Path_23" class="st0" d="m 190.6,213.7 -2.6,-4.1 -3.7,3.6 2,6 h 4.3 z"/>
+                              <path id="Path_21" class="st0" d="M 352.4,44.9 330.5,48.5 297,31.9 295.7,41.4 273,38.6 266.5,28.3 H 247.1 L 240.2,22 233.5,28.7 236.7,9.3 217.8,6.6 180.7,31.7 159.3,54 147.3,51.4 107.5,76.3 96.2,61.8 111.8,66.4 V 55 l -24,-16 -8,5.1 0.3,0.6 20.3,36.7 -4.6,9.1 h 11.8 l 2.1,4.2 -5.1,5.5 17.3,8.4 6.3,-2.9 2.1,8.4 -5.9,6.7 -10.9,16 6.3,9.7 2.9,7.6 0.8,6.3 22.7,28.6 h 26.1 l 9.3,23.2 21.5,-27.8 10.1,12.6 3.4,-0.8 2.3,4.8 -1.5,12.6 4.4,3.4 v 4 l 2.3,2.5 4.6,2.9 1.7,-4.2 -2.3,-5.1 -5.9,-7.4 1.9,-8 7.6,9.3 7.6,-10.1 -7.4,-12.4 h 15.4 l 16.4,-17.3 -7.8,-15 5.1,-6.3 6.3,9.3 6.5,1.3 -1.3,-10.7 12.6,-7.8 9.7,-27.8 -9.7,-6.3 14.5,-13.1 20.6,1.3 8.2,-11.2 1.1,1.1 -12,16.6 9.3,19.6 c 0,0 8.2,-25.9 16,-31 5.5,-3.4 11.3,-6.5 17.3,-9.1 l 1.9,-0.8 v -8.4 l 16.4,2.9 1.7,-12 z"/>
+                            </g>
+                            <g id="g6202_africa">
+                              <path id="Path_40" class="st0" d="m 130.2,248.4 4.1,3.8 -6,20 -6.1,1.4 c 0,0 -3.8,-2.3 -3.8,-2.7 0.9,-1.8 1.9,-3.5 3.1,-5.2 l 0.6,-5.7 -0.1,-4.3 4.9,-1.6 z"/>
+                              <path id="Path_22" class="st0" d="m 56.6,153.1 -32.4,10.1 -12.4,41.3 20,16.8 14.7,-5.9 10.1,4 v 15 l 9.1,13.9 -2.3,25.3 c 0,0 9.7,10.7 10.3,19.4 l 20.4,-8.2 c 0,0 9.3,-22.5 18.3,-29.1 l 1.1,-24.2 17.3,-17.9 V 205 l -12.2,2.1 -16.6,-29.5 -1.3,-1.5 2.8,-8.2 -24.5,-1.4 -2.7,3.6 z"/>
+                            </g>
+                            <g id="g6199_europe">
+                              <path id="Path_41" class="st0" d="m 10.4,65.4 c 0,0 6.6,5.5 6,6 -0.6,0.5 -6,6.3 -6,6.3 L 0,76.8 V 71 Z"/>
+                              <path id="Path_20" class="st0" d="m 122.7,154 -2.9,-7.6 -6.3,-9.7 10.9,-16 5.9,-6.7 -2.1,-8.4 -6.3,2.9 -17.3,-8.4 5.1,-5.5 -2.1,-4.2 H 95.7 l 4.6,-9.1 -20.2,-36.6 -0.8,-0.4 -19.5,19 v 6.9 l -12.7,15.6 3.8,11.4 5.9,1.1 3.2,-4.4 5.5,13.7 7.5,-11.1 -0.4,-7.8 -2.5,-8.6 8.2,-12.4 5.7,2.1 -4.2,9.9 v 9.5 l 13.7,2.5 -9.3,2.7 -7.6,15.8 -8.2,-1.7 -6.9,1.7 -3.6,-4.4 -3.6,-2.5 -2.1,1.5 -14.3,17.7 c 0,0 -1.3,-7.6 -1.3,-8.2 v -13.7 l -3.6,-4.3 -4.4,1.1 -1.3,2.3 4,4 -2.5,20 c 0,0 1.7,4.2 2.7,4.6 2,1.2 4,2.6 5.9,4 l -2.9,2.1 -2.3,2.3 h -4.8 l -3.2,0.8 1.5,18.7 12.8,-2.7 1.3,-8.6 8,-1.7 4.2,-4.2 6.8,0.2 12.7,13.5 c 0,0 2.1,-4.6 1.9,-5.3 -0.2,-0.7 -10.7,-12.2 -10.7,-12.2 h 4 l 7.6,3.4 4.4,12.8 12.4,-8.2 2.3,-10.5 2.1,9.5 -5.7,9.3 -2.5,4.8 h 15.6 l 2.9,1.1 -2.9,12.8 -2.3,5.9 20.4,23.8 8.8,1.3 16.4,-12.2 -22.7,-28.6 z"/>
+                            </g>
+                            <line
+                              id="Line_7"
+                              class="st1"
+                              x1="553.20001"
+                              y1="205.89999"
+                              x2="547.20001"
+                              y2="212.8"
+                              style="display:inline;fill:none" />
+                          </g>
+                        </g>
+                        <g id="Group_18" transform="translate(1016,799.935)">
+                          <g id="g11676"/>
+                            <g filter="url(#Rectangle_314)" id="g9497_guam" onClick="getCountryNames('US')" transform="matrix(1.0286594,0,0,1.0478438,-0.4947,-0.51870557)">
+                              <path class="st2" onClick="setActive(this)" d="m 423.63826,203.00895 2.06196,2.24941 3.74901,0.56235 2.43685,-0.7498 0.74981,-1.87451 -1.31216,-2.2494 -1.1247,-2.24941 -2.99921,-0.18745 -2.43686,2.24941 -0.98412,2.88205" id="path9656" transform="translate(-0.003)"/>
+                              <path onClick="setActive(this)" d="m 447.27874,210.81689 2.71723,3.37997 2.45213,-0.53019 2.5184,1.65684 2.71723,-0.99411 0.26509,-2.71722 -2.38586,-0.13255 -3.7776,-2.45213 z" id="path11568" />
+                              <path class="st2" onClick="setActive(this)" d="m 462.05779,215.45606 1.98822,2.65095 5.50072,0.2651 1.78939,-3.0486 -6.42855,-1.19293 z" id="path11570" />
+                              <path class="st2" onClick="setActive(this)" d="m 485.25362,230.23511 -0.86156,1.2592 0.59646,3.18115 -0.9941,2.31958 -1.92194,2.84977 2.84977,5.63327 -1.12666,4.0427 3.64506,3.31369 1.12666,0.59647 6.5611,-6.69366 8.28422,-3.51251 -3.18114,-6.42855 -13.71867,-6.75993 z" id="path11574" />
+                            </g>
+                            <g id="g5823_s_america" onClick="getCountryNames('SA')">
+                              <path id="Path_76" onClick="setActive(this)" class="st2" d="m 547.1,212.8 -3.7,23.3 19.7,18.8 v 7 l -3.1,27.5 -5.9,31.7 4.8,19.1 h 10.4 l 21.6,-51.4 15.4,-19.4 10.1,-2 12.1,-27.8 -30.9,-13.3 -10.9,-13.9 -33.61797,-6.39118 c 0,0 -3.19856,3.83539 -5.98203,6.79118 z"/>
+                            </g>
+                            <g id="g5032_n_america" onClick="getCountryNames('NA')">
+                              <path id="Path_75" onClick="setActive(this)" class="st2" d="m 567.8,7 -16.4,18 32,14.1 10.7,40.9 12.4,-2.8 15.4,-16.8 21.5,-9.8 5.1,-34.7 9.4,-12.4 H 629.8 L 606.5,0 l -16.4,5.8 -8,2 z"/>
+                              <path id="Path_74" onClick="setActive(this)" class="st2" d="m 541,27.2 c -0.9,0.6 -3.4,2 -4.3,1.8 -0.9,-0.2 -3.7,-5.7 -3.7,-5.7 0,0 -5.7,8 -5.4,9.4 0.3,1.4 4.6,11.7 4.6,11.7 l 12.7,0.8 9.7,9.5 v 13.4 l -7.6,2.4 0.3,4.9 11.9,-0.8 9.8,10.8 6.8,-10 -8.8,-12 8.8,6 1.1,-10.1 -10.6,-6.1 -0.4,-6.8 -13.6,-12 -6.4,0.4 -2.7,-1.2 -0.5,-4.7 z"/>
+                              <path id="Path_73" onClick="setActive(this)" class="st2" d="m 509.1,24 -5.1,9.3 4.3,7.4 7.5,-4.1 -2,-6.2 z"/>
+                              <path id="Path_72" onClick="setActive(this)" class="st2" d="m 482.9,25 -6.4,7.3 4.1,7.5 1.7,2.7 -2.6,3.7 1.4,3.8 7.8,2.5 11.1,0.7 5.4,-1.8 1.5,-5.2 -8,-2.8 0.3,-11.9 -15.4,-3.9 -0.6,-1.7 z"/>
+                              <path id="Path_71" onClick="setActive(this)" class="st2" d="m 477.7,22.8 v 2.9 l -3.4,4.2 -1.8,1.9 1.1,7.6 -3.5,2.3 -5.7,-0.7 -3.4,-6.8 0.5,-7.4 3.7,-5.8 z"/>
+                              <path id="Path_70"  onClick="setActive(this)" class="st2" d="m 437.7,49.1 -34.8,-10.4 -15.7,23 6.5,32.6 22.7,-9 31.7,5.9 19.9,35.1 v 32 l 20.2,21.9 v -15.4 l 12.6,25.8 46.3,22.2 c 0,0 0.10214,0.0121 6.16348,-6.57785 L 518.7,186.6 517,172.8 l 20.8,-0.8 7,12.4 2,-19.9 34,-43.9 11.5,-5.5 -18,-25.8 -9.3,6.2 -5.6,-14.1 -13.4,6.7 0.3,25.5 -30,-21.3 23.9,-21.1 -1.4,-25.5 -30.9,14.7 -7.7,-2.3 -13.1,-0.4 -30.7,-12.6 z"/>
+                            </g>
+                            <g id="g5799_ocean" onClick="getCountryNames('OC')">
+                              <path id="Path_64" onClick="setActive(this)" class="st2" d="m 299.8,247.5 -4.4,15.2 -8.7,-1.4 1.3,-12.4 -8.1,-0.3 -32,19.9 1.1,23.9 32.6,-2.9 13.9,12.6 H 315 l 5.8,-23 z"/>
+                              <path id="Path_67" onClick="setActive(this)" class="st2" d="m 354.2,308.5 -3.6,-2.8 -10.4,13.3 4.1,3.6 -2.1,2.7 c 0,0 3.1,0.3 3.4,0 0.3,-0.3 11.9,-15.2 11.9,-15.2 z"/>
+                              <path id="Path_66" onClick="setActive(this)" class="st2" d="m 357.5,296.4 -3.5,2.1 -0.8,7.2 4.3,1.8 4.3,-5.4 z"/>
+                              <path id="Path_65" onClick="setActive(this)" class="st4" d="m 308.8,305.7 -7.5,1.1 2.1,14.5 5.4,-2.8 -1.7,-5.5 2.2,-2.9 z"/>
+                              <path id="Path_63" onClick="setActive(this)" class="st2" d="m 315.4,246.1 -9.4,-11.4 -6.9,-2.2 -2,9.8 9.8,8.1 5.6,4.2 4.1,-1 -8,-7.5 z"/>
+                            </g>
+                            <g id="g5808_asia" onClick="getCountryNames('AS')">
+                              <path id="Path_62" onClick="setActive(this)" class="st2" d="m 299.1,232.5 -9,-6 -11.2,0.7 2.8,8.6 9.7,2.7 c 0,0 0.8,5.6 1.3,5.6 0.5,0 4.5,-1.8 4.5,-1.8 z"/>
+                              <path id="Path_49" onClick="setActive(this)" class="st2" d="M 352.4,44.9 330.5,48.5 297,31.9 295.7,41.4 273,38.6 266.5,28.3 H 247.1 L 240.2,22 233.5,28.7 236.7,9.3 217.8,6.6 180.7,31.7 159.3,54 147.3,51.4 107.5,76.3 96.2,61.8 111.8,66.4 V 55 l -24,-16 -8,5.1 0.3,0.6 20.3,36.7 -4.6,9.1 h 11.8 l 2.1,4.2 -5.1,5.5 17.3,8.4 6.3,-2.9 2.1,8.4 -5.9,6.7 -10.9,16 6.3,9.7 2.9,7.6 0.8,6.3 22.7,28.6 h 26.1 l 9.3,23.2 21.5,-27.8 10.1,12.6 3.4,-0.8 2.3,4.8 -1.5,12.6 4.4,3.4 v 4 l 2.3,2.5 4.6,2.9 1.7,-4.2 -2.3,-5.1 -5.9,-7.4 1.9,-8 7.6,9.3 7.6,-10.1 -7.4,-12.4 h 15.4 l 16.4,-17.3 -7.8,-15 5.1,-6.3 6.3,9.3 6.5,1.3 -1.3,-10.7 12.6,-7.8 9.7,-27.8 -9.7,-6.3 14.5,-13.1 20.6,1.3 8.2,-11.2 1.1,1.1 -12,16.6 9.3,19.6 c 0,0 8.2,-25.9 16,-31 5.5,-3.4 11.3,-6.5 17.3,-9.1 l 1.9,-0.8 v -8.4 l 16.4,2.9 1.7,-12 z"/>
+                              <path id="Path_51" onClick="setActive(this)" class="st2" d="m 190.6,213.7 -2.6,-4.1 -3.7,3.6 2,6 h 4.3 z"/>
+                              <path id="Path_52" onClick="setActive(this)" class="st2" d="m 217.3,215.8 -4.4,3.7 2.7,7.6 14.4,12.6 4,-8.6 -12.1,-7.4 -3,-4.9 z"/>
+                              <path id="Path_53" onClick="setActive(this)" class="st2" d="m 252.9,213 5.7,4.8 -2.5,3.9 0.2,4.6 c 0,0 -4,4.1 -4.1,4.3 -0.1,0.2 -3,4 -3.7,4 -0.7,0 -4.8,-0.6 -5.3,-0.6 -0.9,-0.4 -1.7,-1 -2.5,-1.6 0,0 -1.5,-2.5 -1.7,-2.9 -0.2,-0.4 -1.7,-3.2 -1.7,-3.2 l 3.2,-4.5 5.2,0.8 z"/>
+                              <path id="Path_54" onClick="setActive(this)" class="st2" d="m 247.9,243.7 -1.2,-5.3 c 0,0 -7.9,-2.7 -8.1,-2.7 -0.2,0 -6.2,4.6 -6.2,4.6 0,0 -1.8,2.7 -0.8,2.9 1,0.2 10.7,2.9 10.7,2.9 z"/>
+                              <path id="Path_55" onClick="setActive(this)" class="st2" d="m 264.1,228.4 2.7,-2.5 -3.8,-1.3 -4.4,2.9 -2.8,3.3 c 0.1,1.6 0.3,3.1 0.6,4.7 0.2,0.1 4.3,1.8 4.9,1.2 1.3,-1.2 2.5,-2.5 3.6,-3.8 0,-0.2 -0.8,-4.5 -0.8,-4.5 z"/>
+                              <path id="Path_56" onClick="setActive(this)" class="st2" d="m 270.4,208.6 -7.1,1.8 c 0,0 2,6.9 2.2,6.9 0.2,0 5.7,-2.5 5.7,-2.5 z"/>
+                              <path id="Path_57" onClick="setActive(this)" class="st2" d="m 264.7,194.6 c -0.4,0 -8,2 -8,2 0,0 -1.2,2.5 0,2.9 2.1,0.8 4.1,1.8 6.1,2.9 1.6,1 3.3,1.8 5.1,2.6 z"/>
+                              <path id="Path_58" onClick="setActive(this)" class="st2" d="m 263.3,179.1 c -0.3,-0.1 -5.8,4.6 -5.8,4.6 0,0 -1.1,4.4 -0.8,4.6 0.3,0.2 7.4,0 7.4,0 z"/>
+                              <path id="Path_59" onClick="setActive(this)" class="st2" d="m 300.8,113 -2.9,-2.7 c 0,0 -0.4,1.4 -0.5,2 -0.1,0.6 0.7,7.8 0.7,8.4 0,0.6 0.2,8.4 0.2,8.4 0,0 -0.2,2.2 0.8,1.7 1,-0.5 4,-0.5 4.1,-1.8 -0.1,-2.2 -0.4,-4.3 -0.7,-6.4 -0.1,-0.8 0.3,-5.6 0.2,-6.1 -0.6,-1.2 -1.2,-2.3 -1.9,-3.5 z"/>
+                              <path id="Path_60" onClick="setActive(this)" class="st2" d="m 302.5,136.1 h -4.7 c -1,0.5 -2,1.1 -2.8,1.8 -0.4,0.6 -0.9,2.4 -0.5,3.1 1.3,1.1 2.6,2.2 4,3.2 0,0 3.7,0.1 4.8,-0.8 1.1,-0.9 3.6,-2.7 3.1,-3.6 -0.5,-0.9 -3.9,-3.7 -3.9,-3.7 z"/>
+                              <path id="Path_61" onClick="setActive(this)" class="st2" d="m 294.2,143.7 c 0,0 3.6,1.9 3.6,2.2 0,0.3 -0.4,2.7 -0.5,4.3 0,1.9 0.2,3.9 0.5,5.8 -0.1,1.6 -0.3,3.2 -0.5,4.7 l -7.4,2.7 c -0.6,0.8 -1.2,1.6 -2,2.2 -0.8,0.7 -1.7,1.2 -2.6,1.5 -1.4,0.3 -1.7,-0.3 -3.4,0.7 -1.7,1 -1.3,2.1 -2.8,2 -1.5,-0.1 -3.4,0 -3.9,-0.9 -0.5,-0.9 -1.5,-4.9 -0.8,-5.3 0.7,-0.4 6.4,-5.4 6.4,-5.4 l 8,-3.4 c 0,0 6.3,-3.9 6.2,-4.2 -0.1,-0.3 -0.8,-6.9 -0.8,-6.9 z"/>
+                            </g>
+                            <g id="g5795_africa" onClick="getCountryNames('AF')">
+                              <path id="Path_50" onClick="setActive(this)" class="st2" d="m 56.6,153.1 -32.4,10.1 -12.4,41.3 20,16.8 14.7,-5.9 10.1,4 v 15 l 9.1,13.9 -2.3,25.3 c 0,0 9.7,10.7 10.3,19.4 l 20.4,-8.2 c 0,0 9.3,-22.5 18.3,-29.1 l 1.1,-24.2 17.3,-17.9 V 205 l -12.2,2.1 -16.6,-29.5 -1.3,-1.5 2.8,-8.2 -24.5,-1.4 -2.7,3.6 z"/>
+                              <path id="Path_68" onClick="setActive(this)" class="st2" d="m 130.2,248.4 4.1,3.8 -6,20 -6.1,1.4 c 0,0 -3.8,-2.3 -3.8,-2.7 0.9,-1.8 1.9,-3.5 3.1,-5.2 l 0.6,-5.7 -0.1,-4.3 4.9,-1.6 z"/>
+                            </g>
+                            <g id="g5784_europe" onClick="getCountryNames('EU')">
+                              <path id="Path_48" onClick="setActive(this)" class="st2" d="m 122.7,154 -2.9,-7.6 -6.3,-9.7 10.9,-16 5.9,-6.7 -2.1,-8.4 -6.3,2.9 -17.3,-8.4 5.1,-5.5 -2.1,-4.2 H 95.7 l 4.6,-9.1 -20.2,-36.6 -0.8,-0.4 -19.5,19 v 6.9 l -12.7,15.6 3.8,11.4 5.9,1.1 3.2,-4.4 5.5,13.7 7.5,-11.1 -0.4,-7.8 -2.5,-8.6 8.2,-12.4 5.7,2.1 -4.2,9.9 v 9.5 l 13.7,2.5 -9.3,2.7 -7.6,15.8 -8.2,-1.7 -6.9,1.7 -3.6,-4.4 -3.6,-2.5 -2.1,1.5 -14.3,17.7 c 0,0 -1.3,-7.6 -1.3,-8.2 v -13.7 l -3.6,-4.3 -4.4,1.1 -1.3,2.3 4,4 -2.5,20 c 0,0 1.7,4.2 2.7,4.6 2,1.2 4,2.6 5.9,4 l -2.9,2.1 -2.3,2.3 h -4.8 l -3.2,0.8 1.5,18.7 12.8,-2.7 1.3,-8.6 8,-1.7 4.2,-4.2 6.8,0.2 12.7,13.5 c 0,0 2.1,-4.6 1.9,-5.3 -0.2,-0.7 -10.7,-12.2 -10.7,-12.2 h 4 l 7.6,3.4 4.4,12.8 12.4,-8.2 2.3,-10.5 2.1,9.5 -5.7,9.3 -2.5,4.8 h 15.6 l 2.9,1.1 -2.9,12.8 -2.3,5.9 20.4,23.8 8.8,1.3 16.4,-12.2 -22.7,-28.6 z"/>
+                              <path id="Path_69" onClick="setActive(this)" class="st2" d="m 10.4,65.4 c 0,0 6.6,5.5 6,6 -0.6,0.5 -6,6.3 -6,6.3 L 0,76.8 V 71 Z"/>
+                            </g>
+                            <!-- <path d="m 471.53495,218.57093 1.85566,3.24741 1.65685,1.59057 1.52429,2.65095 6.89248,-2.58467 -1.06038,-3.77761 -4.10898,-0.86156 -2.5184,-1.19293 -1.2592,-0.79528 z" id="path11572" transform="matrix(1.0286594,0,0,1.0478438,-0.4947,-0.51870557)" /> -->
+                          </g>
+                        </g>
+                        <g id="Group_Title">
+                          <g id="Group_189" class="st6">
+                            <g transform="matrix(1.2573697,0,0,1,381.9421,1612)" filter="url(#Rectangle_27)" id="g325">
+                              <g id="Rectangle_27-9" data-name="Rectangle 27" transform="translate(460.79,101.75)">
+                                <rect width="58" height="20" rx="10" stroke="none" id="rect320" x="0" y="0" />
+                                <rect x="0.5" y="0.5" width="57" height="19" rx="9.5" fill="none" id="rect322" />
+                              </g>
+                            </g>
+                            <text id="北アメリカ" x="966.78998" y="1727.75">
+                              <tspan id="tspan1164" x="966.78998" y="1727.75">北アメリカ</tspan>
+                            </text>
+                          </g>
+                          <g id="Group_22" class="st6" transform="matrix(1,0,0,0.99967228,-46.350995,157.86156)">
+                            <g transform="matrix(0.76621618,0,0,1.0126094,522.17453,1469.093)" filter="url(#Rectangle_27-2)" id="g336">
+                              <g id="Rectangle_27-10" transform="translate(87.79,91.75)">
+                                <rect width="74" height="20" rx="10" stroke="none" id="rect331" x="0" y="0" />
+                                <rect x="0.5" y="0.5" width="73" height="19" rx="9.5" fill="none" id="rect333" />
+                              </g>
+                            </g>
+                            <text id="欧州" x="606.64221" y="1576.9003">
+                              <tspan id="tspan2847" x="606.64221" y="1576.9003">欧州</tspan>
+                            </text>
+                          </g>
+                          <g id="Group_131" class="st6" transform="translate(-55.651,270.75)">
+                            <g transform="translate(563.65,1341.25)" filter="url(#Rectangle_27-4)" id="g358">
+                              <g id="Rectangle_27-12"  transform="translate(25.79,220.75)">
+                                <rect width="74" height="20" rx="10" stroke="none" id="rect353" x="0" y="0" />
+                                <rect x="0.5" y="0.5" width="73" height="19" rx="9.5" fill="none" id="rect355" />
+                              </g>
+                            </g>
+                            <text id="アフリカ" transform="translate(624.442,1576)">
+                              <tspan x="-24" y="0" id="tspan360">アフリカ</tspan>
+                            </text>
+                          </g>
+                          <g id="Group_132" class="st6" transform="translate(133.349,311.75)">
+                            <g transform="translate(374.65,1300.25)" filter="url(#Rectangle_27-5)" id="g369">
+                              <g id="Rectangle_27-13" transform="translate(214.79,261.75)">
+                                <rect width="74" height="20" rx="10" stroke="none" id="rect364" x="0" y="0" />
+                                <rect x="0.5" y="0.5" width="73" height="19" rx="9.5" fill="none" id="rect366" />
+                              </g>
+                            </g>
+                            <text id="オセオニア" transform="translate(626.442,1576)">
+                              <tspan x="-30" y="0" id="tspan371">オセオニア</tspan>
+                            </text>
+                          </g>
+                          <g id="Group_133" class="st6" transform="translate(261.666,299.75)">
+                            <g transform="translate(246.33,1312.25)" filter="url(#Rectangle_27-6)" id="g380">
+                              <g id="Rectangle_27-14" transform="translate(346,249.75)">
+                                <rect width="155.683" height="20" rx="10" stroke="none" id="rect375" x="0" y="0" />
+                                <rect x="0.5" y="0.5" width="154.683" height="19" rx="9.5" fill="none" id="rect377" />
+                              </g>
+                            </g>
+                            <text id="ハワイ_グアム_サイパン" transform="translate(670.334,1576)">
+                              <tspan x="-65.771004" y="0" id="tspan382">ハワイ/グアム/サイパン</tspan>
+                            </text>
+                          </g>
+                          <g id="Group_134" class="st6" transform="translate(443.349,284.75)">
+                            <g transform="matrix(1.1810345,0,0,0.99209706,-30.174555,1329.1053)" filter="url(#Rectangle_27-8)" id="g402">
+                              <g id="Rectangle_27-16" transform="translate(523.79,234.75)">
+                                <rect width="58" height="20" rx="10" stroke="none" id="rect397" x="0" y="0" />
+                                <rect x="0.5" y="0.5" width="57" height="19" rx="9.5" fill="none" id="rect399" />
+                              </g>
+                            </g>
+                            <text id="南アメリカ" x="593.34198" y="1576">
+                              <tspan id="tspan1166" x="593.34198" y="1576">南アメリカ</tspan>
+                            </text>
+                          </g>
+                          <g id="Group_26" class="st6" transform="translate(170.29,56.75)">
+                            <g id="Rectangle_29" transform="translate(538,1619.25)">
+                              <rect width="61" height="20" rx="10" stroke="none" id="rect408" x="0" y="0" />
+                              <rect x="0.5" y="0.5" width="60" height="19" rx="9.5" fill="none" id="rect410"/>
+                            </g>
+                            <text id="アジア" transform="translate(569,1633.25)">
+                              <tspan x="-18" y="0" id="tspan413">アジア</tspan>
+                            </text>
+                          </g>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+              </div>
+              <div class="simulation">
+                <h3 class="simulation--tit simulation-top">
+                  <span class="icon">
+                    <img src="{{ asset('assets/img/money.svg', 'user_data') }}" alt="シミュレーション結果"></span><span class="simulation_tit">シミュレーション結果</span></h3>
+                <div class="simulation--list resultContent">
+                  <div class="travellist resultSimu">
+                    <ul class="resultList resultCurrent" id="result_current_1" onclick="showList();">
+                      <li><p id='des_si_title_1'>{{ '渡航先①'|trans }}</p>
+                      <div class="info">
+                        <p class="date" id="des_date_1">{{ '期間: '|trans }}</p>
+                        <p class="area" id="des_area_1">{{ '国名: '|trans }}</p>
+                      </div>
+                      </li>
+                    </ul>
+                    <ul class="resultList resultListSelect" id="result_list_select_1">
+                      <li id="list_1" class="selected"><p id='des_si_title_1'>{{ '渡航先①'|trans }}</p>
+                      <div class="info">
+                        <p class="date" id="des_date_1">{{ '期間: '|trans }}</p>
+                        <p class="area" id="des_area_1">{{ '国名: '|trans }}</p>
+                      </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="rentalfee">
+                    <dl class="dflex">
+                      <dt>通信料</dt>
+                      <input type="hidden" id="des_price_1" value="0">
+                      <input type="hidden" id="daily_price_1" value="0">
+                      <input type="hidden" id="total_price_1" value="0">
+                      <dd class="price" id="des_1">
+                        ーーーー円
+                      </dd>
+                    </dl>
+                    <dl class="dflex">
+                      <dt>レンタル料（220円/日）</dt>
+                      <dd class="price" id="daily_1">ーーーー円</dd>
+                    </dl>
+                  </div>
+                  <div class="totalfee">
+                    <dl class="dflex">
+                      <dt>合計金額</dt>
+                      <dd id="total_1">ーーー円<small>（税込）</small></dd>
+                    </dl>
+                  </div>
+                  <div class="btnsutmit">
+                    <a id="btn_apply_1" href="{{ url('shopping_option') }}">この内容でお申し込み</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %}
+            <div class="loader"><div class="loaderIcon"></div></div>
+          </div>
+        </div>
+      </section>
+    </section>
+{% endblock %}
+
+{% block javascript %}
+  <script type="text/javascript">
+    var $simuLoader = $('.loader');
+    
+    function listClick(element) {
+      if($('.resultListSelect').css('display') == 'table') {
+        $('.resultListSelect').css('display','none');
+      } else {
+        $('.resultListSelect').css('display','table');
+      }
+
+      var index = $('.active').find('a').attr('href').substring(4);
+      var replace_index = element.children[0].id.substring(13);
+      // console.log(replace_index);
+      var str_parent = '#result_list_select_' + index;
+      var $parent = $(str_parent);
+      $(str_parent + ' .selected').removeClass('selected');
+      var str_element = '#result_current_' + index;
+      var $obj = $(str_element);
+      $obj.html('<li>'+element.innerHTML+'</li>');
+      element.classList.add('selected');
+
+      var str_des_title = '#daily_' + index;
+      var $des_title = $(str_des_title);
+      var str_sub_title = '#daily_price_' + replace_index;
+      $des_title[0].innerHTML = $(str_sub_title).val() + '円';
+      
+      str_des_title = '#des_' + index;
+      $des_title = $(str_des_title);
+      str_sub_title = '#des_price_' + replace_index;
+      $des_title.html($(str_sub_title).val() + '円');
+      
+      str_des_title = '#total_' + index;
+      $des_title = $(str_des_title);
+      str_sub_title = '#total_price_' + replace_index;
+      $des_title[0].innerHTML = $(str_sub_title).val() + '円<small>（税込）</small>';
+      
+    }
+
+    function showList() {
+      if($('.resultListSelect').css('display') == 'table') {
+        $('.resultListSelect').css('display','none');
+      } else {
+        $('.resultListSelect').css('display','table');
+      }
+    }
+
+    $('document').ready(function(){      
+
+      $(document).on("change",".continent", function() {
+          let clickedOption = $(this).val();
+          if (clickedOption != '*') {
+            getCountryNames(clickedOption);
+          }
+      });
+
+      
+      $('.tab__list').each(function(){
+        // For each set of tabs, we want to keep track of
+        // which tab is active and its associated content
+        var $active, $content, $links = $(this).find('li');
+        
+        // If the location.hash matches one of the links, use that as the active tab.
+        // If no match is found, use the first link as the initial active tab.
+        $active = $($links.filter('[href="'+location.hash+'"]')[0] || $links[0]);
+        $active.addClass('active');
+        $content = $($active.find('a').attr('href'));
+        // Hide the remaining content
+        $links.not($active).each(function () {
+            $($(this).find('a').attr('href')).hide();
+        });
+
+        $('.tab_title').on('click', function (e) {
+          $active.removeClass('active');
+
+          // $active.children()[2].style.display="none";
+          $content.hide();
+          $active = $(this).parent();
+
+          $content = $($(this).attr('href'));
+
+          // Make the tab active.
+          $active.addClass('active');
+          $content.show();
+
+          // Prevent the anchor's default click action
+          e.preventDefault();
+        });
+
+        // Bind the click event handler
+        $(this).on('click', 'li', function(e){
+            // Make the old tab inactive.
+            if($(this)[0].classList.contains('tab__link')) {
+              $active.removeClass('active');
+
+              // $active.children()[2].style.display="none";
+              $content.hide();
+
+              // Update the variables with the new link and content
+              $active = $(this);
+              $content = $($(this).find('a').attr('href'));
+
+              // Make the tab active.
+              $active.addClass('active');
+              $content.show();
+
+              // Prevent the anchor's default click action
+              e.preventDefault();
+            } else if($(this)[0].classList.contains('more')) {
+              var num = $('.tab__list').children().eq($('.tab__list').children().length-2).children().eq(0).attr('href').substring(4);
+              var str_des_element = '#des_price_'+num;
+              var $des_element = $(str_des_element);
+              var des_price = $des_element.val();
+              var str_num = '';
+              
+              num++;
+              if (parseInt(des_price, 10) > 0) {
+                if (num < 6) {
+                  switch(num) {
+                    case 2:
+                      str_num = '②';
+                      break;
+                    case 3:
+                      str_num = '③';
+                      break;
+                    case 4:
+                      str_num = '④';
+                      break;
+                    case 5:
+                      str_num = '⑤';
+                      break;
+                    default:
+                      break;
+                  }
+                  $('<li class="tabslist__list--li tab__link"><a href="#tab'+num+'"><span>渡航先</span><span class="num">'+str_num+'</span></a><span class="delete" onClick="deleteTab(this);"><img src="{{ asset("assets/img/close-white.svg", "user_data") }}" alt=""></span></li>').insertBefore('ul.tab__list>li:last');
+                  $('.blockmap').append('<div class="tabscontent dflex" id="tab'+num+'" style="display: none;">'+$('#tab1').html().replace('country_select_1', 'country_select_'+num).replace('des_title_1', 'des_title_'+num).replace('des_si_title_1', 'des_si_title_'+num).replace('des_date_1', 'des_date_'+num).replace('des_area_1', 'des_area_'+num).replace('price_1', 'price_'+num).replace('des_1', 'des_'+num).replace('des_price_1', 'des_price_'+num).replace('daily_price_1', 'daily_price_'+num).replace('total_price_1', 'total_price_'+num).replace('daily_1', 'daily_'+num).replace('total_1', 'total_'+num).replace('btn_apply_1', 'btn_apply_'+num).replace('daterange_1', 'daterange_'+num).replace('product_id_1', 'product_id_'+num).replace('result_current_1', 'result_current_'+num).replace('result_list_select_1', 'result_list_select_'+num).replace('cartitem_id_1', 'cartitem_id_'+num).replace('productclass_id_1', 'productclass_id_'+num)+'</div>');
+                  
+                  var str_des_title = '#des_title_' + num;
+                  $des_title = $(str_des_title);
+                  $des_title[0].innerHTML = '渡航先'+str_num;
+                  
+                  // initialize the new tab item
+                  str_des_title = '#des_price_' + num;
+                  $des_title = $(str_des_title);
+                  $des_title.val(0);
+
+                  str_des_title = '#daily_price_' + num;
+                  $des_title = $(str_des_title);
+                  $des_title.val(0);
+
+                  str_des_title = '#total_price_' + num;
+                  $des_title = $(str_des_title);
+                  $des_title.val(0);
+                  
+                  str_des_title = '#country_select_' + num;
+                  $des_title = $(str_des_title);
+                  $des_title.val('-------');
+                  
+                  str_des_title = '#product_id_' + num;
+                  $des_title = $(str_des_title);
+                  $des_title.val('');
+                  
+                  str_des_title = '#daterange_' + num;
+                  $des_title = $(str_des_title);
+                  $des_title.val('');
+                  
+                  str_des_title = '#price_' + num;
+                  $des_title = $(str_des_title);
+                  $des_title[0].innerHTML = '---円';
+                  
+                  $('.resultListSelect').append("<li id='list_" + num + "' onClick='listClick(this);'><p id='des_si_title_" + num + "'>{{ '渡航先" + str_num + "' }}</p><div class='info'><p class='date' id='des_date_" + num + "'>{{ '期間: '|trans }}</p><p class='area' id='des_area_" + num + "'>{{ '国名: '|trans }}</p></div></li>");
+                }
+              }              
+            }
+        });
+      });      
+    });
+    
+    function deleteTab(element) {
+      var index = $('.active').find('a').attr('href').substring(4);
+      var str_cart = '#cartitem_id_' + index;
+      var cartitem_id = $(str_cart).val();
+      str_cart = '#product_id_' + index;
+      var product_id = $(str_cart).val();
+      str_cart = '#productclass_id_' + index;
+      var productclass_id = $(str_cart).val();
+
+      if (productclass_id != '') {
+        deleteCartItem(cartitem_id, product_id, productclass_id);
+      }
+
+      // if (element.parentElement.parentElement.children.length > 2) {
+      if (index != 1) {
+        var total_tabs_length = $('.tabslist__list').children().length - 1;
+            
+        if (total_tabs_length == 1) {
+          var str_list = '#list_' + index;
+          $(str_list).remove();
+        } else {
+          for (var i = total_tabs_length; i > 0; i--) {
+            // var str_list = 'ul#result_list_select_' + i + ' li#list_' + index;
+            var str_list = 'ul.resultListSelect' + ' li#list_' + index;
+            $(str_list).remove();
+          }  
+        }
+        $active = element.parentElement.parentElement.children[0];
+        $active.click();
+        $('#tab1').show();
+        element.parentElement.remove();
+        var h_ref = element.parentElement.children[0].href;
+        $content = $(h_ref.substring(h_ref.indexOf('#')));
+        
+        $content.remove();
+        // var str_list = '#list_' + index;
+        // $(str_list).remove();
+
+      } else {
+        // initialize the new tab item
+        var str_des_title = '#des_price_' + index;
+        var $des_title = $(str_des_title);
+        $des_title.val(0);
+
+        str_des_title = '#daily_price_' + index;
+        $des_title = $(str_des_title);
+        $des_title.val(0);
+
+        str_des_title = '#total_price_' + index;
+        $des_title = $(str_des_title);
+        $des_title.val(0);
+        
+        str_des_title = '#country_select_' + index;
+        $des_title = $(str_des_title);
+        $des_title.val('-------');
+        
+        str_des_title = '#product_id_' + index;
+        $des_title = $(str_des_title);
+        $des_title.val('');
+        
+        str_des_title = '#daterange_' + index;
+        $des_title = $(str_des_title);
+        $des_title.val('');
+        
+        str_des_title = '#price_' + index;
+        $des_title = $(str_des_title);
+        $des_title.html('---円');
+
+        str_des_title = '#des_' + index;
+        $des_title = $(str_des_title);
+        $des_title.html('---円');
+
+        str_des_title = '#daily_' + index;
+        $des_title = $(str_des_title);
+        $des_title.html('---円');
+
+        str_des_title = '#total_' + index;
+        $des_title = $(str_des_title);
+        $des_title.html('---円');
+
+        str_des_title = '#productclass_id_' + index;
+        $des_title = $(str_des_title);
+        $des_title.val('');
+
+        str_des_title = '#des_date_' + index;
+        $des_title = $(str_des_title);
+        $des_title.html('期間: ');
+        
+        str_des_title = '#des_area_' + index;
+        $des_title = $(str_des_title);
+        $des_title.html('国名: ');
+      }
+    }
+
+    function setActive(element) {
+
+      var index = $('.active').find('a').attr('href').substring(4);
+      
+      if ($('.st3').length > 0 && typeof $('.st3')[index - 1] !== "undefined") {
+          $('.st3')[index - 1].classList.remove('st3');
+      }
+      element.classList.add("st3");
+      
+    }
+
+    function getCountryNames(name) {
+      $.ajax({
+          url: "https://kw.api.gonosen.work/api/countries?continent=" + name,
+          type: 'GET',
+          crossDomain: true,
+          dataType: 'json',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          success:function(data){
+            updateCountryName(data.data.countries);
+          }
+
+      });
+    }
+
+    function updateCountryName(country_arr) {
+      // body...
+      var index = $('.active').find('a').attr('href').substring(4);
+      
+      var str_select = '#country_select_' + index;
+      // var jsonData = JSON.parse(arr[0]);
+      // var $select = $(str_select);
+      
+      var $select = $(str_select);
+      var options = "";
+      for (var i = country_arr.length - 1; i >= 0; i--) {
+         options += '<option value="'+country_arr[i].country_code+'">'+country_arr[i].country_name_jp+'</option>';
+      }
+
+      // $select[0].innerHTML = options;
+      $select.html(options);
+      
+    }
+
+    // var nextMonth=moment().add(30,'days');
+    // var nextWeek=moment().add(7,'days');
+    $('body').on('focus',".daterange", function(){
+        var minDate = new Date();
+        minDate.setDate(minDate.getDate() + 1);
+
+        $(this).daterangepicker({
+            locale: {
+                format: 'MM/DD',
+                daysOfWeek: ["日","月","火","水","木","金","土"],
+                monthNames: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+                firstDay: 0,
+                applyLabel: '確認',
+                cancelLabel: 'キャンセル',
+              },
+              // endDate:nextMonth,
+              minDate: minDate,
+              startDate: minDate,
+              endDate: minDate
+            }, 
+            function(start, end, label) {
+              // alert("Your chosen date: "+start.format('MM/DD/YYYY')+' to '+end.format('MM/DD/YYYY'));
+              var index = $('.active').find('a').attr('href').substring(4);
+      
+              var str_select = '#country_select_' + index;
+              var str_price = '#price_' + index;
+              // var jsonData = JSON.parse(arr[0]);
+              // var $select = $(str_select);
+              
+              var $select = $(str_select);
+              var $price = $(str_price);
+              // var country = $select[0].value;
+              var country = $select.val();
+              if (country != 'none') {
+                calculatePrice(country, start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+              }
+            }
+        );
+    });
+
+    $('.country').change(function() {    
+        var index = $('.active').find('a').attr('href').substring(4);
+        var str_daterange = '#daterange_' + index;
+        var $daterange = $(str_daterange);
+        var range = $daterange[0].value;
+        var dates = [];
+
+        if (range.includes('～')) {
+          var dates = range.split('～');
+        } else if (range.includes('-')) {
+          var dates = range.split('-');
+        }
+
+        if (dates.length > 0) {
+          var str_select = '#country_select_' + index;
+          var $select = $(str_select);
+          var country = $select[0].value;
+          var start = new Date(dates[0].trim());
+          var end = new Date(dates[1].trim());
+          end.setFullYear(start.getFullYear());
+          calculatePrice(country, changeDateFormat(start, '-'), changeDateFormat(end, '-'));
+        }
+    });
+
+    function changeDateFormat(date, join_format) {
+      let date_month = (date.getMonth() + 1).toString().padStart(2, '0');
+      let date_day = date.getDate().toString().padStart(2, '0');
+      let date_year = date.getFullYear();
+      var res = '';
+      res = [date_year, date_month, date_day].join(join_format);
+      return String(res);
+    }
+
+
+    function calculatePrice(country, start, end) {
+      $simuLoader.stop().fadeIn(100);
+      $.ajax({
+          url: "https://kw.api.gonosen.work/api/countries/price",
+          method: 'post',
+          crossDomain: true,
+          dataType: 'json',
+          data: {
+            'data': [
+              {
+                'country_code': country,
+                'from_date': start,
+                'to_date': end
+              },
+            ]
+          },
+          success: function(data){
+            $simuLoader.stop().fadeOut(100);
+            des_price = data.data[0].total_price;
+            var index = $('.active').find('a').attr('href').substring(4);
+            
+            var str_price = '#price_' + index;
+            var $price = $(str_price);
+            $price[0].innerHTML = numberWithCommas(des_price) + '円';
+            
+            str_price = '#des_' + index;
+            $price = $(str_price);
+            $price[0].innerHTML = numberWithCommas(des_price) + '円'
+            
+            str_price = '#des_price_' + index;
+            $price = $(str_price);
+            $price.val(des_price);
+            
+            str_price = '#daily_' + index;
+            $price = $(str_price);
+            var dt1 = new Date(start);
+            dt1.setDate(dt1.getDate() + 1);
+            var dt2 = new Date(end);
+            dt2.setDate(dt2.getDate() + 1);
+            $price[0].innerHTML = numberWithCommas(Math.round((dt2.getTime() - dt1.getTime()) / (1000 * 3600 * 24)) * 220) + '円';
+
+            str_price = '#daily_price_' + index;
+            $price = $(str_price);
+            $price.val(numberWithCommas(Math.round((dt2.getTime() - dt1.getTime()) / (1000 * 3600 * 24)) * 220));
+            
+            str_price = '#total_' + index;
+            $price = $(str_price);
+            $price[0].innerHTML = numberWithCommas(des_price + Math.round((dt2.getTime() - dt1.getTime()) / (1000 * 3600 * 24)) * 220) + '円';
+
+            str_price = '#total_price_' + index;
+            $price = $(str_price);
+            $price.val(numberWithCommas(des_price + Math.round((dt2.getTime() - dt1.getTime()) / (1000 * 3600 * 24)) * 220));
+            
+            var total_tabs_length = $('.tabslist__list').children().length - 1;
+            
+            if (total_tabs_length == 1) {
+              str_price = '#des_date_' + index;
+              $price = $(str_price);
+              var str_dt1 = changeDateFormat(dt1, '/');
+              var str_dt2 = changeDateFormat(dt2, '/');
+              $price[0].innerHTML = '期間: <span>' + str_dt1 + '〜' + str_dt2.substring(5) + '</span>';
+              
+              str_price = '#des_area_' + index;
+              $price = $(str_price);
+              $price[0].innerHTML = '国名: <span>' + data.data[0].country_name_jp + '</span>';
+            } else {
+              for (var i = 0; i < total_tabs_length; i++) {
+                var tab_index = $('.tabslist__list').children()[i].firstElementChild.getAttribute('href').substring(4);
+                
+                str_price = 'ul#result_list_select_' + tab_index + ' li#list_' + index + ' p#des_date_' + index;
+                $price = $(str_price);
+                var str_dt1 = changeDateFormat(dt1, '/');
+                var str_dt2 = changeDateFormat(dt2, '/');
+                $price[0].innerHTML = '期間: <span>' + str_dt1 + '〜' + str_dt2.substring(5) + '</span>';
+
+                str_price = 'ul#result_list_select_' + tab_index + ' li#list_' + index + ' p#des_area_' + index;
+                $price = $(str_price);
+                $price[0].innerHTML = '国名: <span>' + data.data[0].country_name_jp + '</span>';
+              }  
+            }
+
+            str_price = '#product_id_' + index;
+            $price = $(str_price);
+            var product_id = $price.val();
+
+            new_product(product_id, index, data.data[0].country_name_jp, data.data[0].country_code, des_price, dt1.getTime(), dt2.getTime());
+            // str_price = '#btn_apply_' + index;
+            // $price = $(str_price);
+            // $price.prop('href', './shopping/option?'+'num='+index+'&from='+start+'&to='+end+'&country='+data.data[0].country_name_jp+'&price='+des_price);
+          }
+      });
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function deleteCartItem(cartitem_id, product_id, productclass_id) {
+      $simuLoader.stop().fadeIn(100);
+      $.ajax({
+        url: '{{ url("delete_cartitem") }}',
+        method: 'post',
+        data: {
+          'cartitem_id': cartitem_id,
+          'product_id': product_id,
+          'productclass_id': productclass_id
+        },
+        success: function(data) {
+          $simuLoader.stop().fadeOut(100);
+        }
+      });
+    }
+
+    function new_product(product_id, index, country, country_code, price, start, end) {
+      $('.applyBtn').prop('disabled', true);
+      $simuLoader.stop().fadeIn(100);
+      $.ajax({
+        url: '{{ url("add_product") }}',
+        method: 'post',
+        data: {
+          'product_id': product_id,
+          'index': index,
+          'country': country,
+          'country_code': country_code,
+          'from': start,
+          'to': end,
+          'price': price
+        },
+        success: function(data){
+          $simuLoader.stop().fadeOut(100);
+          $('.applyBtn').prop('disabled', false);
+          if (data != 'fail') {
+            var str_elm = '#productclass_id_' + index;
+            var $elm = $(str_elm);
+            $elm.val(data);
+          }
+        },
+        error: function(err) {
+          $simuLoader.stop().fadeOut(100);
+          $('.applyBtn').prop('disabled', false);
+        }
+      });
+    }
+    
+  </script>
+{% endblock %}

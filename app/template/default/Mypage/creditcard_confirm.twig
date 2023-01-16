@@ -1,0 +1,100 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'mypage secondpage page__mypage' %}
+{% set baner_title = 'クレジットカード情報追加・削除' %}
+
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% set mypageno = 'index' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="router">
+            <div class="container">
+                <h2 class="ttl clblue">クレジットカード情報追加</h2>
+                <div class="blockcontent">
+                    {% include 'Mypage/navi.twig' %}
+                    <div class="blockcontent--right regist regist--confirm mypageregist--confirm">
+                        <h3 class="ttlbgpink">変更内容確認</h3>
+                        <form method="post" action="{{ url('mypage_creditcard_input') }}" class="h-adr" novalidate>
+                            <span class="p-country-name" style="display:none;">Japan</span>
+                            {{ form_widget(form._token) }}
+                            <div class="border">
+                                <table>
+                                    <tr>
+                                        <th>クレジットカードのタイプ</th>
+                                        <td>
+                                            {% if form.credit_card_type.vars.data == 1 %}
+                                                    <span>VISA</span>
+                                            {% elseif form.credit_card_type.vars.data == 2 %}
+                                                <span>MASTER</span>
+                                            {% elseif form.credit_card_type.vars.data == 3 %}
+                                                <span>DINERS</span>
+                                            {% elseif form.credit_card_type.vars.data == 4 %}
+                                                <span>JCB</span>
+                                            {% elseif form.credit_card_type.vars.data == 5 %}
+                                                <span>AMEX</span>
+                                            {% else %}
+                                                <span>VISA</span>
+                                            {% endif %}
+                                            {{ form_widget(form.credit_card_type, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>クレジットカード番号</th>
+                                        <td>
+                                            <span>{{ form.credit_card_number.vars.data }}</span>
+                                            {{ form_widget(form.credit_card_number, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>名義人</th>
+                                        <td>
+                                            <span>{{ form.holder_name.vars.data }}</span>
+                                            {{ form_widget(form.holder_name, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>有効期限</th>
+                                        <td>
+                                            {{ form.expiration_month.vars.data }}/{{ form.expiration_year.vars.data[2:4] }}
+                                            {{ form_widget(form.expiration_month, { type : 'hidden' }) }}
+                                            {{ form_widget(form.expiration_year, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>セキュリティコード</th>
+                                        <td>
+                                            {{ form.security_code.vars.data }}
+                                            {{ form_widget(form.security_code, { type : 'hidden' }) }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="regist--button">
+                                <div class="regist--btn">
+                                    <button class="buttonsubmit bgblue btnarr" type="submit" name="mode" value="complete">{{ '送信する'|trans }}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}

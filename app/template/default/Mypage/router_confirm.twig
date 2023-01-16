@@ -1,0 +1,199 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'mypage secondpage page__mypage' %}
+{% set baner_title = 'レンタル期間・渡航国・安全補償の変更完了' %}
+
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+
+{% set ProductNum = 0 %}
+{% set mypageno = 'index' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="router">
+            <div class="container">
+                <h2 class="ttl clblue">レンタル期間・渡航国・安全補償の変更完了</h2>
+                <div class="blockcontent">
+                    {% include 'Mypage/navi.twig' %}
+                    <div class="blockcontent--right">
+                        <h3 class="ttlbgpink">変更内容確認</h3>
+                        <form class="regist regist--confirm" action="">
+                            <div class="border">
+                                <table>
+                                    <tr>
+                                        <th>渡航⽇時 渡航国</th>
+                                        <td>
+                                            {% set SecurityFee = 0 %}
+                                            {% set Days = 0 %}
+                                            {% set Option1Fee = 0 %}
+                                            {% set Option2Fee = 0 %}
+                                            {% for OrderItem in Order.OrderItems %}
+                                                {% set ProductClass = OrderItem.ProductClass %}
+                                                {% set Product = OrderItem.Product %}
+                                                {% if OrderItem.IsProduct()  %}
+                                                    {% if ((Product.Id == 3) or (Product.Id == 4) or (Product.Id == 5)) %}
+                                                        {% set SecurityFee = ProductClass.price02_inc_tax %}
+                                                        {% set Days = OrderItem.Quantity %}
+                                                    {% endif %}
+                                                    {% if (Product.Id == 6) %}
+                                                        {% set Option1Fee = ProductClass.price02_inc_tax %}
+                                                    {% endif %}
+                                                    {% if (Product.Id == 7) %}
+                                                        {% set Option2Fee = ProductClass.price02_inc_tax %}
+                                                    {% endif %}             
+                                                    {% if (Product.Id > 7) %}
+                                                        {% set Contents = OrderItem.ProductName|split('_') %}
+                                                        <p><span>20{{ Contents[1] }}〜{{ Contents[2][3:5] }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ Contents[0] }}</p>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>安⼼補償</th>
+                                        <td>
+                                            <p><span>{% if (SecurityFee > 250 ) %}フル{% else %}ライト{% endif %}</span>{{ SecurityFee|number_format }}円（{{ Days }}⽇間）</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>オプション</th>
+                                        <td><p>{% if (Option1Fee > 0) %}<span>{{ '電源変換アダプター'|trans }}</span>{{ Option1Fee|number_format }}円（{{ Days }}{{ '⽇間）'|trans }}{% elseif (Option2Fee > 0) %}<span>{{ '事前受け取り'|trans }}</span>{{ Option2Fee|number_format }}{{ '円'|trans }}{% else %}{{ '無し'|trans }}{% endif %}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <th>受け取り⽅法</th>
+                                        <td>{{ Order.Shippings[0].Delivery }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>お届け先住所</th>
+                                        <td>{{ '〒'|trans }}{{ Order.Shippings[0].postal_code }}<br>{{ Order.Shippings[0].pref }}{{ Order.Shippings[0].addr01 }}{{ Order.Shippings[0].addr02 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>お届け⽇時</th>
+                                        <td>{{ Order.Shippings[0].shipping_delivery_date? Order.Shippings[0].shipping_delivery_date|date_day_with_weekday : '指定なし'|trans }}</br>{{ Order.Shippings[0].shipping_delivery_time? Order.Shippings[0].shipping_delivery_time : '指定なし'|trans }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>お⽀払⽅法：{{ Order.Payment }}</th>
+                                        {# <td>************1234<br>12/25<br>***</td> #}
+                                    </tr>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <section class="simulationft"> 
+            <div class="simulation simulation--footer">
+                <div class="container">
+                <h3 class="simulation--tit"><span class="icon"><img src="{{ asset('assets/img/money.svg', 'user_data') }}" alt="シミュレーション結果"></span><span>お申込内容</span></h3>
+                <div class="simulation--list">
+                    <div class="travellist">
+                        {% set TotalRentalPrice = 0 %}
+                        {% set SecurityFee = 0 %}
+						{% set Option1Fee = 0 %}
+						{% set Option2Fee = 0 %}
+                        {% set Days = 0 %}
+                        {% for OrderItem in Order.OrderItems %}
+                            {% set ProductClass = OrderItem.ProductClass %}
+                            {% set Product = OrderItem.Product %}
+                            {% set Contents = OrderItem.ProductName|split('_') %}
+                            {% if (OrderItem.IsProduct()) %}
+                                {% if ((Product.Id == 3) or (Product.Id == 4) or (Product.Id == 5)) %}
+                                    {% set SecurityFee = ProductClass.price02_inc_tax %}
+                                    {% set Days = OrderItem.Quantity %}
+                                {% endif %}
+								{% if (Product.Id == 6) %}
+                                    {% set Option1Fee = ProductClass.price02_inc_tax %}
+                                {% endif %}
+								{% if (Product.Id == 7) %}
+                                    {% set Option2Fee = ProductClass.price02_inc_tax %}
+                                {% endif %}
+                                {% if (Product.Id > 7) %}
+                                    {% set ProductNum = ProductNum + 1 %}
+                                    {% set TotalRentalPrice = TotalRentalPrice + ProductClass.Price02 - ProductClass.Price01 %}
+                                <dl class="dflex list_item">
+                                    <dt>{{ '渡航国'|trans }}
+                                        {% if (ProductNum == 1) %}①
+                                          {% elseif (ProductNum == 2) %}②
+                                          {% elseif (ProductNum == 3) %}③
+                                          {% elseif (ProductNum == 4) %}④
+                                          {% elseif (ProductNum == 5) %}⑤
+                                        {% endif %}</dt>
+                                    <dd>{{ '期間: '|trans }}20{{ Contents[1] }}～{{ Contents[2][3:5] }}<br>{{ '国名: '|trans }}{{ Contents[0] }}</dd>
+                                </dl>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %} 
+                        <input type="hidden" id="product_num" name="" value="{{ProductNum}}">
+                    </div>
+                        <div class="simulation--sumary">
+                        <div class="totalfee">
+                            <dl class="dflex">
+                                <dt>合計金額</dt>
+                                <dd>{{ Order.sub_total|number_format }}{{ '円'|trans }}<small>{{ '（税込）'|trans }}</small></dd>
+                            </dl>
+                        </div>
+                        <div class="rentalfee">
+                            <dl class="dflex">
+                                <dt>レンタル料（220円/日）</dt>
+                                <dd class="price">{{ (1.1 * TotalRentalPrice)|number_format }}{{ '円'|trans }}</dd>
+                            </dl>
+                            <dl class="dflex">
+                                <dt>{{ '安⼼補償料（'|trans }}{{ SecurityFee|number_format }}{{ '円/⽇）'|trans }}</dt>
+                                <dd class="price">{{ (SecurityFee * Days)|number_format }}{{ '円'|trans }}</dd>
+                            </dl>
+                            <dl class="dflex">
+                                <dt>オプション料（110円/⽇）</dt>
+                                <dd class="price">{{ (Option1Fee * Days)|number_format }}{{ '円'|trans }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    {# <div class="regist--button">
+                        <div class="regist--btn">
+                            <button class="buttonsubmit bgpink btnarr" type="submit" name="mode" value="complete">{{ '送信する'|trans }}</button>
+                        </div>
+                    </div> #}
+                    <div class="mypage--btn simulation--btn"><a class="buttonsubmit bgpink btnarr" href="{{ url('mypage_router_complete') }}">送信する</a></div>
+                </div>
+                </div>
+            </div>
+            </section>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // $('.list_item').css('flex', '0 0 (100/{{ ProductNum }})%');
+            var product_num = $('#product_num').val();
+            if ( product_num > 5) {
+                $('.list_item').css('flex', '0 0 17%');
+            } else if ( product_num == 5 ) {
+                $('.list_item').css('flex', '0 0 20%');
+            } else if ( product_num == 4 ) {
+                $('.list_item').css('flex', '0 0 25%');
+            } else if ( product_num == 3 ) {
+                $('.list_item').css('flex', '0 0 34%');
+            } else if ( product_num == 2 ) {
+                $('.list_item').css('flex', '0 0 50%');
+            } else {
+                $('.list_item').css('flex', '0 0 100%');
+            }
+        });
+    </script>
+{% endblock%}

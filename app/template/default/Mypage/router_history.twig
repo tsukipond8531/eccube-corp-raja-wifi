@@ -1,0 +1,92 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+
+{% block stylesheet %}
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+
+{% set body_class = 'mypage secondpage page__mypage' %}
+{% set baner_title = '購⼊履歴' %}
+
+{% extends 'default_frame.twig' %}
+
+{% set mypageno = 'index' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="mypage">
+            <div class="container">
+                <h2 class="ttl clblue">購⼊履歴</h2>
+                <div class="blockcontent">
+                    {% include 'Mypage/navi.twig' %}
+                    <div class="blockcontent--right">
+                        {% if pagination.totalItemCount > 0 %}
+                        <ul class="dflex mypage--listimg">
+                            {% for Order in pagination %}
+                                {% set startDate = "" %}
+                                {% set endDate = "" %}
+                                {% set country = "" %}
+
+                                {% for OrderItem in Order.MergedProductOrderItems %}
+                                    {% set Product = OrderItem.Product %}
+                                    {% set nameParts = Product.name|split("_") %}
+                                    {% if OrderItem.IsProduct() %}
+                                        {% if Product.Id > 7 %}
+                                            {% if startDate == "" %}
+                                                {% set startDate = "20" ~ nameParts[1] %}
+                                            {% else %}
+                                                {% set sDate = date(startDate) %}
+                                                {% set eDate = "20" ~ nameParts[1] %}
+                                                {% set eDate = date(eDate) %}
+                                                {% if sDate > eDate %}
+                                                    {% set startDate = "20" ~ nameParts[1] %}
+                                                {% endif %}
+                                            {% endif %}
+                                            {% if endDate == "" %}
+                                                {% set endDate = "20" ~ nameParts[2] %}
+                                            {% else %}
+                                                {% set sDate = date(endDate) %}
+                                                {% set eDate = "20" ~ nameParts[2] %}
+                                                {% set eDate = date(eDate) %}
+                                                {% if sDate < eDate %}
+                                                    {% set endDate = "20" ~ nameParts[2] %}
+                                                {% endif %}
+                                            {% endif %}
+                                            {% if country == "" %}
+                                                {% set country = nameParts[0]|default(Product.name) %}
+                                            {% else %}
+                                                {% set country = country ~ "・" ~ nameParts[0]|default(Product.name) %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                <li>
+                                    <div class="img"><img src="{{ asset('assets/img/imgdum.png', 'user_data') }}" alt=""></div>
+                                    <p>00-000000</p>
+                                    <p><span>{{ startDate }}〜{{ endDate }}<br>{{ country }}</span></p>
+                                </li>
+                            {% endfor %}
+                            <div class="ec-pagerRole">
+                                {% include "pager.twig" with {'pages': pagination.paginationData} %}
+                            </div>
+                        </ul>
+                        {% else %}
+                            <p class="ec-para-normal">{{ 'ご購入履歴はありません。'|trans }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}

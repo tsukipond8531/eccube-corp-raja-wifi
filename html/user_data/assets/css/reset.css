@@ -1,0 +1,246 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box
+}
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box; 
+  -o-transition: border-box;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+body {
+  -webkit-text-size-adjust: 100%
+}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;  
+  vertical-align: baseline;
+  background: 0 0
+}
+h1 {
+  font-size: 2em;  
+}
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+}
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+b,strong {
+  font-weight: bold !important;
+}
+code,kbd,pre,samp,tt {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+small {
+  font-size: 80%;
+}
+sub,sup {
+  font-size: 75%;
+  position: relative;
+  vertical-align: baseline;
+  border: 0;
+  outline: 0
+}
+sub {
+  bottom: -0.25em;
+}
+sup {
+  top: -0.5em;
+}
+button,input,optgroup,select,textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+}
+button,input { /* 1 */
+  overflow: visible;
+  -webkit-transition: all .2s ease-in-out 0s;
+  -moz-transition: all .2s ease-in-out 0s;
+  -o-transition: all .2s ease-in-out 0s;
+  -ms-transition: all .2s ease-in-out 0s;
+  transition: all .2s ease-in-out 0s
+}
+button,select { /* 1 */
+  text-transform: none;
+}
+input,select {
+  vertical-align: middle;
+}
+input:focus {
+  outline: 0
+}
+textarea {
+  overflow: auto;
+}
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+table{
+  border-spacing: 0;
+  border-collapse: collapse;
+  table-layout: fixed;//fix IE
+}
+progress {
+  vertical-align: baseline;
+}
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+summary {
+  display: list-item;
+}
+template,[hidden],.hidden {
+  display: none;
+}
+
+blockquote,q {
+  quotes: none
+}
+blockquote:after,
+blockquote:before,
+q:after,
+q:before {
+  content: "";
+  content: none
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section {
+  display: block
+}
+img {
+  vertical-align: top;
+  border-style: none;
+  line-height: 0;
+  font-size: 0;
+  -ms-interpolation-mode: bicubic;
+  background: 0 0;
+  zoom: 1
+}
+ol, ul {
+  list-style: none; 
+}
+a {
+  background-color: transparent;
+  font-size: 100%;
+  vertical-align: baseline;
+  text-decoration: none;
+  background: 0 0
+}
+a:focus {
+  outline: 0
+}
+a img{
+  opacity: 1;
+  transition: ease-out 0.3s;
+}
+a img:hover{
+  opacity: 0.7;
+  transition: ease-out 0.3s;
+}
+ins {
+  background-color: #ff9;
+  color: #000;
+  text-decoration: none
+}
+mark {
+  background-color: #ff9;
+  color: #000;
+  font-style: italic;
+  font-weight: 700
+}
+del {
+  text-decoration: line-through
+}
+abbr[title],dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help
+}
+a,
+button,
+input {
+  -webkit-transition: all .3s ease-in-out 0s;
+  -moz-transition: all .3s ease-in-out 0s;
+  -o-transition: all .3s ease-in-out 0s;
+  -ms-transition: all .3s ease-in-out 0s;
+  transition: all .3s ease-in-out 0s
+}

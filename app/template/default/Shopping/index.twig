@@ -1,0 +1,1576 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% extends 'default_frame.twig' %}
+
+{% set body_class = 'secondpage recieve page__recieve payment page__payment' %}
+
+{% set baner_title = 'WiFiレンタルのお申込み' %}
+{% set ProductNum = 0 %}
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<link rel="stylesheet" href="{{ asset('assets/css/creditcard.css', 'user_data') }}">
+	<script src="//yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+	<!-- <script src="{{ asset('assets/js/YubinBango.js', 'user_data') }}"></script> -->
+	<script src="{{ asset('assets/js/jquery.formatphonenumber.js', 'user_data') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/ja.min.js"></script>
+	
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/imask/3.4.0/imask.min.js"></script>
+    <script src="{{ asset('assets/js/creditcard.js', 'user_data') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}    
+
+{% block main %}
+
+<form class="regist--form h-adr" id="shopping-form" method="post" action="{{ url('shopping_confirm') }}" style="position: relative;">
+	<span class="p-country-name" style="display:none;">Japan</span>
+{{ form_widget(form._token) }}
+{{ form_widget(form.redirect_to) }}
+{# {{ include('@Stripe4/credit.twig', ignore_missing=true) }} #}
+<input type="hidden" id="shopping_stage" name="shopping_stage" value="1">
+    <div class="recieve regist regist--input">
+        <div class="container">
+            <h2 class="ttl clblue">{{ '受け取り方法選択'|trans }}</h2>
+            <ul class="listselect">
+                <li class="listselect--item">
+                    <span class="num">01</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-calendar.png', 'user_data') }}" alt="渡航日時・渡航先選択">
+                    </span>
+                    <span class="txt">{{ '渡航日時・'|trans }}<br>{{ '渡航国選択'|trans }}</span>
+                </li>
+                <li class="listselect--item">
+                    <span class="num">02</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-plug.png', 'user_data') }}" alt="オプション選択">
+                    </span>
+                    <span class="txt">{{ 'オプション'|trans }}<br>{{ '選択'|trans }}</span>
+                </li>
+                <li class="listselect--item">
+                    <span class="num">03</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-notes.png', 'user_data') }}" alt="購入者情報登録">
+                    </span>
+                    <span class="txt">{{ '購入者'|trans }}<br>{{ '情報登録'|trans }}</span>
+                </li>
+                <li class="listselect--item active" id="shipping_item">
+                    <span class="num">04</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-choice.png', 'user_data') }}" alt="受け取り方法選択">
+                    </span>
+                    <span class="txt">{{ '受け取り'|trans }}<br>{{ '方法選択'|trans }}</span>
+                </li>
+                <li class="listselect--item" id="payment_item">
+                    <span class="num">05</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-credit.png', 'user_data') }}" alt="お支払方法選択">
+                    </span>
+                    <span class="txt">{{ 'お支払方法'|trans }}<br>{{ '選択'|trans }}</span>
+                </li>
+                <li class="listselect--item">
+                    <span class="num">06</span>
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="お支払方法選択">
+                    </span>
+                    <span class="txt">{{ '注文確認'|trans }}</span>
+                </li>
+            </ul>
+            <div id="recieve_div" class="recieve--method">
+                <h3 class="ttlbgpink">{{ '受け取り⽅法を選択'|trans }}</h3>
+                <div class="securitychoice--list selectgroup">
+                    <div class="securitychoice--item boxselect">
+                        <div class="boxselect--input">
+                            <input type="radio" id="receive1" name="receive-group" value="1" {% if spt == '' %}checked{% endif %}>
+                            <label for="receive1">{{ '宅配便'|trans }}</label>
+                        </div>
+                        <div class="boxselect--inside">
+                            <div class="securitychoice--img">
+                                <img src="{{ asset('assets/img/icon-deli.png', 'user_data') }}" alt="宅配便">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="securitychoice--item boxselect">
+                        <div class="boxselect--input">
+                            <input type="radio" id="receive2" name="receive-group" value="3" {% if scode != '' %}checked{% endif %}>
+                            <label for="receive2">{{ 'コンビニ受け取り'|trans }}</label>
+                        </div>
+                        <div class="boxselect--inside">
+                            <div class="securitychoice--img">
+                                <img src="{{ asset('assets/img/icon-24-hours.png', 'user_data') }}" alt="コンビニ受け取り">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="securitychoice--item boxselect">
+                        <div class="boxselect--input">
+                            <input type="radio" id="receive3" name="receive-group" value="4">
+                            <label for="receive3">{{ '店頭受け取り'|trans }}</label>
+                        </div>
+                        <div class="boxselect--inside">
+                            <div class="securitychoice--img">
+                                <img src="{{ asset('assets/img/icon-store.png', 'user_data') }}" alt="店頭受け取り">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="shipping">
+                <h3 class="ttlbgpink shipping_title">{{ 'お届け先情報'|trans }}</h3>
+                <div class="ec-addressRole">
+                    <div class="border">
+                        <table>
+                            <tr class="delivery"> 
+                                <th class="delivery_th">
+                                    <input type="radio" id="deliver" name="deliver-group" value="1" {% if Order.Customer.overseas_address == '' %}checked{% else %}disabled{% endif %}/>
+                                    <label for="deliver">{{ '申込者住所に配送する'|trans }}</label>
+									<input type="hidden" id="order_user_name" value="{{ Order.name01 }} {{ Order.name02 }}">
+                                    <input type="hidden" id="order_user_email" value="{{ Order.email }}">
+                                </th>
+                                <td>〒{{ Order.postal_code }}<br>{{ Order.Pref }}{{ Order.addr01 }}{{ Order.addr02 }}<br>{{ Order.Customer.overseas_address }}</td>
+                            </tr>
+                            <tr class="delivery"> 
+                                <th class="delivery_th">
+                                    <input type="radio" id="deliverorther" name="deliver-group" value="2" {% if Order.Customer.overseas_address != '' %}checked{% endif %}>
+                                    <label for="deliverorther">{{ '申込者住所以外に配送する'|trans }}</label>
+                                </th>
+                            </tr>
+                            <tr class="delivery"> 
+                                <th>
+                                    <span class="required"> </span>{{ 'お名前'|trans }}
+                                </th>
+                                <td> 
+                                    <ul class="listinput dflex">
+                                        <li>
+                                            <div class="ec-input{{ has_errors(form.name.name01) ? ' error' }}">
+                                                {{ form_widget(form.name.name01, { 'attr': { 'placeholder': '姓' }}) }}
+                                                {{ form_errors(form.name.name01) }}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ec-input{{ has_errors(form.name.name02) ? ' error'}}">
+                                                {{ form_widget(form.name.name02, { 'attr': { 'placeholder': '名' }}) }}
+                                                {{ form_errors(form.name.name02) }}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ec-input{{ has_errors(form.kana.kana01) ? ' error' }}">
+                                                {{ form_widget(form.kana.kana01, {'attr': { 'placeholder': 'セイ' }}) }}
+                                                {{ form_errors(form.kana.kana01) }}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="ec-input{{ has_errors(form.kana.kana02) ? ' error' }}">
+                                                {{ form_widget(form.kana.kana02, {'attr': { 'placeholder': 'メイ' }}) }}
+                                                {{ form_errors(form.kana.kana02) }}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr class="delivery"> 
+                                <th>{{ '会社名'|trans }}</th>
+                                <td>
+                                    <div class="ec-input{{ has_errors(form.company_name) ? ' error' }}">
+                                        {{ form_widget(form.company_name, { 'attr': { 'placeholder': '○○株式会社' }}) }}
+                                        {{ form_errors(form.company_name) }}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="delivery"> 
+                                <th><span class="required"> </span>{{ '住所'|trans }}</th>
+                                <td> 
+                                    <dl class="dflex address">{{ '〒'|trans }}
+                                        <div class="ec-input{{ has_errors(form.postal_code) ? ' error' }}">
+                                            {{ form_widget(form.postal_code, {'attr': { 'maxlength': '8' }}) }}
+                                            {{ form_errors(form.postal_code) }}
+                                        </div>
+                                        <!-- <span class="link">
+                                            <a href="https://www.post.japanpost.jp/zipcode/" target="_blank">{{ '海外の⽅はこちら'|trans }}</a>
+                                        </span> -->
+                                    </dl>
+									<div class="dflex jp_address">
+                                        <span>郵便番号を入力してください。都道府県と市区町村が自動入力されます。</span>
+                                    </div>
+                                    <!-- <div class="btnlocal">
+                                        <a href="https://www.post.japanpost.jp/zipcode/" target="_blank">{{ '郵便番号から⾃動⼊⼒'|trans }}</a>
+                                    </div> -->
+                                    <dl class="dflex"> 
+                                        <dt>{{ '都道府県'|trans }}</dt>
+                                        <dd> 
+                                            <div class="ec-select{{ has_errors(form.address.pref) ? ' error' }}">
+                                                {{ form_widget(form.address.pref) }}
+                                                {{ form_errors(form.address.pref) }}
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                    <dl class="dflex"> 
+                                        <dt>{{ '市区町村名・番地'|trans }}</dt>
+                                        <dd> 
+                                            <div class="ec-input{{ has_errors(form.address.addr01) ? ' error' }}">
+                                                {{ form_widget(form.address.addr01, { 'attr': { 'placeholder': '市区町村名・番地（例: 千代⽥区神⽥神保町1-3-5）'}}) }}
+                                                {{ form_errors(form.address.addr01) }}
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                    <dl class="dflex"> 
+                                        <dt>{{ '建物名'|trans }}</dt>
+                                        <dd> 
+                                            <div class="ec-input{{ has_errors(form.address.addr02) ? ' error' }}">
+                                                {{ form_widget(form.address.addr02,  { 'attr': { 'placeholder': '"建物名（例: 神保ビルディング4F）' }}) }}
+                                                {{ form_errors(form.address.addr02) }}
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </td>
+                            </tr>
+                            <tr class="delivery"> 
+                                <th><span class="required"> </span>{{ '電話番号'|trans }}</th>
+                                <td>
+                                    <div class="ec-input{{ has_errors(form.phone_number) ? ' error' }}">
+                                        {{ form_widget(form.phone_number, {'attr': { 'maxlength': '13' }}) }}
+                                        {{ form_errors(form.phone_number) }}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="convenience">
+                                <th><span class="required"> </span>住所</th>
+                                <td class="blockaddinfo">
+                                    <dl class="dflex">
+                                        <dd>
+                                            <div class="ec-input">
+                                                <input id="convenie_uaddr" type="text" name="convenie_uaddr" value="{{ form.address.pref.vars.data }}{{ form.address.addr01.vars.data }}{{ form.address.addr02.vars.data }}">
+                                            </div> 
+                                        </dd>
+                                    </dl>
+                                    <dl class="dflex">
+                                        郵便番号: 〒
+                                        <div class="ec-Input">
+                                            <input class="" type="tel" name="convenie_uzcd" id="convenie_uzcd" value="">
+                                        </div>
+                                        <span class="link"><a id="convenience_link" target="_blank" href="https://www.e-map.ne.jp/p/sagawa02/?enc=UTF8&spt=&tflg=&rurl={{ url('shopping') }}">コンビニ検索</a></span>
+                                    </dl>
+                                    <dl class="dflex">
+                                        <dt><label>コンビニ名: </label></dt>
+                                        <dd><label>{% if scode != '' %}{{sname}}{% endif %}</label></dd>
+                                        <input type="hidden" name="convenie_sname" value="{% if scode != '' %}{{sname}}{% endif %}">
+                                    </dl>
+                                    <dl class="dflex">
+                                        <dt><label>コンビニ住所: </label></dt>
+                                        <dd><label>{% if scode != '' %}{{saddr}}{% endif %}</label></dd>
+                                        <input type="hidden" name="convenie_saddr" value="{% if scode != '' %}{{saddr}}{% endif %}">
+                                    </dl>
+                                    <dl class="dflex">
+                                        <dt><label>コンビニ郵便番号: </label></dt>
+                                        <dd><label>{% if scode != '' %}〒{{szcd}}{% endif %}</label></dd>
+                                        <input type="hidden" name="convenie_szcd" value="{% if scode != '' %}〒{{szcd}}{% endif %}">
+                                    </dl>
+                                    <dl class="dflex">
+                                        <dt><label>コンビニ電話番号: </label></dt>
+                                        <dd><label>{% if scode != '' %}{{stel}}{% endif %}</label></dd>
+                                        <input type="hidden" name="convenie_stel" value="{% if scode != '' %}{{stel}}{% endif %}">
+                                    </dl>
+                                    <dl class="dflex">
+                                        <dt><label>コンビニコード: </label></dt>
+                                        <dd><label>{% if scode != '' %}{{spare4}}{{scode}}{% endif %}</label></dd>
+                                        <input type="hidden" name="convenie_scode" id="convenie_scode" value="{% if scode != '' %}{{spare4}}{{scode}}{% endif %}">
+                                    </dl>
+                                </td>
+                            </tr>
+                            <tr class="office">
+                                <th>店舗案内</th>
+                                <td class="blockaddinfo">
+                                    <p>〒160-0023<br>東京都新宿区⻄新宿7-18-19新宿税理⼠ビル第⼆別館佐⽵ビル2F</p>
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d810.0597044741837!2d139.6968211!3d35.69574030000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60188d2078ca827b%3A0xbefbcc181b97dbc!2z5qCq5byP5Lya56S-44OL44OD44OB44Kr44Oz44OR44OL44O8!5e0!3m2!1sja!2shk!4v1658541150175!5m2!1sja!2shk" width="100%" height="550" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                    <p> <strong>アクセスマップ</strong></p>
+                                    <p>テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。テキストが⼊ります。</p>
+                                    <ul class="listthumbs dflex">
+                                        <li>
+                                            <img src="{{ asset('assets/img/imgdum.png', 'user_data') }}" alt="">
+                                        </li>
+                                        <li>
+                                            <img src="{{ asset('assets/img/imgdum.png', 'user_data') }}" alt="">
+                                        </li>
+                                        <li>
+                                            <img src="{{ asset('assets/img/imgdum.png', 'user_data') }}" alt="">
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr> 
+                                <th id="delivery_title"><span class="required"> </span>{{ '受取日時選択'|trans }}</th>
+                                <td>
+                                    <div class="blockdate">
+                                        <div class="blockdate--input">
+                                            <div class="startdate" id="startdate"></div>
+                                        </div>
+                                        <div class="blockdate--table">
+                                            <dl> 
+                                                <dt>受け取り⽇時（ご利用開始予定日：<span id="start_date"></span>）</dt>
+                                                <dd> 
+                                                    <div class="ec-input">
+                                                        <input type="text" id="delivery_date" name="delivery_date">
+                                                    </div>
+                                                    
+                                                    {# <input type="text" id="shopping_order_Shippings_0_DeliveryDate" name="_shopping_order[Shippings][0][DeliveryDate]"> #}
+                                                </dd>
+                                            </dl>
+                                            <dl class="shipping_time"> 
+                                                <dt>希望時間</dt>
+                                                <dd> 
+                                                    {% for shipping in Order.shippings %}
+                                                        {% set idx = loop.index0 %}
+                                                        {{ form_widget(form.Shippings[idx].Delivery, { type: 'hidden' })}}
+                                                        {{ form_widget(form.Shippings[idx].DeliveryTime, {'attr': {'class': 'desiredtime'}}) }}
+                                                        {{ form_errors(form.Shippings[idx].DeliveryTime) }}
+                                                    {% endfor %}
+                                                </dd>
+                                            </dl>
+                                            <div class="productselection selectgroup">
+                                                <div class="productselection--item boxselect">
+                                                    <div class="boxselect--input">
+                                                        {% set Option2Fee = 0 %}
+                                                        {% for OrderItem in Order.OrderItems %}
+                                                            {% if OrderItem.IsProduct()  %}
+                                                                {% set ProductClass = OrderItem.ProductClass %}
+                                                                {% set Product = OrderItem.Product %}
+                                                                {% if (Product.Id == 7) %}
+                                                                    {% set Option2Fee = 1 %}
+                                                                {% endif %}             
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <input type="checkbox" id="productselection2" name="productselection2-group" value="{{ Option2Fee }}" {% if (Option2Fee == 1) %}checked{% endif %}>
+                                                        <label class="font_18" for="productselection2">{{ '事前受け取り(3～5日前)'|trans }}</label>
+														<input type="hidden" id="option2_fee" value="{{ Option2Fee }}">
+                                                    </div>
+                                                    <div class="boxselect--inside">
+                                                        <div class="productselection--img">
+                                                            <img src="{{ asset('assets/img/optional-product02.png', 'user_data') }}" style="display: none;" alt="事前受け取り(3～5日前)">
+                                                        </div>
+                                                        <div class="productselection--price">
+                                                            <p class="price font_20">{{ '1箱 550円（税込）/同梱可能'|trans }}</p>
+                                                        </div>
+                                                        <div class="productselection--txt boxselect--txt">
+                                                            <p class="note">{{ '3~5日前でも受け取ることができます。'|trans }}</p>
+                                                            <p class="note txt_center">{{ '※2日前までの指定は無料'|trans }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main__body payment content__payment" id="payment_div" style="display: none;">
+        <input type="hidden" name="_shopping_order[Payment]" value="5">
+        <div class="container">
+            <div class="payment--method">
+                <h3 class="ttlbgpink payment_method_title">{{ '受け取り⽅法を選択'|trans }}</h3>
+                <div class="payment--list dflex">
+                    <div class="payment--item"> 
+                        <h4>{{ 'クレジットカード払い'|trans }}</h4>
+                        <div class="payment--box">
+                            <input id="method1" type="radio" name="radio-group" value="1" checked>
+                            <label class="dflex" for="method1">
+                                <div class="payment--txt">
+                                    <span>{{ 'クレジットカード'|trans }}</span>
+                                </div>
+                                <div class="payment--img">
+                                    <img src="{{ asset('assets/img/icon-credit2.png', 'user_data') }}" alt="">
+                                </div>
+                            </label>
+                            <p>{{ '海外作成カード、VISAデビット、JCBデビット、auWALLET、その他プリペイド式クレジットカードはご利用いただくことはできません。'|trans }}</p>
+                        </div>
+                    </div>
+                    <div class="payment--item"> 
+                        <h4>{{ 'ペイディ'|trans }}</h4>
+                        <div class="payment--box">
+                            <input id="method2" type="radio" name="radio-group" value="2">
+                            <label class="dflex" for="method2">
+                                <div class="payment--txt">
+                                    <span>{{ 'ペイディ'|trans }}</span>
+                                </div>
+                                <div class="payment--img">
+                                    <img src="{{ asset('assets/img/logo-paidy.png', 'user_data') }}" alt="">
+                                </div>
+                            </label>
+                            <p>メールアドレスと携帯電話だけでお買い物ができます。<br>お支払いは翌月でOK。翌月10日までに、コンビニ払い、銀行口座、口座振り込みでお支払いください。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-select paydyabout payment-info">
+                <h3 class="ttlbgpink payment_method_subtitle">{{ 'クレジットカード選択'|trans }}</h3>
+                
+                {% if app.user %}
+                    {% if form.cards is defined and form.cards %}
+                        {% for cardindex, card in form.cards %}
+                            {% set labels = card.vars.label|split(' •••• ') %}
+                        <div class="blockcart">
+                            <input type="radio" id="{{ card.vars.id }}" name="{{ card.vars.full_name }}" value="{{ card.vars.value }}" checked>
+                            <label class="dflex" for="{{ card.vars.id }}">
+                                <div class="blockcart--img">
+                                    <img src="{{ asset('assets/img/visablue.png', 'user_data') }}" alt="">
+                                    <div class="name">
+                                        <span>•••• {{ labels[1] }}</span>
+                                        <span>{{ form.name.name01.vars.data }}  {{ form.name.name02.vars.data }}</span>
+                                    </div>
+                                </div>
+                                <div class="blockcart--info"> 
+                                    <p>{{ labels[0] }}</p>
+                                    <p>末尾が•••• {{ labels[1] }}のクレジットカード</p>
+                                </div>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="blockcart blockcart--add">
+                        <input type="radio" id="blockcart3" name="_shopping_order[cards]" value="3">
+                        <label class="dflex" for="blockcart3">
+                            <div class="blockcart--img">
+                                <img src="{{ asset('assets/img/imgdum2.png', 'user_data') }}" alt="">
+                                <div class="icon">
+                                    <img src="{{ asset('assets/img/icon-pluscircle.svg', 'user_data') }}" alt="">
+                                </div>
+                            </div>
+                            <div class="blockcart--info"> 
+                                <p>クレジットカード情報を追加</p>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="border add_blockcart form-row">
+						<ul class="dflex">
+							<li>
+								<div class="form-container">
+									<div class="field-container">
+										<label for="name">カードに記憶された名前</label>
+										<input id="name" maxlength="20" type="text" value="{{ Order.name01 }} {{ Order.name02 }}">
+									</div>
+									<div class="field-container">
+										<label for="cardnumber">カード番号</label><span id="generatecard" style="display: none">generate random</span>
+										<input id="cardnumber" type="text" pattern="[0-9]*" inputmode="numeric">
+										<svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+										</svg>
+									</div>
+									<div class="field-container">
+										<label for="expirationdate">有効期間(mm/yy)</label>
+										<input id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric">
+									</div>
+									<div class="field-container">
+										<label for="securitycode">セキュリティコード</label>
+										<input id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
+									</div>
+								</div>
+								<div class="ec-checkbox productselection--list">
+									{{ form_widget(form.stripe_save_card) }}
+								</div>
+							</li>
+							<li>
+								<div class="credit_container preload">
+									<div class="creditcard">
+										<div class="front">
+											<div id="ccsingle"></div>
+											<svg version="1.1" id="cardfront" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+												x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+												<g id="Front">
+													<g id="CardBackground">
+														<g id="Page-1_1_">
+															<g id="amex_1_">
+																<path id="Rectangle-1_1_" class="lightcolor grey" d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40
+														C0,17.9,17.9,0,40,0z" />
+															</g>
+														</g>
+														<path class="darkcolor greydark" d="M750,431V193.2c-217.6-57.5-556.4-13.5-750,24.9V431c0,22.1,17.9,40,40,40h670C732.1,471,750,453.1,750,431z" />
+													</g>
+													<text transform="matrix(1 0 0 1 60.106 295.0121)" id="svgnumber" class="st2 st3 st4">0123 4567 8910 1112</text>
+													<text transform="matrix(1 0 0 1 54.1064 428.1723)" id="svgname" class="st2 st5 st6">{{ Order.name01 }} {{ Order.name02 }}</text>
+													<text transform="matrix(1 0 0 1 54.1074 389.8793)" class="st7 st5 st8">カードに記憶された名前</text>
+													<text transform="matrix(1 0 0 1 479.7754 388.8793)" class="st7 st5 st8">月/年</text>
+													<text transform="matrix(1 0 0 1 65.1054 241.5)" class="st7 st5 st8">カード番号</text>
+													<g>
+														<text transform="matrix(1 0 0 1 574.4219 433.8095)" id="svgexpire" class="st2 st5 st9">••/••</text>
+														<text transform="matrix(1 0 0 1 479.3848 417.0097)" class="st2 st10 st11">VALID</text>
+														<text transform="matrix(1 0 0 1 479.3848 435.6762)" class="st2 st10 st11">THRU</text>
+														<polygon class="st2" points="554.5,421 540.4,414.2 540.4,427.9    " />
+													</g>
+													<g id="cchip">
+														<g>
+															<path class="st2" d="M168.1,143.6H82.9c-10.2,0-18.5-8.3-18.5-18.5V74.9c0-10.2,8.3-18.5,18.5-18.5h85.3
+													c10.2,0,18.5,8.3,18.5,18.5v50.2C186.6,135.3,178.3,143.6,168.1,143.6z" />
+														</g>
+														<g>
+															<g>
+																<rect x="82" y="70" class="st12" width="1.5" height="60" />
+															</g>
+															<g>
+																<rect x="167.4" y="70" class="st12" width="1.5" height="60" />
+															</g>
+															<g>
+																<path class="st12" d="M125.5,130.8c-10.2,0-18.5-8.3-18.5-18.5c0-4.6,1.7-8.9,4.7-12.3c-3-3.4-4.7-7.7-4.7-12.3
+														c0-10.2,8.3-18.5,18.5-18.5s18.5,8.3,18.5,18.5c0,4.6-1.7,8.9-4.7,12.3c3,3.4,4.7,7.7,4.7,12.3
+														C143.9,122.5,135.7,130.8,125.5,130.8z M125.5,70.8c-9.3,0-16.9,7.6-16.9,16.9c0,4.4,1.7,8.6,4.8,11.8l0.5,0.5l-0.5,0.5
+														c-3.1,3.2-4.8,7.4-4.8,11.8c0,9.3,7.6,16.9,16.9,16.9s16.9-7.6,16.9-16.9c0-4.4-1.7-8.6-4.8-11.8l-0.5-0.5l0.5-0.5
+														c3.1-3.2,4.8-7.4,4.8-11.8C142.4,78.4,134.8,70.8,125.5,70.8z" />
+															</g>
+															<g>
+																<rect x="82.8" y="82.1" class="st12" width="25.8" height="1.5" />
+															</g>
+															<g>
+																<rect x="82.8" y="117.9" class="st12" width="26.1" height="1.5" />
+															</g>
+															<g>
+																<rect x="142.4" y="82.1" class="st12" width="25.8" height="1.5" />
+															</g>
+															<g>
+																<rect x="142" y="117.9" class="st12" width="26.2" height="1.5" />
+															</g>
+														</g>
+													</g>
+												</g>
+												<g id="Back">
+												</g>
+											</svg>
+										</div>
+										<div class="back">
+											<svg version="1.1" id="cardback" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+												x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+												<g id="Front">
+													<line class="st0" x1="35.3" y1="10.4" x2="36.7" y2="11" />
+												</g>
+												<g id="Back">
+													<g id="Page-1_2_">
+														<g id="amex_2_">
+															<path id="Rectangle-1_2_" class="darkcolor greydark" d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40
+													C0,17.9,17.9,0,40,0z" />
+														</g>
+													</g>
+													<rect y="61.6" class="st2" width="750" height="78" />
+													<g>
+														<path class="st3" d="M701.1,249.1H48.9c-3.3,0-6-2.7-6-6v-52.5c0-3.3,2.7-6,6-6h652.1c3.3,0,6,2.7,6,6v52.5
+												C707.1,246.4,704.4,249.1,701.1,249.1z" />
+														<rect x="42.9" y="198.6" class="st4" width="664.1" height="10.5" />
+														<rect x="42.9" y="224.5" class="st4" width="664.1" height="10.5" />
+														<path class="st5" d="M701.1,184.6H618h-8h-10v64.5h10h8h83.1c3.3,0,6-2.7,6-6v-52.5C707.1,187.3,704.4,184.6,701.1,184.6z" />
+													</g>
+													<text transform="matrix(1 0 0 1 621.999 227.2734)" id="svgsecurity" class="st6 st7">•••</text>
+													<g class="st8">
+														<text transform="matrix(1 0 0 1 518.083 280.0879)" class="st9 st6 st10">セキュリティコード</text>
+													</g>
+													<rect x="58.1" y="378.6" class="st11" width="375.5" height="13.5" />
+													<rect x="58.1" y="405.6" class="st11" width="421.7" height="13.5" />
+													<text transform="matrix(1 0 0 1 59.5073 228.6099)" id="svgnameback" class="st12 st13">{{ Order.name01 }} {{ Order.name02 }}</text>
+												</g>
+											</svg>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+                        <ul class="dflex" style="display: none;">
+                            <li>
+                                <div id="stripe-card" class="form-group" style="margin: 25% 0 0 0;">
+                                    <div id="card" class="form-control">
+                                        <!-- ここにクレジットカード番号入力欄が挿入される -->
+                                    </div>
+                                </div>
+                                <div class="ec-checkbox productselection--list">
+                                    {{ form_widget(form.stripe_save_card) }}
+                                </div>
+                            </li>
+                            <li>
+                                <img src="{{ asset('assets/img/imgdum4.png', 'user_data') }}" alt="">
+                            </li>
+                        </ul>
+                    </div>
+                {% else %}
+                <div class="border add_blockcart form-row">
+					<ul class="dflex">
+                        <li>
+                            <div class="form-container">
+                                <div class="field-container">
+                                    <label for="name">カードに記憶された名前</label>
+                                    <input id="name" maxlength="20" type="text" value="{{ Order.name01 }} {{ Order.name02 }}">
+                                </div>
+                                <div class="field-container">
+                                    <label for="cardnumber">カード番号</label><span id="generatecard" style="display: none">generate random</span>
+                                    <input id="cardnumber" type="text" pattern="[0-9]*" inputmode="numeric">
+                                    <svg id="ccicon" class="ccicon" width="750" height="471" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+                                    </svg>
+                                </div>
+                                <div class="field-container">
+                                    <label for="expirationdate">有効期間(mm/yy)</label>
+                                    <input id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric">
+                                </div>
+                                <div class="field-container">
+                                    <label for="securitycode">セキュリティコード</label>
+                                    <input id="securitycode" type="text" pattern="[0-9]*" inputmode="numeric">
+                                </div>
+                            </div>
+                            <div class="ec-checkbox productselection--list">
+                                {{ form_widget(form.stripe_save_card) }}
+                            </div>
+                        </li>
+                        <li>
+                            <div class="credit_container preload">
+                                <div class="creditcard">
+                                    <div class="front">
+                                        <div id="ccsingle"></div>
+                                        <svg version="1.1" id="cardfront" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+                                            <g id="Front">
+                                                <g id="CardBackground">
+                                                    <g id="Page-1_1_">
+                                                        <g id="amex_1_">
+                                                            <path id="Rectangle-1_1_" class="lightcolor grey" d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40
+                                                    C0,17.9,17.9,0,40,0z" />
+                                                        </g>
+                                                    </g>
+                                                    <path class="darkcolor greydark" d="M750,431V193.2c-217.6-57.5-556.4-13.5-750,24.9V431c0,22.1,17.9,40,40,40h670C732.1,471,750,453.1,750,431z" />
+                                                </g>
+                                                <text transform="matrix(1 0 0 1 60.106 295.0121)" id="svgnumber" class="st2 st3 st4">0123 4567 8910 1112</text>
+                                                <text transform="matrix(1 0 0 1 54.1064 428.1723)" id="svgname" class="st2 st5 st6">{{ Order.name01 }} {{ Order.name02 }}</text>
+                                                <text transform="matrix(1 0 0 1 54.1074 389.8793)" class="st7 st5 st8">カードに記憶された名前</text>
+                                                <text transform="matrix(1 0 0 1 479.7754 388.8793)" class="st7 st5 st8">月/年</text>
+                                                <text transform="matrix(1 0 0 1 65.1054 241.5)" class="st7 st5 st8">カード番号</text>
+                                                <g>
+                                                    <text transform="matrix(1 0 0 1 574.4219 433.8095)" id="svgexpire" class="st2 st5 st9">••/••</text>
+                                                    <text transform="matrix(1 0 0 1 479.3848 417.0097)" class="st2 st10 st11">VALID</text>
+                                                    <text transform="matrix(1 0 0 1 479.3848 435.6762)" class="st2 st10 st11">THRU</text>
+                                                    <polygon class="st2" points="554.5,421 540.4,414.2 540.4,427.9    " />
+                                                </g>
+                                                <g id="cchip">
+                                                    <g>
+                                                        <path class="st2" d="M168.1,143.6H82.9c-10.2,0-18.5-8.3-18.5-18.5V74.9c0-10.2,8.3-18.5,18.5-18.5h85.3
+                                                c10.2,0,18.5,8.3,18.5,18.5v50.2C186.6,135.3,178.3,143.6,168.1,143.6z" />
+                                                    </g>
+                                                    <g>
+                                                        <g>
+                                                            <rect x="82" y="70" class="st12" width="1.5" height="60" />
+                                                        </g>
+                                                        <g>
+                                                            <rect x="167.4" y="70" class="st12" width="1.5" height="60" />
+                                                        </g>
+                                                        <g>
+                                                            <path class="st12" d="M125.5,130.8c-10.2,0-18.5-8.3-18.5-18.5c0-4.6,1.7-8.9,4.7-12.3c-3-3.4-4.7-7.7-4.7-12.3
+                                                    c0-10.2,8.3-18.5,18.5-18.5s18.5,8.3,18.5,18.5c0,4.6-1.7,8.9-4.7,12.3c3,3.4,4.7,7.7,4.7,12.3
+                                                    C143.9,122.5,135.7,130.8,125.5,130.8z M125.5,70.8c-9.3,0-16.9,7.6-16.9,16.9c0,4.4,1.7,8.6,4.8,11.8l0.5,0.5l-0.5,0.5
+                                                    c-3.1,3.2-4.8,7.4-4.8,11.8c0,9.3,7.6,16.9,16.9,16.9s16.9-7.6,16.9-16.9c0-4.4-1.7-8.6-4.8-11.8l-0.5-0.5l0.5-0.5
+                                                    c3.1-3.2,4.8-7.4,4.8-11.8C142.4,78.4,134.8,70.8,125.5,70.8z" />
+                                                        </g>
+                                                        <g>
+                                                            <rect x="82.8" y="82.1" class="st12" width="25.8" height="1.5" />
+                                                        </g>
+                                                        <g>
+                                                            <rect x="82.8" y="117.9" class="st12" width="26.1" height="1.5" />
+                                                        </g>
+                                                        <g>
+                                                            <rect x="142.4" y="82.1" class="st12" width="25.8" height="1.5" />
+                                                        </g>
+                                                        <g>
+                                                            <rect x="142" y="117.9" class="st12" width="26.2" height="1.5" />
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                            <g id="Back">
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="back">
+                                        <svg version="1.1" id="cardback" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                            x="0px" y="0px" viewBox="0 0 750 471" style="enable-background:new 0 0 750 471;" xml:space="preserve">
+                                            <g id="Front">
+                                                <line class="st0" x1="35.3" y1="10.4" x2="36.7" y2="11" />
+                                            </g>
+                                            <g id="Back">
+                                                <g id="Page-1_2_">
+                                                    <g id="amex_2_">
+                                                        <path id="Rectangle-1_2_" class="darkcolor greydark" d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40
+                                                C0,17.9,17.9,0,40,0z" />
+                                                    </g>
+                                                </g>
+                                                <rect y="61.6" class="st2" width="750" height="78" />
+                                                <g>
+                                                    <path class="st3" d="M701.1,249.1H48.9c-3.3,0-6-2.7-6-6v-52.5c0-3.3,2.7-6,6-6h652.1c3.3,0,6,2.7,6,6v52.5
+                                            C707.1,246.4,704.4,249.1,701.1,249.1z" />
+                                                    <rect x="42.9" y="198.6" class="st4" width="664.1" height="10.5" />
+                                                    <rect x="42.9" y="224.5" class="st4" width="664.1" height="10.5" />
+                                                    <path class="st5" d="M701.1,184.6H618h-8h-10v64.5h10h8h83.1c3.3,0,6-2.7,6-6v-52.5C707.1,187.3,704.4,184.6,701.1,184.6z" />
+                                                </g>
+                                                <text transform="matrix(1 0 0 1 621.999 227.2734)" id="svgsecurity" class="st6 st7">•••</text>
+                                                <g class="st8">
+                                                    <text transform="matrix(1 0 0 1 518.083 280.0879)" class="st9 st6 st10">セキュリティコード</text>
+                                                </g>
+                                                <rect x="58.1" y="378.6" class="st11" width="375.5" height="13.5" />
+                                                <rect x="58.1" y="405.6" class="st11" width="421.7" height="13.5" />
+                                                <text transform="matrix(1 0 0 1 59.5073 228.6099)" id="svgnameback" class="st12 st13">{{ Order.name01 }} {{ Order.name02 }}</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="dflex" style="display: none;">
+                        <li>
+                            <div id="stripe-card" class="form-group" style="margin: 25% 0 0 0;">
+                                <div id="card" class="form-control">
+                                    <!-- ここにクレジットカード番号入力欄が挿入される -->
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <img src="{{ asset('assets/img/imgdum4.png', 'user_data') }}" alt="">
+                        </li>
+                    </ul>
+                </div>
+                {% endif %}
+                <!-- ここにエラーメッセージが表示される -->
+                {{ form_widget(form.stripe_payment_method_id) }}
+                <div id="card-errors" class="text-danger small mb-lg-5" role="alert">
+                    {{ form_errors(form.stripe_payment_method_id) }}
+                </div>
+                <div class="paydyabout--box">
+                    <div class="paydyabout--img">
+                        <img src="{{ asset('assets/img/visawhite.png', 'user_data') }}" alt="">
+                    </div>
+                    <p class="text_center">”お申し込みを確定する”をクリックした後、安全に決済するために、後払い（ペイディ）にリダイレクトされます。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="simulationft"> 
+        <div class="simulation simulation--footer">
+            <div class="container">
+                <h3 class="simulation--tit">
+                    <span class="icon">
+                        <img src="{{ asset('assets/img/money.svg', 'user_data') }}" alt="シミュレーション結果">
+                    </span>
+                    <span>{{ 'お申込内容'|trans }}</span>
+                </h3>
+                <div class="simulation--list">
+                    {% if (Order.OrderItems|length == 0) %}
+                    <span>{{ 'お申込内容がありません。'|trans }}</span>
+                    {% else %}
+                    <div class="travellist">
+                        {% set TotalWifiPrice = 0 %}
+                        {% set TotalRentalPrice = 0 %}
+                        {% set SecurityFee = 0 %}
+						{% set Option1Fee = 0 %}
+						{% set Option2Fee = 0 %}
+                        {% set Days = 0 %}
+                        {% set RecentDate = '' %}
+                        {% for OrderItem in Order.OrderItems %}
+                            {% set ProductClass = OrderItem.ProductClass %}
+                            {% set Product = OrderItem.Product %}
+                            {% if (OrderItem.IsProduct()) %}
+                                {% if ((Product.Id == 3) or (Product.Id == 4) or (Product.Id == 5)) %}
+                                    {% set SecurityFee = ProductClass.price02_inc_tax %}
+                                    {% set Days = OrderItem.Quantity %}
+                                {% endif %}
+								{% if (Product.Id == 6) %}
+                                    {% set Option1Fee = ProductClass.price02_inc_tax %}
+                                {% endif %}
+								{% if (Product.Id == 7) %}
+                                    {% set Option2Fee = ProductClass.price02_inc_tax %}
+                                {% endif %}
+                                {% if (Product.Id > 7) %}
+                                    {% set ProductNum = ProductNum + 1 %}
+                                    {% set Contents = OrderItem.ProductName|split('_') %}
+                                    {% set TotalWifiPrice = TotalWifiPrice + ProductClass.Price01 %}    
+                                    {% set TotalRentalPrice = TotalRentalPrice + ProductClass.Price02 - ProductClass.Price01 %}
+                                    {% if RecentDate == "" %}
+                                        {% set RecentDate = date(Product.rental_start) %}
+                                    {% elseif RecentDate > date(Product.rental_start) %}
+                                        {% set RecentDate = date(Product.rental_start) %}
+                                    {% endif %}
+                                <dl class="dflex list_item">
+                                    <dt>{{ '渡航国'|trans }}
+                                        {% if (ProductNum == 1) %}①
+                                          {% elseif (ProductNum == 2) %}②
+                                          {% elseif (ProductNum == 3) %}③
+                                          {% elseif (ProductNum == 4) %}④
+                                          {% elseif (ProductNum == 5) %}⑤
+                                        {% endif %}</dt>
+                                    <dd>{{ '期間: '|trans }}20{{ Contents[1] }}～{{ Contents[2][3:5] }}<br>{{ '国名: '|trans }}{{ Contents[0] }}</dd>
+                                </dl>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                        <input type="hidden" id="product_num" name="" value="{{ProductNum}}">
+                        <input type="hidden" id="recent_date" name="" value="{{RecentDate|date('Y-m-d')}}">
+                    </div>
+                    <div class="simulation--sumary">
+                        <div class="totalfee">
+                            <dl class="dflex">
+                                <dt>{{ '合計金額'|trans }}</dt>
+                                <!-- <dd>{{ (Order.sub_total - (Order.sub_total / 1.1 - SecurityFee * Days - Option1Fee * Days - Option2Fee - TotalRentalPrice) * 0.1)|number_format }}{{ '円'|trans }}<small>{{ '（税込）'|trans }}</small></dd> -->
+								<dd id="sub_total">{{ (((Order.sub_total/10)|round)*10)|number_format }}{{ '円'|trans }}<small>{{ '（税込）'|trans }}</small></dd>
+                            </dl>
+                        </div>
+                        <div class="rentalfee">
+                            <dl class="dflex flex_10">
+                                <dt>{{ '通信料'|trans }}</dt>
+                                <dd class="price pr_0">{{ (1.1 * TotalWifiPrice)|number_format }}{{ '円'|trans }}</dd>
+                            </dl>
+                            <dl class="dflex flex_25">
+                                <dt>{{ 'レンタル料（220円/日）'|trans }}</dt>
+                                <dd class="price">{{ (1.1 * TotalRentalPrice)|number_format }}{{ '円'|trans }}</dd>
+                            </dl>
+                            <dl class="dflex flex_25">
+                                <dt>{{ '安⼼補償料（'|trans }}{{ SecurityFee|number_format }}{{ '円/⽇）'|trans }}</dt>
+                                <dd class="price">{{ (SecurityFee * Days)|number_format }}{{ '円'|trans }}</dd>
+                            </dl>
+                            <dl class="dflex flex_25">
+                                <dt>{{ 'オプション料（110円/⽇）'|trans }}</dt>
+                                <dd class="price">{{ (Option1Fee * Days)|number_format }}{{ '円'|trans }}</dd>
+                            </dl>
+                            <dl class="dflex flex_15" id="option2_label" {% if Option2Fee > 0 %}style="display: block;"{% else %}style="display: none;"{% endif %}>
+                                <dt>{{ '事前受け取り'|trans }}</dt>
+                                <dd class="price pr_0">{{ '550円'|trans }}</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="mypage--btn simulation--btn">
+                        <button class="buttonsubmit bgpink btnarr" type="submit" id="btn_submit">{{ '次へ'|trans }}</a>
+                        {# <a class="buttonsubmit bgpink btnarr" href="{{ url('shopping_payment_creditcard') }}">{{ '送信する'|trans }}</a> #}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="loader"><div class="loaderIcon"></div></div>
+</form>
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript">
+        var $simuLoader = $('.loader');
+        var startdate = $('#startdate');
+        var recent_date = $('#recent_date').val();
+        var option2 = $('#option2_fee').val();
+        $('#start_date').html(recent_date);
+        var deli_date = new Date(recent_date);
+        deli_date.setDate(deli_date.getDate()-1);
+
+        var min_date = new Date();
+        var two_days_ago = new Date(recent_date);
+        two_days_ago.setDate(two_days_ago.getDate()-1);
+        var five_days_ago = new Date(recent_date);
+        five_days_ago.setDate(five_days_ago.getDate()-4);
+
+        if (option2 > 0) {
+            if (min_date < five_days_ago) {
+                min_date = five_days_ago;
+            }
+        } else {
+            if (min_date < two_days_ago) {
+                min_date = two_days_ago;
+            }
+        }
+
+        function updateCalendar() {
+            var min_date = new Date();
+            var option2 = $('#productselection2').val();
+            if (option2 == '1') {
+                if (min_date < five_days_ago) {
+                    min_date = five_days_ago;
+                }
+            } else {
+                if (min_date < two_days_ago) {
+                    min_date = two_days_ago;
+                }
+            }
+            startdate.flatpickr({
+                inline: true,
+                // mode: "multiple",
+                minDate: min_date,
+                maxDate: new Date(recent_date),
+                defaultDate: new Date(recent_date),
+                dateFormat: "Y-m-d",
+                locale: "ja",
+                onChange: function(selectedDates, dateStr, instance) {
+                    $('#delivery_date').val(dateStr);
+                },
+            });
+        }
+
+        $('#delivery_date').val(deli_date.toISOString().split('T')[0]);
+        startdate.flatpickr({
+            inline: true,
+            // mode: "multiple",
+            minDate: min_date,
+            maxDate: new Date(recent_date),
+            defaultDate: new Date(recent_date),
+            dateFormat: "Y-m-d",
+            locale: "ja",
+            disable : [
+                    {% for holiday in holidays %}
+                        '{{ holiday }}',
+                    {% endfor %}
+                ],
+            onChange: function(selectedDates, dateStr, instance) {
+                $('#delivery_date').val(dateStr);
+            },
+        });
+    
+        var shipping_option = '1';
+        var deliver_option = '1';
+    
+        var payment_method_option = '1';
+        var payment_card_option = '3';
+		$('#shopping_order_phone_number').formatPhoneNumber();
+		$('#shopping_order_postal_code').formatPhoneNumber({format: '###-####'});        
+        $(document).ready(function () {
+            $('html, body').animate({
+                scrollTop: $("#recieve_div").offset().top - 100
+            }, 2000);
+            var overseas_addr = '{{Order.Customer.overseas_address}}';
+            if (overseas_addr == '') {
+                addShippingData();
+            }
+            var conveni_id = '{{ sid }}';
+            var spt = '{{ spt }}';
+            if ( conveni_id != '' ) {
+                shipping_option = '3';
+                $('#shopping_order_Shippings_0_Delivery').val(shipping_option);
+            } else {
+                $('#shopping_order_Shippings_0_Delivery').val(shipping_option);
+            }
+    
+            payment_card_option = $('.blockcart input[name="_shopping_order[cards]"]:checked').val();
+            $('#{{ form.stripe_payment_method_id.vars.id }}').val(payment_card_option);
+    
+            switch(shipping_option) {
+                case '1':
+                    $('.delivery').css('display','block');
+                    $('.convenience').css('display','none');
+                    $('.office').css('display','none');
+                    // $('.delivery_title').html('{{ "配送⽇時選択"|trans }}');
+                    $('.shipping_title').html('{{ "お届け先情報"|trans }}');
+    					$('.shipping_time').css('display', 'block');
+                    break;
+                case '3':
+                    $('.convenience').css('display','block');
+                    $('.delivery').css('display','none');
+                    $('.office').css('display','none');
+                    // $('.delivery_title').html('{{ "受け取り⽇時選択"|trans }}');
+                    $('.shipping_title').html('{{ "コンビニ受け取り"|trans }}');
+    					$('.shipping_time').css('display', 'none');
+                    break;
+                case '4':
+                    $('.delivery').css('display','none');
+                    $('.convenience').css('display','none');
+                    $('.office').css('display','block');
+                    // $('.delivery_title').html('{{ "受け取り⽇時選択"|trans }}');
+                    $('.shipping_title').html('{{ "店頭受け取り"|trans }}');
+    					$('.shipping_time').css('display', 'block');
+                    break;
+                default:
+                    break;
+            }
+    
+            // $('#shopping_order_name_name01').val('');
+            // $('#shopping_order_name_name02').val('');
+            // $('#shopping_order_kana_kana01').val('');
+            // $('#shopping_order_kana_kana02').val('');
+            // $('#shopping_order_company_name').val('');
+            // $('#shopping_order_postal_code').val('');
+            // $('#shopping_order_address_pref').val('');
+            // $('#shopping_order_address_addr01').val('');
+            // $('#shopping_order_address_addr02').val('');
+            // $('#shopping_order_phone_number').val('');
+    
+            $('.delivery_th input[name=deliver-group]').on('change', function() {
+                deliver_option = $('.delivery_th input[name=deliver-group]:checked').val();
+                switch(deliver_option) {
+                    case '1':
+                        addShippingData();
+                        break;
+                    case '2':
+                        $("#shopping_order_name_name01").prop('required',true);
+                        $("#shopping_order_name_name02").prop('required',true);
+                        $("#shopping_order_kana_kana01").prop('required',true);
+                        $("#shopping_order_kana_kana02").prop('required',true);
+                        $("#shopping_order_postal_code").prop('required',true);
+                        $("#shopping_order_address_addr01").prop('required',true);
+                        $("#shopping_order_address_addr02").prop('required',true);
+                        $("#shopping_order_phone_number").prop('required',true);
+
+                        $("#shopping_order_name_name01").prop('disabled',false);
+                        $("#shopping_order_name_name02").prop('disabled',false);
+                        $("#shopping_order_kana_kana01").prop('disabled',false);
+                        $("#shopping_order_kana_kana02").prop('disabled',false);
+                        $("#shopping_order_postal_code").prop('disabled',false);
+                        $("#shopping_order_address_pref").prop('disabled',false);
+                        $("#shopping_order_address_addr01").prop('disabled',false);
+                        $("#shopping_order_address_addr02").prop('disabled',false);
+                        $("#shopping_order_phone_number").prop('disabled',false);
+                        break;
+                    default:
+                        break;
+                }
+            });
+    
+            $('.boxselect--input input[name=receive-group]').on('change', function() {
+                shipping_option = $('.boxselect--input input[name=receive-group]:checked').val();
+                $('#shopping_order_Shippings_0_Delivery').val(shipping_option);
+                switch(shipping_option) {
+                    case '1':
+                        $('.delivery').css('display','block');
+                        $('.convenience').css('display','none');
+                        $('.office').css('display','none');
+                        // $('.delivery_title').html('{{ "配送⽇時選択"|trans }}');
+                        $('.shipping_title').html('{{ "お届け先情報"|trans }}');
+    						$('.shipping_time').css('display', 'block');
+                        break;
+                    case '3':
+                        $('.convenience').css('display','block');
+                        $('.delivery').css('display','none');
+                        $('.office').css('display','none');
+                        // $('.delivery_title').html('{{ "受け取り⽇時選択"|trans }}');
+                        $('.shipping_title').html('{{ "コンビニ受け取り"|trans }}');
+    						$('.shipping_time').css('display', 'none');
+                        break;
+                    case '4':
+                        $('.delivery').css('display','none');
+                        $('.convenience').css('display','none');
+                        $('.office').css('display','block');
+                        // $('.delivery_title').html('{{ "受け取り⽇時選択"|trans }}');
+                        $('.shipping_title').html('{{ "店頭受け取り"|trans }}');
+    						$('.shipping_time').css('display', 'block');
+                        break;
+                    default:
+                        break;
+                }
+            });
+            var product_num = $('#product_num').val();
+            if ( product_num > 5) {
+                $('.list_item').css('flex', '0 0 17%');
+            } else if ( product_num == 5 ) {
+                $('.list_item').css('flex', '0 0 20%');
+            } else if ( product_num == 4 ) {
+                $('.list_item').css('flex', '0 0 25%');
+            } else if ( product_num == 3 ) {
+                $('.list_item').css('flex', '0 0 34%');
+            } else if ( product_num == 2 ) {
+                $('.list_item').css('flex', '0 0 50%');
+            } else {
+                $('.list_item').css('flex', '0 0 100%');
+            }
+            // $('.list_item').css('flex', '0 0 (100/{{ ProductNum }})%');
+    
+            $('.add_blockcart').css('display', 'none');
+            $('.paydyabout--box').css('display', 'none');
+    
+            $('.payment--box input[name=radio-group]').on('change', function() {
+                payment_method_option = $('.payment--box input[name=radio-group]:checked').val();
+                switch(payment_method_option) {
+                    case '1':
+    						$('.blockcart input[name="_shopping_order[cards]"]:checked').prop('checked', false);
+                        $('.blockcart').css('display', 'block');
+                        $('.add_blockcart').css('display', 'none');
+                        $('.paydyabout--box').css('display', 'none');
+                        $('.payment_method_title').html('{{ "受け取り⽅法を選択"|trans }}');
+                        $('.payment_method_subtitle').html('{{ "クレジットカード選択"|trans }}');
+                        break;
+                    case '2':
+                        $('.blockcart').css('display', 'none');
+                        $('.add_blockcart').css('display', 'none');
+                        $('.paydyabout--box').css('display', 'block');
+                        $('.payment_method_title').html('{{ "お⽀払⽅法を選択"|trans }}');
+                        $('.payment_method_subtitle').html('{{ "ペイディについて"|trans }}');
+                        break;
+                    default:
+                        break;
+                }
+            });
+			
+			const product_2_check = document.getElementById('productselection2');
+			const option2_fee = $('#option2_fee').val();
+			product_2_check.addEventListener('change', e => {
+				if(e.target.checked === true) {
+                    $('#productselection2').val('1');
+                    $('#option2_label').show();
+					if (option2_fee == 0) {
+						$('#sub_total').html('{{ (((Order.sub_total/10)|round)*10 + 550)|number_format }}{{ "円"|trans }}<small>{{ "（税込）"|trans }}</small>');
+					} else {
+						$('#sub_total').html('{{ (((Order.sub_total/10)|round)*10)|number_format }}{{ "円"|trans }}<small>{{ "（税込）"|trans }}</small>');
+					}
+				}
+				if(e.target.checked === false) {
+                    $('#productselection2').val('0');
+                    $('#option2_label').hide();
+					if (option2_fee > 0) {
+						$('#sub_total').html('{{ (((Order.sub_total/10)|round)*10 - 550)|number_format }}{{ "円"|trans }}<small>{{ "（税込）"|trans }}</small>');
+					} else {
+						$('#sub_total').html('{{ (((Order.sub_total/10)|round)*10)|number_format }}{{ "円"|trans }}<small>{{ "（税込）"|trans }}</small>');
+					}
+				}
+                updateCalendar();
+			});
+    
+            $('.blockcart input[name="_shopping_order[cards]"]').on('change', function() {
+                payment_card_option = $('.blockcart input[name="_shopping_order[cards]"]:checked').val();
+                if (payment_card_option != '3') {
+                    $('.blockcart').css('display', 'block');
+                    $('.add_blockcart').css('display', 'none');
+                    $('.paydyabout--box').css('display', 'none');
+                    $('.payment_method_title').html('{{ "受け取り⽅法を選択"|trans }}');
+                    $('.payment_method_subtitle').html('{{ "クレジットカード選択"|trans }}');
+                } else {
+                    $('.blockcart').css('display', 'none');
+                    $('.add_blockcart').css('display', 'block');
+                    $('.paydyabout--box').css('display', 'none');
+                    $('.payment_method_title').html('{{ "お⽀払⽅法を選択"|trans }}');
+                    $('.payment_method_subtitle').html('{{ "お⽀払情報⼊⼒"|trans }}');
+                }
+                $('#{{ form.stripe_payment_method_id.vars.id }}').val(payment_card_option);
+            });
+    
+    
+        });
+    
+        $(function() {
+            var $redirectCallback = function() {
+                loadingOverlay();
+                $('#shopping_order_redirect_to').val($(this).attr('data-path'));
+                $('#shopping-form').attr('action', '{{ url("shopping_redirect_to") }}').submit();
+                setTimeout(function () {
+                    loadingOverlay("hide");
+                }, 2000);
+            };
+            $('[data-trigger]').each(function() {
+                $(this).on($(this).attr('data-trigger'), $redirectCallback);
+            });
+        });
+    
+        $('#convenience_link').on('click', function(e) {
+            var search_addr = $('#convenie_uaddr').val();
+            if (search_addr == '') {
+                e.preventDefault();
+                $('#convenie_uaddr').parent().addClass('error');
+                $('#convenie_uaddr').parent().append('<p class="ec-errorMessage">入力されていません。</p>');
+                return false;
+            } else {
+                $('#convenie_uaddr').parent().removeClass('error');
+                $('#convenie_uaddr').parent().children().last().remove();
+                e.preventDefault();
+                location.href = $(this).attr("href") + '&uaddr=' + $('#convenie_uaddr').val() + '&uzcd=' + $('#convenie_uzcd').val();
+            }
+        });
+    
+        $('#btn_submit').on('click', function(e) {
+            $simuLoader.stop().fadeIn(100);
+            e.preventDefault();
+            var shopping_stage = $('#shopping_stage').val();
+            var delivery_date = $('#delivery_date').val();
+            if (shopping_stage == '1') {
+                if (shipping_option == '1' && deliver_option == '2') {
+                    var name01 = $("#shopping_order_name_name01").val();
+                    var name02 = $("#shopping_order_name_name02").val();
+                    var kana01 = $("#shopping_order_kana_kana01").val();
+                    var kana02 = $("#shopping_order_kana_kana02").val();
+                    var postal_code = $("#shopping_order_postal_code").val();
+                    var pref = $("#shopping_order_address_pref").val();
+                    var addr01 = $("#shopping_order_address_addr01").val();
+                    var addr02 = $("#shopping_order_address_addr02").val();
+                    var phone_number = $("#shopping_order_phone_number").val();
+                    var is_valid = true;
+                    if (name01 == '') {
+                        if (!$("#shopping_order_name_name01").parent().hasClass('error')) {
+                            $("#shopping_order_name_name01").parent().addClass('error');
+                            $("#shopping_order_name_name01").parent().append('<p class="ec-errorMessage">入力されていません。</p>');
+                        }
+                        is_valid = false;
+                    } else {
+                        $("#shopping_order_name_name01").parent().removeClass('error');
+                        $("#shopping_order_name_name01").parent().children().find("p").remove();
+                    }
+                    if (name02 == '') {
+                        if (!$("#shopping_order_name_name02").parent().hasClass('error')) {
+                            $("#shopping_order_name_name02").parent().addClass('error');
+                            $("#shopping_order_name_name02").parent().append('<p class="ec-errorMessage">入力されていません。</p>');
+                        }                        
+                        is_valid = false;
+                    } else {
+                        $("#shopping_order_name_name02").parent().removeClass('error');
+                        $("#shopping_order_name_name02").parent().children().find("p").remove();
+                    }
+                    if (kana01 == '') {
+                        if (!$("#shopping_order_kana_kana01").parent().hasClass('error')) {
+                            $("#shopping_order_kana_kana01").parent().addClass('error');
+                            $("#shopping_order_kana_kana01").parent().append('<p class="ec-errorMessage">入力されていません。</p>');
+                        }                        
+                        is_valid = false;
+                    } else {
+                        $("#shopping_order_kana_kana01").parent().removeClass('error');
+                        $("#shopping_order_kana_kana01").parent().children().find("p").remove();
+                    }
+                    if (kana02 == '') {
+                        if (!$("#shopping_order_kana_kana02").parent().hasClass('error')) {
+                            $("#shopping_order_kana_kana02").parent().addClass('error');
+                            $("#shopping_order_kana_kana02").parent().append('<p class="ec-errorMessage">入力されていません。</p>');
+                        }                        
+                        is_valid = false;
+                    } else {
+                        $("#shopping_order_kana_kana02").parent().removeClass('error');
+                        $("#shopping_order_kana_kana02").parent().children().find("p").remove();
+                    }
+                    if (postal_code == '') {
+                        if (!$("#shopping_order_postal_code").parent().hasClass('error')) {
+                            $("#shopping_order_postal_code").parent().addClass('error');
+                            $("#shopping_order_postal_code").parent().append('<p class="ec-errorMessage">入力されていません。</p>');
+                        }
+                        is_valid = false;
+                    } else {
+                        $("#shopping_order_postal_code").parent().removeClass('error');
+                        $("#shopping_order_postal_code").parent().children().find("p").remove();
+                    }
+                    if (pref == '') {
+                        if (!$("#shopping_order_address_pref").parent().hasClass('error')) {
+                            $("#shopping_order_address_pref").parent().addClass('error');
+                        }                        
+                        is_valid = false;
+                    } else {
+                        $("#shopping_order_address_pref").parent().removeClass('error');
+                    }
+                    if (addr01 == '') {
+                        if (!$("#shopping_order_address_addr01").parent().hasClass('error')) {
+                            $("#shopping_order_address_addr01").parent().addClass('error');
+                            $("#shopping_order_address_addr01").parent().append('<p class="ec-errorMessage">入力されていません。</p>');
+                        }                        
+                        is_valid = false;
+                    } else {
+                        $("#shopping_order_address_addr01").parent().removeClass('error');
+                        $("#shopping_order_address_addr01").parent().children().find("p").remove();
+                    }
+                    // if (addr02 == '') {
+                    //     if (!$("#shopping_order_address_addr02").parent().hasClass('error')) {
+                    //         $("#shopping_order_address_addr02").parent().addClass('error');
+                    //         $("#shopping_order_address_addr02").parent().append('<p class="ec-errorMessage">入力されていません。</p>');
+                    //     }
+                    //     is_valid = false;
+                    // } else {
+                    //     $("#shopping_order_address_addr02").parent().removeClass('error');
+                    //     $("#shopping_order_address_addr02").parent().children().last().remove();
+                    // }
+                    if (phone_number == '') {
+                        if (!$("#shopping_order_phone_number").parent().hasClass('error')) {
+                            $("#shopping_order_phone_number").parent().addClass('error');
+                            $("#shopping_order_phone_number").parent().append('<p class="ec-errorMessage">入力されていません。</p>');    
+                        }                       
+                        is_valid = false;
+                    } else {
+                        $("#shopping_order_phone_number").parent().removeClass('error');
+                        $("#shopping_order_phone_number").parent().children().find("p").remove();
+                    }
+                    if (!is_valid) {
+                        $simuLoader.stop().fadeOut(100);
+                        return false;
+                    } else {
+                        if (delivery_date == '') {
+                            if (!$('#delivery_date').parent().hasClass('error')) {
+                                $('#delivery_date').parent().addClass('error');
+                                $('#delivery_date').parent().append('<p class="ec-errorMessage">受け取り⽇時が選択されていません。</p>');
+                            }
+                            $simuLoader.stop().fadeOut(100);
+                            return false;
+                        } else {
+                            $('#delivery_date').parent().removeClass('error');
+                            $('#delivery_date').parent().children().find("p").remove();
+
+                            shopping_stage = '2';
+                            window.scrollTo(0, 0);
+                            $('html, body').animate({
+                                scrollTop: $("#recieve_div").offset().top
+                            }, 2000);
+                            $('#shopping_stage').val(shopping_stage);
+                            $('.ttl').html('受け取り⽅法選択');
+                            $('.content__payment').css('display', 'block');
+                            $('.recieve--method').css('display', 'none');
+                            $('.shipping').css('display', 'none');
+                            $('#shipping_item').removeClass('active');
+                            $('#payment_item').addClass('active');
+                            $simuLoader.stop().fadeOut(100);
+                            return false;
+                        }
+                    }
+                } else if (shipping_option == '3' && $('#convenie_scode').val() == '') {
+                    $simuLoader.stop().fadeOut(100);
+                    alert('コンビニを選択してくださいませ。');
+                    return false;
+                } else {
+                    if (delivery_date == '') {
+                        if (!$('#delivery_date').parent().hasClass('error')) {
+                            $('#delivery_date').parent().addClass('error');
+                            $('#delivery_date').parent().append('<p class="ec-errorMessage">受け取り⽇時が選択されていません。</p>');
+                        }
+                        $simuLoader.stop().fadeOut(100);
+                        return false;
+                    } else {
+                        $('#delivery_date').parent().removeClass('error');
+                        $('#delivery_date').parent().children().find("p").remove();
+                        window.scrollTo(0, 0);
+                        shopping_stage = '2';
+                        $('html, body').animate({
+                            scrollTop: $("#recieve_div").offset().top
+                        }, 2000);
+                        $('#shopping_stage').val(shopping_stage);
+                        $('.ttl').html('受け取り⽅法選択');
+                        $('.content__payment').css('display', 'block');
+                        $('.recieve--method').css('display', 'none');
+                        $('.shipping').css('display', 'none');
+                        $('#shipping_item').removeClass('active');
+                        $('#payment_item').addClass('active');
+                        $simuLoader.stop().fadeOut(100);
+                        return false;
+                    }
+                }
+            } else {
+                // var payment_card_id = $('#{{ form.stripe_payment_method_id.vars.id }}').val();
+                // if (payment_card_id && payment_card_id != '3') {
+                //    switch(shipping_option) {
+                //        case '1':
+                //            $('#shopping-form').submit();
+                //            $simuLoader.stop().fadeOut(100);
+                //            break;
+                //        case '3':
+                //            if( $('#convenie_scode').val() != '') {
+                //                $('#shopping-form').submit();
+                //                $simuLoader.stop().fadeOut(100);
+                //            } else {
+                //                $simuLoader.stop().fadeOut(100);
+                //                alert('コンビニを選択してくださいませ。');
+                //                return false;
+                //            }
+                //            break;
+                //        case '4':
+                //                $('#shopping-form').submit();
+                //                $simuLoader.stop().fadeOut(100);
+                //            break;
+                //    }
+                // } else {
+                //    $simuLoader.stop().fadeOut(100);
+                //    alert('クレジットカード情報が正しくありません。');
+                //    return false;
+                // }
+				var email_addr = '{{ Order.email }}';
+                if (ValidateEmail(email_addr)) {
+    				if (payment_method_option == '1') {
+						var payment_card_id = $('#{{ form.stripe_payment_method_id.vars.id }}').val();
+						if (payment_card_id && payment_card_id != '3') {
+							switch(shipping_option) {
+								case '1':
+									$('#shopping-form').submit();
+									$simuLoader.stop().fadeOut(100);
+									break;
+								case '3':
+									if( $('#convenie_scode').val() != '') {
+										$('#shopping-form').submit();
+										$simuLoader.stop().fadeOut(100);
+									} else {
+										$simuLoader.stop().fadeOut(100);
+										alert('コンビニを選択してくださいませ。');
+										return false;
+									}
+									break;
+								case '4':
+										$('#shopping-form').submit();
+										$simuLoader.stop().fadeOut(100);
+									break;
+							}
+						} else {
+							$simuLoader.stop().fadeOut(100);
+							alert('クレジットカード情報が正しくありません。');
+							return false;
+						}
+					} else {
+						switch(shipping_option) {
+							case '1':
+								$('#shopping-form').submit();
+								$simuLoader.stop().fadeOut(100);
+								break;
+							case '3':
+								if( $('#convenie_scode').val() != '') {
+									$('#shopping-form').submit();
+									$simuLoader.stop().fadeOut(100);
+								} else {
+									$simuLoader.stop().fadeOut(100);
+									alert('コンビニを選択してくださいませ。');
+									return false;
+								}
+								break;
+							case '4':
+									$('#shopping-form').submit();
+									$simuLoader.stop().fadeOut(100);
+								break;
+						}
+					}
+				}
+            }
+        });
+    
+        const appearance = {
+          theme: 'flat'
+        };
+    
+        var options = {
+          clientSecret: '{{client_secret}}',
+          // Fully customizable with appearance API.
+          appearance: appearance,
+        };
+    
+        const stripe = Stripe('{{stripe_public_key}}', {locale: '{{ eccube_config.locale }}'});
+        const elements = stripe.elements(options);
+    
+        // スタイルのカスタマイズ
+        const style = {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: "16px",
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        };
+    
+        // const form = document.getElementById('shopping-form');
+    
+        // クレジットカード情報入力欄の構築
+        // const card = elements.create('payment');
+        const card = elements.create('card', {style: style, hidePostalCode: true});
+        card.mount("#card");
+    
+        // 入力変更時のリスナー
+        // バリデーションメッセージを表示する
+        card.on('change', async (event) => {
+            const displayError = document.getElementById('card-errors');
+            if (event.complete) {
+                await createStripePaymentMethod(card);
+            } else {
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = '';
+                }
+                $('#{{ form.stripe_payment_method_id.vars.id }}').val('');
+            }
+        });
+
+		function ValidateEmail(email_addr) {
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if(email_addr.match(mailformat)) {
+                return true;
+            } else {
+				$simuLoader.stop().fadeOut(100);
+                alert("{{ Order.email }}\nメールアドレス形式が正しくありません。");
+                return false;
+            }
+        }
+    
+        window.addEventListener("load", stripeCheckoutHandler, false);
+    
+        function stripeCheckoutHandler(e) {
+            // const selector = '#shopping-form > div > div.ec-orderRole__summary > div > div.ec-totalBox__btn > button';
+            const selector = '#btn_submit';
+            const jsInitCheckTimer = setInterval(jsLoaded, 1000);
+    
+            function jsLoaded() {
+                if (document.querySelector(selector) != null) {
+                    clearInterval(jsInitCheckTimer);
+                }
+                // submit時のリスナー
+                let button = document.querySelector(selector);
+                button.addEventListener('click', async (event) => {
+                    event.preventDefault();
+    
+                    {% if app.user %}
+                    const stripePaymentMethod = $(".blockcart input[name='_shopping_order[cards]']:checked").val();
+                    if (stripePaymentMethod && $('#stripe-card:visible').length == 0) {
+                        $('#{{ form.stripe_payment_method_id.vars.id }}').val(stripePaymentMethod);
+                    }
+                    {% endif %}
+    
+                    // form.submit();
+                });
+            }
+        }
+    
+        async function createStripePaymentMethod(card) {
+            return await stripe
+                .createPaymentMethod({
+                    type: 'card',
+                    card: card,
+                    billing_details: {
+                        'name': '{{ Order.name01 }} {{ Order.name02 }}',
+                        'email': '{{ Order.email }}'
+                    }
+                })
+                .then(async (result) => {
+                    if (result.error) {
+                        showStripeErrorMessage(result.error.message);
+                    } else {
+                        $('#{{ form.stripe_payment_method_id.vars.id }}').val(result.paymentMethod.id);
+                    }
+                });
+        }
+    
+        function showStripeErrorMessage(message) {
+            const errorElement = document.getElementById('card-errors');
+            errorElement.textContent = message;
+            const overlay = document.querySelector('.bg-load-overlay');
+            if (overlay) {
+                overlay.remove();
+            }
+        }
+
+        function addShippingData() {
+            $("#shopping_order_name_name01").val('{{Order.name01}}');
+            $("#shopping_order_name_name02").val('{{Order.name02}}');
+            $("#shopping_order_kana_kana01").val('{{Order.kana01}}');
+            $("#shopping_order_kana_kana02").val('{{Order.kana02}}');
+            $("#shopping_order_postal_code").val('{{Order.postal_code}}');
+            $("#shopping_order_address_pref option:contains('{{Order.pref}}')").prop('selected', true);
+            $("#shopping_order_address_addr01").val('{{Order.addr01}}');
+            $("#shopping_order_address_addr02").val('{{Order.addr02}}');
+            $("#shopping_order_phone_number").val('{{Order.phone_number}}');
+
+            // $("#shopping_order_name_name01").prop('disabled',true);
+            // $("#shopping_order_name_name02").prop('disabled',true);
+            // $("#shopping_order_kana_kana01").prop('disabled',true);
+            // $("#shopping_order_kana_kana02").prop('disabled',true);
+            // $("#shopping_order_postal_code").prop('disabled',true);
+            // $("#shopping_order_address_pref").prop('disabled',true);
+            // $("#shopping_order_address_addr01").prop('disabled',true);
+            // $("#shopping_order_address_addr02").prop('disabled',true);
+            // $("#shopping_order_phone_number").prop('disabled',true);
+        }
+    </script>
+{% endblock %}

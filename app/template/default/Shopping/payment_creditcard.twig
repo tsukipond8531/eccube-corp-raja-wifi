@@ -1,0 +1,293 @@
+{% extends 'default_frame.twig' %}
+{% set body_class = 'secondpage payment page__payment' %}
+{% set baner_title = 'WiFiレンタルのお申込み' %}
+{% block main %}
+	<section class="main__body payment content__payment">
+		<div class="container">
+	        <h2 class="ttl clblue">{{ '受け取り⽅法選択'|trans }}</h2>
+	        <ul class="listselect">
+	            <li class="listselect--item">
+	            	<span class="num">01</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-calendar.png', 'user_data') }}" alt="渡航日時・渡航先選択">
+	            	</span>
+	            	<span class="txt">{{ '渡航日時・'|trans }}<br>{{ '渡航先選択'|trans }}</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">02</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-plug.png', 'user_data') }}" alt="オプション選択">
+	            	</span>
+	            	<span class="txt">{{ 'オプション'|trans }}<br>{{ '選択'|trans }}</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">03</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-notes.png', 'user_data') }}" alt="購入者情報登録">
+	            	</span>
+	            	<span class="txt">{{ '購入者'|trans }}<br>{{ '情報登録'|trans }}</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">04</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-choice.png', 'user_data') }}" alt="受け取り方法選択">
+	            	</span>
+	            	<span class="txt">{{ '受け取り'|trans }}<br>{{ '方法選択'|trans }}</span>
+	            </li>
+	            <li class="listselect--item active">
+	            	<span class="num">05</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-credit.png', 'user_data') }}" alt="お支払方法選択">
+	            	</span>
+	            	<span class="txt">{{ 'お支払方法'|trans }}<br>{{ '選択'|trans }}</span>
+	            </li>
+	            <li class="listselect--item">
+	            	<span class="num">06</span>
+	            	<span class="icon">
+	            		<img src="{{ asset('assets/img/icon-magnifier.png', 'user_data') }}" alt="お支払方法選択">
+	            	</span>
+	            	<span class="txt">{{ '注文確認'|trans }}</span>
+	            </li>
+	        </ul>
+	        <div class="payment--method">
+	            <h3 class="ttlbgpink payment_method_title">{{ '受け取り⽅法を選択'|trans }}</h3>
+	            <div class="payment--list dflex">
+		            <div class="payment--item"> 
+		                <h4>{{ 'クレジットカード払い'|trans }}</h4>
+		                <div class="payment--box">
+			                <input id="method1" type="radio" name="radio-group" value="1" checked>
+			                <label class="dflex" for="method1">
+			                    <div class="payment--txt">
+			                    	<span>{{ 'クレジットカード'|trans }}</span>
+			                    </div>
+			                    <div class="payment--img">
+			                    	<img src="{{ asset('assets/img/icon-credit2.png', 'user_data') }}" alt="">
+			                    </div>
+			                </label>
+			                <p>{{ '海外作成カード、VISAデビット、JCBデビット、auWALLET、その他プリペイド式クレジットカードはご利用いただくことはできません。'|trans }}</p>
+		                </div>
+		            </div>
+		            <div class="payment--item"> 
+		                <h4>{{ 'ペイディ'|trans }}</h4>
+		                <div class="payment--box">
+		                  	<input id="method2" type="radio" name="radio-group" value="2">
+		                  	<label class="dflex" for="method2">
+		                    	<div class="payment--txt">
+		                    		<span>{{ 'ペイディ'|trans }}</span>
+		                    	</div>
+		                    	<div class="payment--img">
+		                    		<img src="{{ asset('assets/img/logo-paidy.png', 'user_data') }}" alt="">
+		                    	</div>
+		                  	</label>
+		                  	<p>メールアドレスと携帯電話だけでお買い物ができます。<br>お支払いは翌月でOK。翌月10日までに、コンビニ払い、銀行口座、口座振り込みでお支払いください。</p>
+		                </div>
+		            </div>
+	            </div>
+	        </div>
+	        <div class="card-select paydyabout payment-info">
+	            <h3 class="ttlbgpink payment_method_subtitle">{{ 'クレジットカード選択'|trans }}</h3>
+	            <form action="">
+		            <div class="blockcart">
+		            	<input type="radio" id="blockcart1" name="cart-radio-group" value="1" checked>
+		                <label class="dflex" for="blockcart1">
+		                  	<div class="blockcart--img">
+		                  		<img src="{{ asset('assets/img/visablue.png', 'user_data') }}" alt="">
+		                    	<div class="name">
+		                    		<span>•••• 1234</span>
+		                    		<span>Tanaka Taro</span>
+		                    	</div>
+		                  	</div>
+		                  	<div class="blockcart--info"> 
+		                    	<p>Visa</p>
+		                    	<p>末尾が•••• 1234のクレジットカード</p>
+		                  	</div>
+		                </label>
+		            </div>
+		            <div class="blockcart">
+		            	<input type="radio" id="blockcart2" name="cart-radio-group" value="2">
+		                <label class="dflex" for="blockcart2">
+		                  	<div class="blockcart--img">
+		                  		<img src="{{ asset('assets/img/visagray.png', 'user_data') }}" alt="">
+		                    	<div class="name">
+		                    		<span>•••• 1234</span>
+		                    		<span>Tanaka Taro</span>
+		                    	</div>
+		                  	</div>
+		                  	<div class="blockcart--info"> 
+		                    	<p>Visa</p>
+		                    	<p>末尾が•••• 1234のクレジットカード</p>
+		                  	</div>
+		                </label>
+		            </div>
+		            <div class="blockcart blockcart--add">
+		            	<input type="radio" id="blockcart3" name="cart-radio-group" value="3">
+		                <label class="dflex" for="blockcart3">
+		                  	<div class="blockcart--img">
+		                  		<img src="{{ asset('assets/img/imgdum2.png', 'user_data') }}" alt="">
+		                    	<div class="icon">
+		                    		<img src="{{ asset('assets/img/icon-pluscircle.svg', 'user_data') }}" alt="">
+		                    	</div>
+		                  	</div>
+		                  	<div class="blockcart--info"> 
+		                    	<p>クレジットカード情報を追加</p>
+		                  	</div>
+		                </label>
+		            </div>
+		            <div class="paydyabout--box">
+		              	<div class="paydyabout--img">
+		              		<img src="{{ asset('assets/img/visawhite.png', 'user_data') }}" alt="">
+		              	</div>
+		              	<p class="text_center">”お申し込みを確定する”をクリックした後、安全に決済するために、後払い（ペイディ）にリダイレクトされます。</p>
+		            </div>
+		            <div class="border add_blockcart">
+		              	<ul class="dflex">
+		                	<li>
+		                		<img src="{{ asset('assets/img/imgdum3.png', 'user_data') }}" alt="">
+		                	</li>
+		                	<li>
+		                		<img src="{{ asset('assets/img/imgdum4.png', 'user_data') }}" alt="">
+		                	</li>
+		              	</ul>
+	            </div>
+	            </form>
+	        </div>
+        </div>
+        <section class="simulationft"> 
+          	<div class="simulation simulation--footer">
+            	<div class="container">
+              		<h3 class="simulation--tit">
+              			<span class="icon">
+              				<img src="{{ asset('assets/img/money.svg', 'user_data') }}" alt="シミュレーション結果">
+              			</span>
+              			<span>{{ 'お申込内容'|trans }}</span>
+              		</h3>
+              		<div class="simulation--list">
+              			{% if (Order.OrderItems|length == 0) %}
+	                    <span>{{ 'お申込内容がありません。'|trans }}</span>
+	                    {% else %}
+                		<div class="travellist">
+                  			{% set TotalRentalPrice = 0 %}
+		                    {% set SecurityFee = 0 %}
+		                    {% set Days = 0 %}
+		                    {% for OrderItem in Order.OrderItems %}
+		                        {% set ProductClass = OrderItem.ProductClass %}
+		                        {% set Product = OrderItem.Product %}
+		                        {% set Contents = OrderItem.ProductName|split('_') %}
+		                        {% if (OrderItem.IsProduct()) %}
+		                            {% if ((Product.Id == 3) or (Product.Id == 4) or (Product.Id == 5)) %}
+		                                {% set SecurityFee = ProductClass.Price02 %}
+		                                {% set Days = OrderItem.Quantity %}
+		                            {% endif %}
+		                            {% if (Product.Id > 7) %}
+		                                {% set TotalRentalPrice = TotalRentalPrice + ProductClass.Price02 - ProductClass.Price01 %}
+		                            <dl class="dflex">
+		                                <dt>{{ '渡航先'|trans }}
+		                                    {% if (Contents[1] == 1) %}①
+		                                      {% elseif (Contents[1] == 2) %}②
+		                                      {% elseif (Contents[1] == 3) %}③
+		                                      {% elseif (Contents[1] == 4) %}④
+		                                      {% elseif (Contents[1] == 5) %}⑤
+		                                    {% endif %}</dt>
+		                                <dd>{{ '期間: '|trans }}20{{ Contents[2] }}～{{ Contents[3] }}<br>{{ '国名: '|trans }}{{ Contents[0] }}</dd>
+		                            </dl>
+		                            {% endif %}
+		                        {% endif %}
+		                    {% endfor %}
+                		</div>
+                		<div class="simulation--sumary">
+                  			<div class="totalfee">
+                    			<dl class="dflex">
+                      				<dt>{{ '合計金額'|trans }}</dt>
+                      				<dd>{{ Order.taxable_total|number_format }}{{ '円'|trans }}<small>{{ '（税込）'|trans }}</small></dd>
+                    			</dl>
+                  			</div>
+                  			<div class="rentalfee">
+                    			<dl class="dflex">
+                      				<dt>{{ 'レンタル料（220円/日）'|trans }}</dt>
+                      				<dd class="price">{{ TotalRentalPrice|number_format }}{{ '円'|trans }}</dd>
+                    			</dl>
+                    			<dl class="dflex">
+                      				<dt>{{ '安⼼保証料（'|trans }}{{ SecurityFee }}{{ '円/⽇）'|trans }}</dt>
+                      				<dd class="price">{{ SecurityFee * Days }}{{ '円'|trans }}</dd>
+                    			</dl>
+                    			<dl class="dflex">
+                      				<dt>{{ 'オプション品料（110円/⽇）'|trans }}</dt>
+                      				<dd class="price">{{ 110 * Days }}{{ '円'|trans }}</dd>
+                    			</dl>
+                  			</div>
+                		</div>
+                		{% endif %}
+                		<div class="mypage--btn simulation--btn">
+                			<a class="buttonsubmit bgpink btnarr" href="{{ url('shopping_confirm') }}">次へ進む</a>
+                		</div>
+              		</div>
+            	</div>
+          	</div>
+        </section>
+	</section>
+{% endblock %}
+
+{% block javascript %}
+
+	<script type="text/javascript">
+		var payment_method_option = '1';
+		var payment_card_option = '1';
+
+		$(document).ready(function () {
+			$('.add_blockcart').css('display', 'none');
+			$('.paydyabout--box').css('display', 'none');
+
+			$('.payment--box input[name=radio-group]').on('change', function() {
+				payment_method_option = $('.payment--box input[name=radio-group]:checked').val();
+				switch(payment_method_option) {
+					case '1':
+						$('.blockcart').css('display', 'block');
+						$('.add_blockcart').css('display', 'none');
+						$('.paydyabout--box').css('display', 'none');
+						$('.payment_method_title').html('{{ "受け取り⽅法を選択"|trans }}');
+						$('.payment_method_subtitle').html('{{ "クレジットカード選択"|trans }}');
+						break;
+					case '2':
+						$('.blockcart').css('display', 'none');
+						$('.add_blockcart').css('display', 'none');
+						$('.paydyabout--box').css('display', 'block');
+						$('.payment_method_title').html('{{ "お⽀払⽅法を選択"|trans }}');
+						$('.payment_method_subtitle').html('{{ "ペイディについて"|trans }}');
+						break;
+					default:
+						break;
+				}
+			});
+
+			$('.blockcart input[name=cart-radio-group]').on('change', function() {
+				payment_card_option = $('.blockcart input[name=cart-radio-group]:checked').val();
+				switch(payment_card_option) {
+					case '1':
+						$('.blockcart').css('display', 'block');
+						$('.add_blockcart').css('display', 'none');
+						$('.paydyabout--box').css('display', 'none');
+						$('.payment_method_title').html('{{ "受け取り⽅法を選択"|trans }}');
+						$('.payment_method_subtitle').html('{{ "クレジットカード選択"|trans }}');
+						break;
+					case '2':
+						$('.blockcart').css('display', 'block');
+						$('.add_blockcart').css('display', 'none');
+						$('.paydyabout--box').css('display', 'none');
+						$('.payment_method_title').html('{{ "受け取り⽅法を選択"|trans }}');
+						$('.payment_method_subtitle').html('{{ "クレジットカード選択"|trans }}');
+						break;
+					case '3':
+						$('.blockcart').css('display', 'none');
+						$('.add_blockcart').css('display', 'block');
+						$('.paydyabout--box').css('display', 'none');
+						$('.payment_method_title').html('{{ "お⽀払⽅法を選択"|trans }}');
+						$('.payment_method_subtitle').html('{{ "お⽀払情報⼊⼒"|trans }}');
+						break;
+					default:
+						break;
+				}
+			});
+		});
+	</script>
+
+{% endblock %}

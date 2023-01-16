@@ -1,0 +1,40 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'secondpage' %}
+{% set baner_title = 'お問い合わせ(完了)' %}
+
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__commerce">
+        <section class="commerce">
+            <div class="container">
+                <h2 class="ttl clblue">{{ 'お問い合わせ(完了)'|trans }}</h2>
+                <div class="ec-contactCompleteRole">
+                    <div class="ec-off3Grid ec-text-ac">
+                        <div class="ec-off3Grid__cell">
+                            <div class="ec-reportHeading">
+                                <h2>{{ 'お問い合わせ内容の送信が完了いたしました'|trans }}</h2>
+                            </div>
+                            <p class="ec-reportDescription">{{ '万一、ご確認メールが届かない場合は、トラブルの可能性もありますので大変お手数ではございますがもう一度お問い合わせいただくか、お電話にてお問い合わせくださいませ。'|trans }}</p>
+                            <div class="ec-off4Grid__cell"><a class="buttonsubmit bgblue btnarr" href="{{ url('homepage') }}">{{'トップページへ'|trans}}</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+{% endblock %}

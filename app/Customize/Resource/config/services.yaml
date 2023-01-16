@@ -1,0 +1,25 @@
+parameters:
+  env(STRIPE_SECRET_KEY_TEST): 'sk_test_51HPQf3I7V9uu8qK5OHju6fKppm2FqoCEDNXTYkI0NsUAzROEZ2jnIarmzVihrATiSnnkFgps9m0RshDMgD6wvjYS00LXJ4wIPI'
+  env(STRIPE_SECRET_KEY_LIVE): ''
+  env(STRIPE_PUBLIC_KEY_TEST): 'pk_test_51HPQf3I7V9uu8qK5pPZ8ZyLPvfoFtBIFWmD5Hl5BbGlhuEgGfABCr2YuuJkujJUrb3daN9qQJhmGhev2K4fbYQQY00GdczvBIy'
+  env(STRIPE_PUBLIC_KEY_LIVE): ''
+
+twig:
+  globals:
+    stripe_public_key: '%env(STRIPE_PUBLIC_KEY_TEST)%'
+
+monolog:
+  channels: ['stripe']
+  handlers:
+    stripe:
+      type: fingers_crossed
+      action_level: error
+      passthru_level: info
+      handler: stripe_rotating_file
+      channels: [ 'stripe' ]
+    stripe_rotating_file:
+      type: rotating_file
+      max_files: 60
+      path: '%kernel.logs_dir%/%kernel.environment%/stripe.log'
+      formatter: eccube.log.formatter.line
+      level: debug

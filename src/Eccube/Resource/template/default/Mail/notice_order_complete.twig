@@ -1,0 +1,28 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% autoescape 'safe_textmail' %}
+※本メールは自動配信メールです。
+
+============================================
+
+{{ Order.name01 }} {{ Order.name02 }} 様
+
+システムをご利用いただきありがとうございます。
+
+ご注文番号「{{ Order.order_no }}」のレンタルは{{ complete_date }}完了です。
+
+============================================
+
+このメッセージはお客様へのお知らせ専用ですので、
+このメッセージへの返信としてご質問をお送りいただいても回答できません。
+ご了承ください。
+
+{% endautoescape  %}

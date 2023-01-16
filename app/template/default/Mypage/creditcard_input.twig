@@ -1,0 +1,99 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'secondpage page__mypage' %}
+{% set baner_title = 'クレジットカード情報追加・削除' %}
+
+{% extends 'default_frame.twig' %}
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="regist regist--input">
+            <div class="container">
+                <h2 class="ttl clblue">クレジットカード情報追加</h2>
+                <div class="blockcontent">
+                    {% include 'Mypage/navi.twig' %}
+                    <div class="blockcontent--right">
+                        <h3 class="ttlbgpink">お⽀払情報⼊⼒</h3>
+                        <form method="post" action="{{ url('mypage_creditcard_input') }}" class="h-adr" novalidate>
+                            <span class="p-country-name" style="display:none;">Japan</span>
+                            {{ form_widget(form._token) }}
+                            <div class="border">
+                                <table>
+                                    <tr>
+                                        <th><span class="required"></span>クレジットカードのタイプ</th>
+                                        <td>
+                                            <div class="listsel ec-select{{ has_errors(form.credit_card_type) ? ' error' }}">
+                                                {{ form_widget(form.credit_card_type) }}
+                                                {{ form_errors(form.credit_card_type) }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><span class="required"></span>クレジットカード番号</th>
+                                        <td>
+                                            <div class="ec-input{{ has_errors(form.credit_card_number) ? ' error' }}">
+                                                {{ form_widget(form.credit_card_number) }}
+                                                {{ form_errors(form.credit_card_number) }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><span class="required"></span>名義人</th>
+                                        <td>
+                                            <div class="ec-input{{ has_errors(form.holder_name) ? ' error' }}">
+                                                {{ form_widget(form.holder_name) }}
+                                                {{ form_errors(form.holder_name) }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><span class="required"></span>有効期限</th>
+                                        <td>
+                                            <div class="listsel ec-select{{ has_errors(form.expiration_year, form.expiration_month) ? ' error' }}">
+                                                {{ form_widget(form.expiration_month) }}<span>/</span>
+                                                {{ form_widget(form.expiration_year) }}
+                                                {{ form_errors(form.expiration_month) }}
+                                                {{ form_errors(form.expiration_year) }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th><span class="required"></span>セキュリティコード</th>
+                                        <td>
+                                            <div class="ec-input{{ has_errors(form.security_code) ? ' error' }}">
+                                                {{ form_widget(form.security_code) }}
+                                                {{ form_errors(form.security_code) }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="form--submit">
+                                <div class="regist--btn">
+                                    <button type="submit" class="buttonsubmit bgblue btnarr" name="mode"
+                                            value="confirm">{{ '確認ページへ'|trans }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}

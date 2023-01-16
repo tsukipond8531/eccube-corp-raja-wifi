@@ -1,0 +1,56 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'secondpage page__mypage' %}
+{% set baner_title = '既にご利⽤されたことのある⽅の認証' %}
+
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+{% form_theme form 'Form/form_div_layout.twig' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="forgot">
+            <div class="container">
+                <h2 class="ttl clblue">パスワードをお忘れの⽅はこちら</h2>
+                <p class="text_center">パスワードを忘れた⽅は、下記のボックスに、<br>受信可能なメールアドレスを⼊⼒して「送信する」ボタンをクリックしてください。<br></p>
+                <div class="ec-input{{ has_errors(form.login_email) ? ' error' }}">
+                    {{ form_errors(form.login_email) }}
+                </div>
+                <form name="form1" id="form1" method="post" action="{{ url('forgot') }}">
+                    {{ form_widget(form._token) }}
+                    <div class="border">
+                        <table class="styleblue">
+                            <tr>
+                                <th><span class="required"></span>メールアドレス</th>
+                                <td>
+                                    <input type="email" name="login_email" id="login_email" placeholder="メールアドレスをご⼊⼒ください" maxlength="150" value="">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="form--submit">
+                        <div class="regist--btn">
+                            <button type="submit" class="buttonsubmit bgblue btnarr">{{ '送信する'|trans }}</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}
+
+

@@ -1,0 +1,95 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% set body_class = 'mypage secondpage page__mypage' %}
+{% set baner_title = 'マイページ' %}
+
+{% extends 'default_frame.twig' %}
+
+{% block stylesheet %}
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"/>
+{% endblock %}
+
+{% set mypageno = 'index' %}
+
+{% block main %}
+    <!-- MAIN BODY -->
+    <section class="main__body content__mypage">
+        <section class="router">
+            <div class="container">
+                <h2 class="ttl clblue">レンタル期間・渡航国・安全補償の詳細</h2>
+                <div class="blockcontent">
+                    {% include 'Mypage/navi.twig' %}
+                    <div class="blockcontent--right">
+                        <div class="dflex dflex--alstart">
+                            <div class="router--img"><img src="{{ asset('assets/img/imgdum.png', 'user_data') }}" alt=""></div>
+                                {% set startDate = "" %}
+                                {% set endDate = "" %}
+                                {% set country = "" %}
+
+                                {% for OrderItem in Order.MergedProductOrderItems %}
+                                    {% set Product = OrderItem.Product %}
+                                    {% set nameParts = Product.name|split("_") %}
+                                    {% if OrderItem.IsProduct() %}
+                                        {% if Product.Id > 7 %}
+                                            {% if startDate == "" %}
+                                                {% set startDate = "20" ~ nameParts[1] %}
+                                            {% else %}
+                                                {% set sDate = date(startDate) %}
+                                                {% set eDate = "20" ~ nameParts[1] %}
+                                                {% set eDate = date(eDate) %}
+                                                {% if sDate > eDate %}
+                                                    {% set startDate = "20" ~ nameParts[1] %}
+                                                {% endif %}
+                                            {% endif %}
+                                            {% if endDate == "" %}
+                                                {% set endDate = "20" ~ nameParts[2] %}
+                                            {% else %}
+                                                {% set sDate = date(endDate) %}
+                                                {% set eDate = "20" ~ nameParts[2] %}
+                                                {% set eDate = date(eDate) %}
+                                                {% if sDate < eDate %}
+                                                    {% set endDate = "20" ~ nameParts[2] %}
+                                                {% endif %}
+                                            {% endif %}
+                                            {% if country == "" %}
+                                                {% set country = nameParts[0]|default(Product.name) %}
+                                            {% else %}
+                                                {% set country = country ~ "・" ~ nameParts[0]|default(Product.name) %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                                <div class="router--info">
+                                    <dl>
+                                        <dt>型番</dt>
+                                        <dd>00-000000</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>渡航⽇時</dt>
+                                        <dd>{{ startDate }}〜{{ endDate }}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>渡航地域</dt>
+                                        <dd>{{ country }}</dd>
+                                    </dl>
+                                </div>
+                        </div>
+                        <div class="router--btn">
+                            <a class="buttonsubmit bgblue btnarr" href="{{ url('mypage_router_change', {'order_id': Order.Id}) }}">レンタル期間・渡航国<br class="breakpc">・安全補償の変更</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- /END MAIN BODY -->
+{% endblock %}
