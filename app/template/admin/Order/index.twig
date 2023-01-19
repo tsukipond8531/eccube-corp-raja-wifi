@@ -233,13 +233,13 @@ file that was distributed with this source code.
                                     <!-- 各対応状況の件数を表示する -->
                                     {% for status_id, child in statusForm.children %}
                                         <div class="form-check form-check-inline">
+                                            {%- if statusForm.vars.order_count[status_id].display -%}
                                             <input type="checkbox"
                                                    id="{{ child.vars.id }}"
                                                    name="{{ child.vars.full_name }}"
                                                    class="form-check-input"
                                                    value="{{ child.vars.value }}"{{ child.vars.checked ? ' checked="checked"' }}>
                                             <label class="form-check-label" for="{{ child.vars.id }}">{{ child.vars.label }}</label>
-                                            {%- if statusForm.vars.order_count[status_id].display -%}
                                                 (<a href="{{ url('admin_order', { 'order_status_id': status_id }) }}">{{ statusForm.vars.order_count[status_id].count }}</a>)
                                             {%- endif %}
                                         </div>
@@ -404,6 +404,22 @@ file that was distributed with this source code.
                         {{ form_errors(searchForm.buy_product_name) }}
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-row">
+                            <div class="col-12">
+                                <p class="col-form-label">{{ '利用開始日'|trans }}</p>
+                                {{ form_widget(searchForm.rental_start) }}
+                                {{ form_errors(searchForm.rental_start) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label class="col-form-label">{{ '終了予定日'|trans }}</label>
+                        {{ form_widget(searchForm.rental_end) }}
+                        {{ form_errors(searchForm.rental_end) }}
+                    </div>
+                </div>
 
                 <div class="row mb-2">
                     <div class="col">
@@ -554,20 +570,30 @@ file that was distributed with this source code.
                                         <th class="border-top-0 pt-2 pb-2 text-center pl-3">
                                             <input type="checkbox" id="toggle_check_all" name="filter" value="open">
                                         </th>
-                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.order.orderer'|trans }}<a href="#" class="js-listSort" data-sortkey="orderer"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></th>
-                                        <th class="border-top-0 pt-2 pb-2 text-center text-nowrap">{{ 'admin.common.payment_method'|trans }}<a href="#" class="js-listSort" data-sortkey="payment_method"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></th>
-                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.order.order_status'|trans }}<a href="#" class="js-listSort" data-sortkey="order_status"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></th>
-                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.order.purchase_price'|trans }}<a href="#" class="js-listSort" data-sortkey="purchase_price"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></th>
-                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.order.message_short'|trans }}</th>
-                                        <th class="border-top-0 pt-2 pb-2 text-center text-nowrap">{{ 'admin.order.shipping_status'|trans }}<a href="#" class="js-listSort" data-sortkey="shipping_status"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">注文番号</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">顧客名</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">ステータス</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">利用開始日</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">利用終了日</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">問い合わせ</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">配送方法</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.order.shipping_status'|trans }}<a href="#" class="js-listSort" data-sortkey="shipping_status"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">返却情報</th>
+                                        <th class="border-top-0 pt-2 pb-2 text-center">IMEI</th>
                                         <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.order.tracking_number'|trans }}<a href="#" class="js-listSort" data-sortkey="tracking_number"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></th>
-                                        <th class="border-top-0 pt-2 pb-2 text-center">{{ 'admin.order.delivery'|trans }}<a href="#" class="js-listSort" data-sortkey="delivery"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></th>
                                         <th class="border-top-0 pt-2 pb-2 text-center pr-3"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {% for Order in pagination %}
-                                        {% for Shipping in Order.Shippings %}
+                                        {% set Product = null %}
+                                        {% for OrderItem in Order.getMergedProductOrderItems if Product is empty %}
+                                            {# 商品オプションは除く #}
+                                            {% if OrderItem.Product.basic %}
+                                                {% set Product = OrderItem.Product %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for Shipping in Order.Shippings if Product is not empty %}
                                             <tr>
                                                 <td class="align-middle text-center pl-3">
                                                     <input type="checkbox" id="check_{{ Shipping.id }}" data-id="{{ Shipping.id }}" name="ids[]" value="{{ Shipping.id }}"
@@ -576,18 +602,20 @@ file that was distributed with this source code.
                                                            data-update-status-url="{{ url('admin_shipping_update_order_status', { id: Shipping.id}) }}"
                                                     />
                                                 </td>
-                                                <td class="align-middle text-left">
-                                                    <a class="action-edit" href="{{ url('admin_order_edit', { id : Order.id }) }}">{{ Order.order_no }}<br>{{ Order.name01 ~ Order.name02 }}<br>{{ Order.order_date|date_min }}</a>
+                                                <td class="align-middle text-center">
+                                                    <a class="action-edit" href="{{ url('admin_order_edit', { id : Order.id }) }}">{{ Order.order_no }}</a>
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    {{ Order.payment_method }}
+                                                    {{ Order.name01 ~ Order.name02 }}
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     <span class="badge badge-ec-blue" style="background-color: #fff; color: {{ Order.OrderStatusColor }}; border-color: {{ Order.OrderStatusColor }}">{{ Order.OrderStatus }}</span>
                                                 </td>
-                                                <td class="align-middle text-right">
-                                                    {{ Order.payment_total|price }}<br>
-                                                    {{ Order.payment_date ? Order.payment_date|date_day : 'admin.order.not_payment'|trans }}
+                                                <td class="align-middle text-center">
+                                                    {{ Product.rental_start|date('Y年m月d日') }}
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    {{ Product.rental_end|date('Y年m月d日') }}
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     {% if Order.message is not empty %}
@@ -599,6 +627,9 @@ file that was distributed with this source code.
                                                             <i class="fa fa-commenting fa-lg text-secondary" aria-hidden="true"></i>
                                                         </a>
                                                     {% endif %}
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    {{ Shipping.shipping_delivery_name }}
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     {% if Order.is_multiple %}
@@ -617,6 +648,8 @@ file that was distributed with this source code.
                                                         <i class="fa fa-envelope fa-lg text-secondary" aria-hidden="true" data-tooltip="true" data-placement="top" data-original-title="{{ 'admin.order.shipping_mail__completed'|trans({'%date%': send_mail_date}) }}"></i>
                                                     {% endif %}
                                                 </td>
+                                                <td class="align-middle text-center"></td>
+                                                <td class="align-middle text-center"></td>
                                                 <td class="align-middle text-center">
                                                     <div class="input-group input-group-sm">
                                                         <input type="text" id="tracking_number_{{ Shipping.id }}" class="form-control update_tracking_number" placeholder="{{ 'admin.order.tracking_number'|trans }}" value="{{ Shipping.trackingNumber }}" data-shipping_id="{{ Shipping.id }}" data-url="{{ url('admin_shipping_update_tracking_number', { id : Shipping.id }) }}" tabindex="{{ loop.index }}"/>
@@ -626,10 +659,6 @@ file that was distributed with this source code.
                                                     </button>
                                                 </span>
                                                     </div>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    {{ Shipping.name01 ~ Shipping.name02 }}<br>
-                                                    {{ Shipping.Pref.name }}
                                                 </td>
                                                 <td class="align-middle pr-3">
                                                     <div class="text-right">

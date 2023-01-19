@@ -44,6 +44,13 @@ if (!class_exists(OrderStatus::class, false)) {
         const PROCESSING = 8;
         /** 返品 */
         const RETURNED = 9;
+		
+		/** 注文確定. */
+		const CONFIRMED = 4;
+		/** 店頭受取. */
+		const SHOP = 10;
+		/** 返却不備 */
+		const NORETURNED = 11;
 
         /**
          * 受注一覧画面で, ステータスごとの受注件数を表示するかどうか

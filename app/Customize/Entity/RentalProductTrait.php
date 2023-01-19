@@ -29,6 +29,14 @@ trait RentalProductTrait {
     private $rental_end;
 
     /**
+     * 商品オプションも商品として登録されているため、商品オプションと区別するためのフラグ
+     * @var boolean
+     *
+     * @ORM\Column(name="basic", type="boolean", options={"default":false})
+     */
+    private $basic = false;
+
+    /**
      * @return DateTime
      */
     public function getRentalStart() {
@@ -60,5 +68,25 @@ trait RentalProductTrait {
         $this->rental_end = $rental_end;
 
         return $this;
+    }
+
+    /**
+     * @param boolean $basic
+     *
+     * @return $this
+     */
+    public function setBasic(\DateTime $basic)
+    {
+        $this->basic = $basic;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getBasic()
+    {
+        return $this->basic;
     }
 }
