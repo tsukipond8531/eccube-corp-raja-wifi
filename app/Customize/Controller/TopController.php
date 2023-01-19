@@ -359,6 +359,10 @@ class TopController extends AbstractController
                         $Product->setName($item->country_name.'_'.substr($item->from_date, 2).'_'.substr($item->to_date, 2).'_'.$item->country_code);
                         $Product->setRentalStart(new \DateTime($item->from_date));
                         $Product->setRentalEnd(new \DateTime($item->to_date));
+
+                        // 商品オプションと区別するためのフラグを設定
+                        $Product->setBasic(true);
+                        
                         $this->entityManager->persist($Product);
                         $this->entityManager->flush();
 
