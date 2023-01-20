@@ -51,6 +51,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use Eccube\Repository\MailTemplateRepository;
+use Eccube\Form\Type\Admin\CsvImportType;
+use Eccube\Service\CsvImportService;
 
 class OrderController extends AbstractController
 {
@@ -203,7 +205,6 @@ class OrderController extends AbstractController
      */
     public function index(Request $request, $page_no = null, PaginatorInterface $paginator)
     {
-        
         $builder = $this->formFactory
             ->createBuilder(SearchOrderType::class);
 
@@ -216,6 +217,7 @@ class OrderController extends AbstractController
         $this->eventDispatcher->dispatch(EccubeEvents::ADMIN_ORDER_INDEX_INITIALIZE, $event);
 
         $searchForm = $builder->getForm();
+        $csvForm = $this->formFactory->createBuilder(CsvImportType::class)->getForm();
 
         /**
          * ページの表示件数は, 以下の順に優先される.
@@ -398,6 +400,7 @@ class OrderController extends AbstractController
 
         return [
             'searchForm' => $searchForm->createView(),
+            'csvForm' => $csvForm->createView(),
             'pagination' => $pagination,
             'pageMaxis' => $pageMaxis,
             'page_no' => $page_no,
