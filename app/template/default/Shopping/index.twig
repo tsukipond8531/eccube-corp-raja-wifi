@@ -864,20 +864,75 @@ file that was distributed with this source code.
 
 {% block javascript %}
     <script src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/pref.js', 'user_data') }}"></script>
     <script type="text/javascript">
+        var delivery_dates_home = [];
+        var delivery_dates_shop = [];
+        var holidays = [];
+        var delivery_home = 0;
+        var delivery_shop = 0;
+        var delivery_date0 = 0;
+
+        // DBに登録された配送日を取得
+        {% for date in delivery_dates['home'] %}
+            delivery_dates_home.push(parseInt('{{ date }}'));
+        {% endfor %}
+
+        {% for date in delivery_dates['shop'] %}
+            delivery_dates_shop.push(parseInt('{{ date }}'));
+        {% endfor %}
+
+        // 定休日取得
+        {% for holiday in holidays %}
+            holidays.push('{{ holiday }}');
+        {% endfor %}
+
+        if ($('#shopping_order_address_pref').val() !== undefined ) {
+            delivery_home = delivery_dates_home[$('#shopping_order_address_pref').val() - 1];
+            delivery_date0 = delivery_home;
+        }
+
+        {% if saddr is not empty %}
+            delivery_shop = delivery_dates_shop[getPrefId('{{ saddr }}')];
+            delivery_date0 = delivery_shop;
+        {% endif %}
+
         var $simuLoader = $('.loader');
         var startdate = $('#startdate');
         var recent_date = $('#recent_date').val();
         var option2 = $('#option2_fee').val();
         $('#start_date').html(recent_date);
-        var deli_date = new Date(recent_date);
-        deli_date.setDate(deli_date.getDate()-1);
 
         var min_date = new Date();
         var two_days_ago = new Date(recent_date);
         two_days_ago.setDate(two_days_ago.getDate()-1);
         var five_days_ago = new Date(recent_date);
         five_days_ago.setDate(five_days_ago.getDate()-4);
+
+        addtion_date = 0;
+        if (new Date().getHours() >= 14)
+            addtion_date = 1;
+
+        min_date.setDate(min_date.getDate() + delivery_date0 + addtion_date);
+
+        var deli_date = null;
+
+        // 初期受取⽇時を設定
+        // 定休日に含まれている場合は除外
+        for (i = 1; ; i++) {
+            temp_date = new Date(recent_date);
+            temp_date.setDate(temp_date.getDate()-i);
+
+            if (temp_date < min_date) break;
+
+            temp_date = temp_date.toISOString().split('T')[0];
+            if (holidays.includes(temp_date)) continue;
+
+            temp_date = new Date(recent_date);
+            temp_date.setDate(temp_date.getDate() - i - 1);
+            deli_date = temp_date;
+            break;
+        }
 
         if (option2 > 0) {
             if (min_date < five_days_ago) {
@@ -891,6 +946,13 @@ file that was distributed with this source code.
 
         function updateCalendar() {
             var min_date = new Date();
+
+            addtion_date = 0;
+            if (new Date().getHours() >= 14)
+                addtion_date = 1;
+
+            min_date.setDate(min_date.getDate() + delivery_date0 + addtion_date);
+
             var option2 = $('#productselection2').val();
             if (option2 == '1') {
                 if (min_date < five_days_ago) {
@@ -909,13 +971,20 @@ file that was distributed with this source code.
                 defaultDate: new Date(recent_date),
                 dateFormat: "Y-m-d",
                 locale: "ja",
+                disable : [
+                    {% for holiday in holidays %}
+                        '{{ holiday }}',
+                    {% endfor %}
+                ],
                 onChange: function(selectedDates, dateStr, instance) {
                     $('#delivery_date').val(dateStr);
                 },
             });
         }
 
-        $('#delivery_date').val(deli_date.toISOString().split('T')[0]);
+        // 初期受取⽇時を表示
+        if (deli_date !== null)
+            $('#delivery_date').val(deli_date.toISOString().split('T')[0]);
         startdate.flatpickr({
             inline: true,
             // mode: "multiple",
@@ -925,10 +994,10 @@ file that was distributed with this source code.
             dateFormat: "Y-m-d",
             locale: "ja",
             disable : [
-                    {% for holiday in holidays %}
-                        '{{ holiday }}',
-                    {% endfor %}
-                ],
+                {% for holiday in holidays %}
+                    '{{ holiday }}',
+                {% endfor %}
+            ],
             onChange: function(selectedDates, dateStr, instance) {
                 $('#delivery_date').val(dateStr);
             },
@@ -1043,6 +1112,9 @@ file that was distributed with this source code.
                         // $('.delivery_title').html('{{ "配送⽇時選択"|trans }}');
                         $('.shipping_title').html('{{ "お届け先情報"|trans }}');
     						$('.shipping_time').css('display', 'block');
+
+                        delivery_date0 = delivery_home;
+                        updateCalendar();
                         break;
                     case '3':
                         $('.convenience').css('display','block');
@@ -1051,6 +1123,12 @@ file that was distributed with this source code.
                         // $('.delivery_title').html('{{ "受け取り⽇時選択"|trans }}');
                         $('.shipping_title').html('{{ "コンビニ受け取り"|trans }}');
     						$('.shipping_time').css('display', 'none');
+
+                        // コンビニ受け取りタブのみを選択した場合
+                        if (delivery_shop == 0) delivery_date0 = delivery_home;
+                        // コンビニ受け取り配送日数も設定されている場合
+                        else delivery_date0 = delivery_shop;
+                        updateCalendar();
                         break;
                     case '4':
                         $('.delivery').css('display','none');
@@ -1059,11 +1137,22 @@ file that was distributed with this source code.
                         // $('.delivery_title').html('{{ "受け取り⽇時選択"|trans }}');
                         $('.shipping_title').html('{{ "店頭受け取り"|trans }}');
     						$('.shipping_time').css('display', 'block');
+
+                        delivery_date0 = 0;
+                        updateCalendar();
                         break;
                     default:
                         break;
                 }
             });
+
+            $('#shopping_order_address_pref').on('change', function() {
+                delivery_home = delivery_dates_home[$(this).val() - 1];
+                delivery_date0 = delivery_home;
+
+                updateCalendar();
+            });
+
             var product_num = $('#product_num').val();
             if ( product_num > 5) {
                 $('.list_item').css('flex', '0 0 17%');
@@ -1129,6 +1218,10 @@ file that was distributed with this source code.
 				}
                 updateCalendar();
 			});
+
+            $('input[name="receive-group"]').on('change', function() {
+
+            })
     
             $('.blockcart input[name="_shopping_order[cards]"]').on('change', function() {
                 payment_card_option = $('.blockcart input[name="_shopping_order[cards]"]:checked').val();

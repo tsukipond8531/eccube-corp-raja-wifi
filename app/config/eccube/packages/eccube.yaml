@@ -117,6 +117,12 @@ parameters:
     eccube_forgot_mail_template_id: 6 #パスワードリセット
     eccube_reset_complete_mail_template_id: 7 #パスワードリマインダー
     eccube_shipping_notify_mail_template_id: 8 #出荷通知メール
+    eccube_error_mail_template_id: 10 #エラーメール
+    eccube_cancel_mail_template_id: 11 #キャンセルメール
+    eccube_usage_issuance_mail_template_id: 12 #利用明細発行メール
+    eccube_overdue_reminder_mail_template_id: 13 #延滞督促メール
+    eccube_deadline_notify_mail_template_id: 14 #終了日お知らせメール
+    eccube_return_confirmed_mail_template_id: 15 #返却確認、利用明細発行メール
     # メールアドレスをRFC準拠でチェックするか true: チェックする、false: チェックしない
     eccube_rfc_email_check: false
     eccube_package_api_url: '%env(ECCUBE_PACKAGE_API_URL)%'

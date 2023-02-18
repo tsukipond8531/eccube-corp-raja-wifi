@@ -77,6 +77,9 @@ use Eccube\Repository\CalendarRepository;
 
 class ShoppingController extends AbstractShoppingController
 {
+    const DELIVERY_HOME = 1;
+    const DELIVERY_SHOP = 3;
+
     /**
      * @var CartService
      */
@@ -362,8 +365,30 @@ class ShoppingController extends AbstractShoppingController
         $intent = PaymentIntent::create($paymentIntentData);
         $Order->setStripePaymentIntentId($intent->id);
         $this->entityManager->flush();
-        
-        $Calendars = $this->calendarRepository->findAll();
+
+        $deliveryRepository = $this->entityManager->getRepository(\Eccube\Entity\Delivery::class);
+        $deliveryHome = $deliveryRepository->find($this::DELIVERY_HOME);
+        $deliveryShop = $deliveryRepository->find($this::DELIVERY_SHOP);
+
+        $deliveryDates = [
+            'home' => [],
+            'shop' => [],
+        ];
+        $deliveryDateRepository = $this->entityManager->getRepository(\Plugin\DeliveryDate4\Entity\DeliveryDate::class);
+
+        if (count($temp = $deliveryDateRepository->findBy(['Delivery' => $deliveryHome]))) {
+            foreach ($temp as $item) {
+                $deliveryDates['home'][$item->getPref()->getId()] = $item->getDates();
+            }
+        }
+
+        if (count($temp = $deliveryDateRepository->findBy(['Delivery' => $deliveryShop]))) {
+            foreach ($temp as $item) {
+                $deliveryDates['shop'][$item->getPref()->getId()] = $item->getDates();
+            }
+        }
+
+        $Calendars = $this->calendarRepository->findAll([]);
         $holidays = [];
         foreach ($Calendars as $Calendar){
             $holidays[] = date_format($Calendar->getHoliday(), 'Y-m-d');
@@ -386,6 +411,7 @@ class ShoppingController extends AbstractShoppingController
             'spare4' => $spare4,
             'client_secret' => $intent['client_secret'],
             'holidays' => $holidays,
+            'delivery_dates' => $deliveryDates,
         ];
     }
 
