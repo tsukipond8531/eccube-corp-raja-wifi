@@ -39,6 +39,8 @@ use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 use Eccube\Service\CustomerPdfService;
+use Eccube\Repository\OrderRepository;
+use Eccube\Entity\Master\OrderStatus;
 
 class CustomerController extends AbstractController
 {
@@ -68,6 +70,11 @@ class CustomerController extends AbstractController
     protected $pageMaxRepository;
 
     /**
+     * @var OrderRepository
+     */
+    protected $orderRepository;
+
+    /**
      * @var CustomerRepository
      */
     protected $customerRepository;
@@ -78,6 +85,7 @@ class CustomerController extends AbstractController
         CustomerRepository $customerRepository,
         SexRepository $sexRepository,
         PrefRepository $prefRepository,
+        OrderRepository $orderRepository,
         MailService $mailService,
         CsvExportService $csvExportService
     ) {
@@ -85,6 +93,7 @@ class CustomerController extends AbstractController
         $this->customerRepository = $customerRepository;
         $this->sexRepository = $sexRepository;
         $this->prefRepository = $prefRepository;
+        $this->orderRepository = $orderRepository;
         $this->mailService = $mailService;
         $this->csvExportService = $csvExportService;
     }
@@ -356,31 +365,59 @@ class CustomerController extends AbstractController
      *
      * @return StreamedResponse
      */
-    public function exportPDF(Request $request, CustomerPdfService $customerPdfService)
+    public function exportPDF(Request $request, CustomerPdfService $customerPdfService0)
     {
         $customerId = $request->get('id');
         $Customer = $this->customerRepository->find($customerId);
+        $pdfFileNames = [];
+        $qb = $this->orderRepository->createQueryBuilder('o')
+            ->where('o.Customer = :Customer')
+            ->setParameter('Customer', $Customer);
 
-        $Order = $Customer->getOrders()->last();
+        $qb
+            ->andWhere($qb->expr()->notIn('o.OrderStatus', ':status'))
+            ->setParameter('status', [OrderStatus::PROCESSING, OrderStatus::PENDING]);
+        $Orders = $qb->getQuery()->getResult();
 
-        $status = $customerPdfService->makePdf($Order);
+        foreach ( $Orders as $Order ) {
+            $customerPdfService = clone $customerPdfService0;
+            $status = $customerPdfService->makePdf($Order);
+    
+            // 異常終了した場合の処理
+            if (!$status) {
+                $this->addError('admin.order.export.pdf.download.failure', 'admin');
+                log_info('Unable to create pdf files! Process have problems!');
+            }
+    
+            $fileName = $Order->getId() . '.pdf';
+            $destination = '/home/kaigai_wifi_demo/web/html/upload/pdf/' . $fileName;
+            $pdfFileNames[] = $destination;
 
-        // 異常終了した場合の処理
-        if (!$status) {
-            $this->addError('admin.order.export.pdf.download.failure', 'admin');
-            log_info('Unable to create pdf files! Process have problems!');
+            $file = fopen($destination, 'w+');
+            fputs($file, $customerPdfService->outputPdf());
+            fclose($file);
         }
 
-        // TCPDF::Outputを実行するとプロパティが初期化されるため、ファイル名を事前に取得しておく
-        $pdfFileName = $customerPdfService->getPdfFileName();
+        $zipName = '利用明細書_' . $Customer->getId() . '.zip';
+        $zip = new \ZipArchive();
+        $zip->open($zipName, \ZipArchive::CREATE);
+        
+        foreach ($pdfFileNames as $pdfFile) {
+            $zip->addFromString(basename($pdfFile), file_get_contents($pdfFile));
+        }
+        $zip->close();
+        
         // ダウンロードする
         $response = new Response(
-            $customerPdfService->outputPdf(),
+            file_get_contents($zipName),
             200,
-            ['content-type' => 'application/pdf']
+            ['content-type' => 'application/zip']
         );
         
-        $response->headers->set('Content-Disposition', 'attachment; filename="'.$pdfFileName.'"');
+        $response->headers->set('Content-Disposition', 'attachment; filename="'.$zipName.'"');
+
+        // delete zip file after download
+        unlink($zipName);
 
         return $response;
     }

@@ -50,8 +50,12 @@ class CustomerPdfService extends BaseService
             return false;
         }
 
-        $userPath = $this->eccubeConfig->get('eccube_html_admin_dir').'/assets/pdf/利用明細書.pdf';
-        $this->setSourceFile($userPath);
+        try {
+            $userPath = $this->eccubeConfig->get('eccube_html_admin_dir') . '/assets/pdf/利用明細書.pdf';
+            $this->setSourceFile($userPath);
+        } catch (\Exception $e) {
+            dd( $Order, $e->getMessage() );
+        }
         $this->addPdfPage();
 
         // 会員情報を描画する
@@ -61,7 +65,7 @@ class CustomerPdfService extends BaseService
         $this->renderPriceData($Order->getTaxableTotal());
 
         // 出荷詳細情報を描画する
-        // $this->renderOrderDetailData($Order);
+        $this->renderOrderDetail($Order);
 
         return true;
     }
@@ -201,7 +205,8 @@ class CustomerPdfService extends BaseService
      */
     protected function renderOrdererInfo(\Eccube\Entity\Order $Order)
     {
-        $line1 = $Order->getPref()->getName() . $Order->getAddr01();
+        $Pref = $Order->getPref() ? $Order->getPref()->getName() : '';
+        $line1 = $Pref . $Order->getAddr01();
         $line2 = $Order->getAddr02();
         $line3 = $Order->getName01() . $Order->getName02() . '　様';
 
@@ -306,7 +311,7 @@ class CustomerPdfService extends BaseService
      *
      * @param \Eccube\Entity\Order $Order
      */
-    protected function renderOrderDetailData(Order $Order)
+    protected function renderOrderDetail(\Eccube\Entity\Order $Order)
     {
         $arrOrder = [];
         // テーブルの微調整を行うための購入商品詳細情報をarrayに変換する
@@ -440,6 +445,13 @@ class CustomerPdfService extends BaseService
         }
 
         // PDFに設定する
+        $this->backupFont();
+        $this->lfText(38, 171, $Order->getOrderDate()->format('Y年m月d日'), 10);
+        $this->lfText(38, 183, $Order->getOrderNo(), 10);
+        $this->lfText(100, 171, $Order->getReturnedDate() ? $Order->getReturnedDate()->format('Y年m月d日') : '', 10);
+        $this->lfText(100, 183, $Order->getPaymentDate() ? $Order->getPaymentDate()->format('Y年m月d日') : '', 10);
+
+        // table表示
         $this->setFancyTable($this->labelCell, $arrOrder, $this->widthCell);
     }
 
@@ -480,7 +492,7 @@ class CustomerPdfService extends BaseService
         $this->backupFont();
 
         // 開始座標の設定
-        $this->setBasePosition(0, 149);
+        $this->setBasePosition(0, 190);
 
         // Colors, line width and bold font
         $this->SetFillColor(216, 216, 216);
