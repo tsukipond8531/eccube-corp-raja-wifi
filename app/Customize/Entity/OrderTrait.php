@@ -20,18 +20,6 @@ trait OrderTrait
      *     })
      * )
      */
-    private $terminal_no;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Eccube\Annotation\FormAppend(
-     *     auto_render=false,
-     *     type="Symfony\Component\Form\Extension\Core\Type\TextType",
-     *     options={
-     *          "required": false,
-     *     })
-     * )
-     */
     private $shipping_slip_no;
 
     /**
@@ -47,24 +35,30 @@ trait OrderTrait
     private $return_slip_no;
 
     /**
-     * @param string $terminal_no
-     *
-     * @return $this
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Eccube\Annotation\FormAppend(
+     *     auto_render=false,
+     *     type="Symfony\Component\Form\Extension\Core\Type\TextType",
+     *     options={
+     *          "required": false,
+     *     })
+     * )
      */
-    public function setTerminalNo(string $terminal_no)
-    {
-        $this->terminal_no = $terminal_no;
-
-        return $this;
-    }
+    private $imei;
 
     /**
-     * @return string
+     * @var \DateTime
+     *
+     * @ORM\Column(name="returned_date", type="datetimetz", nullable=true)
+     * @Eccube\Annotation\FormAppend(
+     *     auto_render=false,
+     *     type="Symfony\Component\Form\Extension\Core\Type\DateType",
+     *     options={
+     *          "required": false,
+     *     })
+     * )
      */
-    public function getTerminalNo()
-    {
-        return $this->terminal_no;
-    }
+    private $returned_date = null;
 
     /**
      * @param string $shipping_slip_no
@@ -104,5 +98,49 @@ trait OrderTrait
     public function getReturnSlipNo()
     {
         return $this->return_slip_no;
+    }
+
+    /**
+     * @param string $imei
+     *
+     * @return $this
+     */
+    public function setImei(string $imei)
+    {
+        $this->imei = $imei;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImei()
+    {
+        return $this->imei;
+    }
+
+    /**
+     * Set returnedDate.
+     *
+     * @param \DateTime $returnedDate
+     *
+     * @return $this
+     */
+    public function setReturnedDate($returnedDate)
+    {
+        $this->returned_date = $returnedDate;
+
+        return $this;
+    }
+
+    /**
+     * Get returnedDate.
+     *
+     * @return \DateTime
+     */
+    public function getReturnedDate()
+    {
+        return $this->returned_date;
     }
 }

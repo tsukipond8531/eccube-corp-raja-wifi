@@ -35,6 +35,8 @@ $container->loadFromExtension('framework', [
                 (string) Status::PENDING,
                 (string) Status::PROCESSING,
                 (string) Status::RETURNED,
+                (string) Status::SHOP,
+                (string) Status::NORETURNED,
             ],
             'transitions' => [
                 'pay' => [
@@ -64,6 +66,14 @@ $container->loadFromExtension('framework', [
                 'cancel_return' => [
                     'from' => (string) Status::RETURNED,
                     'to' => (string) Status::DELIVERED,
+                ],
+                'shop' => [
+                    'from' => (string) Status::NEW,
+                    'to' => (string) Status::SHOP,
+                ],
+                'no_returned' => [
+                    'from' => (string) Status::DELIVERED,
+                    'to' => (string) Status::NORETURNED,
                 ],
             ],
         ],

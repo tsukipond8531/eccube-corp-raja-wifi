@@ -45,28 +45,28 @@ class SearchOrderTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
       $builder
-        ->add('rental_start', DateTimeType::class, [
+        ->add('rental_start', DateType::class, [
             'label' => '利用開始日',
             'required' => false,
             'input' => 'datetime',
             'widget' => 'single_text',
             'format' => 'yyyy-MM-dd',
             'attr' => [
-                'class' => 'datetimepicker-input',
+                'class' => 'datepicker-input',
                 'data-target' => '#'.$this->getBlockPrefix().'_rental_start',
-                'data-toggle' => 'datetimepicker',
+                'data-toggle' => 'datepicker',
             ],
         ])
-        ->add('rental_end', DateTimeType::class, [
+        ->add('rental_end', DateType::class, [
             'label' => '終了予定日',
             'required' => false,
             'input' => 'datetime',
             'widget' => 'single_text',
             'format' => 'yyyy-MM-dd',
             'attr' => [
-                'class' => 'datetimepicker-input',
+                'class' => 'datepicker-input',
                 'data-target' => '#'.$this->getBlockPrefix().'_rental_end',
-                'data-toggle' => 'datetimepicker',
+                'data-toggle' => 'datepicker',
             ],
         ]);
     }

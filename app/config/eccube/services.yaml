@@ -217,3 +217,9 @@ services:
             - '@Eccube\Request\Context'
         tags:
             - { name: form.type_extension, priority: -99, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
+
+    Customize\Service\MailService:
+        decorates: Eccube\Service\MailService
+
+    Customize\Service\CustomerPdfService:
+        decorates: Eccube\Service\CustomerPdfService

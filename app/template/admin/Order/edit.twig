@@ -186,6 +186,12 @@ file that was distributed with this source code.
                     }
                 }
             });
+
+            $('#manual-preview').on('click', function( event ) {
+                event.preventDefault();
+
+                $('#form2').submit();
+            });
         });
 
         {# ポイント機能が有効かつ会員の場合のみポイントの割引金額を変更する #}
@@ -326,8 +332,8 @@ file that was distributed with this source code.
                                         <div class="row mb-3">
                                             <div class="col-3">端末番号</div>
                                             <div class="col">
-                                                {{ form_widget(form.terminal_no) }}
-                                                {{ form_errors(form.terminal_no) }}
+                                                {{ form_widget(form.imei) }}
+                                                {{ form_errors(form.imei) }}
                                             </div>
                                         </div>
                                         <div class="row mb-3">
@@ -372,6 +378,46 @@ file that was distributed with this source code.
                             </div>
                         </div>
                     </div><!-- .card.rounded -->
+
+                    <div class="card rounded border-0 mb-4">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-2">
+                                    <div class="d-inline-block"><span class="card-title">{{ '使用履歴'|trans }}</span></div>
+                                </div>
+                                <div class="col">利用料金： {{ RealPrice|price }}</div>
+                                <div class="col-2">
+                                    <button id="manual-preview" class="btn btn-ec-conversion px-5">{{ '手動反映'|trans }}</button>
+                                </div>
+                                <div class="col-1 text-right"><a class="d-block" data-toggle="collapse" href="#usageHistory" aria-expanded="false" aria-controls="usageHistory"><i class="fa {{ id ? 'fa-angle-down' : 'fa-angle-up' }} fa-lg"></i></a></div>
+                            </div>
+                        </div>
+                        <div class="collapse {{ id ? 'show' : '' }} ec-cardCollapse h-adr" id="usageHistory">
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <thead class="table-active">
+                                        <tr>
+                                            <th class="pt-2 pb-2 pl-3">{{ '利用日'|trans }}</th>
+                                            <th class="pt-2 pb-2 pr-3">{{ '国コード'|trans }}</th>
+                                            <th class="pt-2 pb-2 pl-3">{{ '国名'|trans }}</th>
+                                            <th class="pt-2 pb-2 pr-3">{{ '通信量'|trans }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for history in UsageHistory %}
+                                            <tr>
+                                                <td class="pl-3">{{ history[3] }}</th>
+                                                <td class="pl-3">{{ history[4] }}</th>
+                                                <td class="pl-3">{{ history[6] }}</th>
+                                                <td class="pl-3">{{ history[7] }}MB</th>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- .card.rounded -->
+
                     <div class="card rounded border-0 mb-4">
                         <div class="card-header">
                             <div class="row">
@@ -678,6 +724,13 @@ file that was distributed with this source code.
                                                 <div class="col">
                                                     {{ form_widget(form.Shipping.DeliveryTime) }}
                                                     {{ form_errors(form.Shipping.DeliveryTime) }}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3 form-group">
+                                                <label class="col-3 col-form-label"><i class="fa fa-calendar-check-o fa-fw mr-1" aria-hidden="true"></i>{{ '返却日'|trans }}</label>
+                                                <div class="col">
+                                                    {{ form_widget(form.returned_date) }}
+                                                    {{ form_errors(form.returned_date) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -1073,5 +1126,8 @@ file that was distributed with this source code.
                 </div>
             </div>
         </div>
+    </form>
+    <form id="form2" method="post" action="{{ url('admin_order_usage_history', { id: id }) }}" style="display: none;">
+        <button type="submit" class="btn btn-ec-conversion px-5">{{ '手動反映'|trans }}</button>
     </form>
 {% endblock %}

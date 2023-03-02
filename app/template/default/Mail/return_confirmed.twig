@@ -1,0 +1,49 @@
+{#
+This file is part of EC-CUBE
+
+Copyright(c) EC-CUBE CO.,LTD. All Rights Reserved.
+
+http://www.ec-cube.co.jp/
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+#}
+{% autoescape 'safe_textmail' %}
+{{ Order.name01 }} {{ Order.name02 }} 様
+
+この度は海外WiFiレンタルショップをご利用いただき、誠にありがとうございます。
+
+お貸出ししておりましたレンタル商品のご返却確認及び、ご利用料金の決済が完了いたしましたので、ご連絡いたします。
+
+ご利用料金につきましては、[PDF添付ファイル]請求明細書をご確認ください。
+
+※お支払い方法により実際のお支払日が異なります。
+　実際のお支払日を確認いただく場合は、ご注文時に選択いただきました決済会社様へお問い合わせください。
+
+
+************************************************
+　ご注文者情報
+************************************************
+ご注文日時：{{ Order.order_date|date_sec|date("Y年m月d日 H:i:s") }}
+ご注文番号：{{ Order.order_no }}
+お名前：{{ Order.name01 }} {{ Order.name02 }} 様
+お名前(カナ)：{{ Order.kana01 }} {{ Order.kana02 }} 様
+{% if Order.company_name %}
+会社名：{{ Order.company_name }}
+{% endif %}
+郵便番号：〒{{ Order.postal_code[:3] }}-{{ Order.postal_code[3:] }}
+住所：{{ Order.Pref }}{{ Order.addr01 }}{{ Order.addr02 }}
+電話番号：{{ Order.phone_number[:4] }}-{{ Order.phone_number[3:3] }}-{{ Order.phone_number[6:] }}
+メールアドレス：{{ Order.email }}
+============================================
+
+海外WiFiレンタルショップ
+メール ：support@k-eifi.com
+WEB :本番URL
+営業時間/10：00～19：00　定休日/土日祝日
+
+
+このメッセージはお客様へのお知らせ専用ですので、
+このメッセージへの返信としてご質問をお送りいただいても回答できません。
+ご了承ください。
+{% endautoescape %}

@@ -53,6 +53,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Eccube\Repository\MailTemplateRepository;
 use Eccube\Form\Type\Admin\CsvImportType;
 use Eccube\Service\CsvImportService;
+use Eccube\Entity\Order;
 
 class OrderController extends AbstractController
 {
@@ -396,7 +397,22 @@ class OrderController extends AbstractController
             }
         }
 
-        $MailTemplates = $this->mailTemplateRepository->findAll();
+        $includes = [
+            $this->eccubeConfig['eccube_order_mail_template_id'],
+            $this->eccubeConfig['eccube_shipping_notify_mail_template_id'],
+            $this->eccubeConfig['eccube_error_mail_template_id'],
+            $this->eccubeConfig['eccube_cancel_mail_template_id'],
+            $this->eccubeConfig['eccube_usage_issuance_mail_template_id'],
+            $this->eccubeConfig['eccube_overdue_reminder_mail_template_id'],
+            $this->eccubeConfig['eccube_deadline_notify_mail_template_id'],
+            $this->eccubeConfig['eccube_return_confirmed_mail_template_id'],
+        ];
+        $MailTemplates = $this->mailTemplateRepository->createQueryBuilder('mt')
+            ->select('mt')
+            ->where($qb->expr()->in('mt', ':includes'))
+            ->setParameter('includes', $includes)
+            ->getQuery()
+            ->getResult();
 
         return [
             'searchForm' => $searchForm->createView(),
@@ -694,6 +710,60 @@ class OrderController extends AbstractController
             $this->entityManager->flush();
             log_info('送り状番号変更処理完了', [$shipping->getId()]);
             $message = ['status' => 'OK', 'shipping_id' => $shipping->getId(), 'tracking_number' => $trackingNumber];
+
+            return $this->json($message);
+        } catch (\Exception $e) {
+            log_error('予期しないエラー', [$e->getMessage()]);
+
+            return $this->json(['status' => 'NG'], 500);
+        }
+    }
+
+    /**
+     * Update to Tracking number.
+     *
+     * @Route("/%eccube_admin_route%/Order/{id}/imei", requirements={"id" = "\d+"}, name="admin_order_update_imei", methods={"PUT"})
+     *
+     * @param Request $request
+     * @param Order $order
+     *
+     * @return Response
+     */
+    public function updateImei(Request $request, Order $order)
+    {
+        if (!($request->isXmlHttpRequest() && $this->isTokenValid())) {
+            return $this->json(['status' => 'NG'], 400);
+        }
+
+        $imei = mb_convert_kana($request->get('imei'), 'a', 'utf-8');
+        /** @var \Symfony\Component\Validator\ConstraintViolationListInterface $errors */
+        $errors = $this->validator->validate(
+            $imei,
+            [
+                new Assert\Length(['max' => $this->eccubeConfig['eccube_stext_len']]),
+                new Assert\Regex(
+                    ['pattern' => '/^[0-9a-zA-Z-]+$/u', 'message' => trans('admin.order.tracking_number_error')]
+                ),
+            ]
+        );
+
+        if ($errors->count() != 0) {
+            log_info('IMEI番号入力チェックエラー');
+            $messages = [];
+            /** @var \Symfony\Component\Validator\ConstraintViolationInterface $error */
+            foreach ($errors as $error) {
+                $messages[] = $error->getMessage();
+            }
+
+            return $this->json(['status' => 'NG', 'messages' => $messages], 400);
+        }
+
+        try {
+            $order->setImei($imei);
+            $this->entityManager->persist($order);
+            $this->entityManager->flush();
+            log_info('IMEI変更処理完了', [$order->getId()]);
+            $message = ['status' => 'OK', 'order_id' => $order->getId(), 'imei' => $imei];
 
             return $this->json($message);
         } catch (\Exception $e) {

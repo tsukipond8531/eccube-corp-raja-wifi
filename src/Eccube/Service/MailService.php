@@ -764,7 +764,7 @@ class MailService
             'Customer' => $Customer,
             'BaseInfo' => $this->BaseInfo,
             'Order' => $Order,
-            'Shipping' => $Shippings
+            'Shipping' => $Shipping
         ]);
 
         $message = (new \Swift_Message())

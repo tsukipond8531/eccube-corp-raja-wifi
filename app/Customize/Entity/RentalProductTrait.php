@@ -75,7 +75,7 @@ trait RentalProductTrait {
      *
      * @return $this
      */
-    public function setBasic(\DateTime $basic)
+    public function setBasic($basic)
     {
         $this->basic = $basic;
 
